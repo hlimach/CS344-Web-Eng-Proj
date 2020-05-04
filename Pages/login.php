@@ -51,7 +51,7 @@
                             <tr>
                                 <td>
                                     <span class="form-title" style="font-size:15px">
-                                        <a href="./loginpage.php"><b>New here? Create your account now!</b></a>
+                                        <a href="./signup.php"><b>New here? Create your account now!</b></a>
                                     </span>
                                 </td>
                             </tr>
