@@ -57,8 +57,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select class="input heightsignup">
-                                            <option value="male">Male</option>
+                                        <select class="input heightsignup" name="gender">
+                                            <option value="male" selected>Male</option>
                                             <option value="female">Female</option>
                                             <option value="other">Other</option>
                                         </select>
@@ -277,7 +277,16 @@
 
 
         //entering data into mysql
+        if($check == true){
+            $sql = "INSERT INTO user (username, password, f_name, l_name, age, bio, gender, email, pic_url) VALUES ('$_POST[username]', '$_POST[pass1]', '$_POST[fname]', '$_POST[lname]', '$_POST[age]', '$_POST[bio]', '$_POST[gender]', '$_POST[email]', '$_POST[pic]')";
 
+            if ($conn->query($sql) == TRUE) {
+                echo '<script>console.log("New record created successfully");</script>';
+            } else {
+                echo '<script>console.log("Error")</script>';
+            }
+            
+        }
 
         }?>
     </body>
