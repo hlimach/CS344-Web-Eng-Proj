@@ -19,7 +19,7 @@
     .c-m-12 { width: 100%; }
 }
 
-@media only screen and (min-width: 1000px) {
+@media only screen and (min-width: 800px) {
     /*desktop display: */
 
     .c-1 { width: 8.33%; }
@@ -31,14 +31,25 @@
     .c-7 { width: 58.33%; }
     .c-8 { width: 66.66%; }
     .c-9 { width: 75%; }
+    .c-aboutdesk-9 {
+        width: 80%;
+        position: fixed;
+        left: 10%;
+    }
     .c-10 { width: 83.33%; }
     .c-11 { width: 91.66%; }
     .c-12 { width: 100%; }
 }
 
-@media (max-width:600px) {
+@media (max-width:800px) {
     .dis {
         display: none;
+    }
+
+    .c-aboutsub-9 {
+        width: 100%;
+        position: absolute;
+        left: 0px;
     }
 }
 
@@ -46,6 +57,10 @@
     #tableform {
         float: left;
     }
+}
+
+body {
+margin:0px;
 }
 
 .colred {
@@ -80,8 +95,6 @@
 .wrap_aboutus {
     background-color: #ffffff;
     overflow: hidden;
-    justify-content: center;
-    padding: 3%;
 }
 
 @keyframes loginsetup {
