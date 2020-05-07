@@ -31,11 +31,6 @@
     .c-7 { width: 58.33%; }
     .c-8 { width: 66.66%; }
     .c-9 { width: 75%; }
-    .c-aboutdesk-9 {
-        width: 80%;
-        position: fixed;
-        left: 10%;
-    }
     .c-10 { width: 83.33%; }
     .c-11 { width: 91.66%; }
     .c-12 { width: 100%; }
@@ -44,12 +39,6 @@
 @media (max-width:800px) {
     .dis {
         display: none;
-    }
-
-    .c-aboutsub-9 {
-        width: 100%;
-        position: absolute;
-        left: 0px;
     }
 }
 
@@ -90,11 +79,6 @@ margin:0px;
     animation-duration: 1s;
     opacity: 0.0;
     animation-fill-mode: forwards;
-}
-
-.wrap_aboutus {
-    background-color: #ffffff;
-    overflow: hidden;
 }
 
 @keyframes loginsetup {
@@ -199,6 +183,108 @@ margin:0px;
     font-family: Buenard;
     font-size: 18px;
     text-align: left;
+}
+
+/*aboutus page*/
+/*mobile display*/
+
+[class *= "c-aboutdesk-"] {
+    width: 100%;
+    position: relative;
+    left: 0px;
+}
+
+@media only screen and (min-width: 700px) {
+    /*tablet display: */
+    .paddingaboutus-t {
+        padding-top: 3%;
+        padding-left: 3%;
+    }
+
+    .paddingdivs-t {
+        padding-left: 3%;
+        padding-top: 0%;
+    }
+    
+}
+
+@media only screen and (min-width: 900px) {
+    /*desktop display: */
+    .c-aboutdesk-d {
+        width: 80%;
+        position: relative;
+        left: 10%;
+    }
+}
+
+.aboutus_container {
+    min-height: 100%;
+    height: 2700px;
+    filter: brightness(80%);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    background-image: url(https://allegromediamusic.files.wordpress.com/2018/03/8281fadb7336e7ced706e1043e023e1c.jpg)
+}
+
+.wrap_aboutus {
+    background-color: #ffffff;
+    overflow: hidden;
+
+}
+
+.skewdiv {
+    background-color: #F7D633;
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    z-index: 1;
+}
+
+.skewr {
+    transform: skew(0deg, -5deg);
+}
+
+.skewl {
+    transform: skew(0deg, 5deg);
+}
+
+    .gif {
+    z-index: 2;
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    top: 300px;
+    right: 10%;
+}
+
+.gifcontainer {
+    height: 350px;
+}
+
+.paddingaboutus-d {
+    padding-top: 3%;
+    padding-left: 3%;
+    padding-right:3%;
+}
+
+.paddingdivs-d {
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
+.aboutus-title {
+    font-family: "Buenard";
+    color: #000000;
+    line-height: 1.0;
+    display: block;
+    font-size: 45px;
+    text-align: left;
+}
+
+.d0h {
+    height:2750px;
 }
 
 </style>
