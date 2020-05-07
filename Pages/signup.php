@@ -1,7 +1,7 @@
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
-        <link rel="stylesheet" type="text/css" href="css file.css">
+        <link rel="stylesheet" type="text/css" href="../Style/css file.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <title>Sign Up</title>
     </head>
