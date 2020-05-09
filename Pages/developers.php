@@ -15,73 +15,8 @@
         </div>
 
         <div class="c-aboutdesk-d wrap_aboutus">
-            <div >
-                <div id='sliding-menu' class='col-3 col-t-5 col-m-5'>
-		            <div id='slider-menu-exit' class="fa fa-times w3-large"></div>
-		            <div id='movie-menu'>
-			            <a href='#'>Movies</a><i class='fa fa-angle-down w3-large'></i>
-			            <ul>
-				            <li><a href='#'>TRENDING</a></li>
-				            <li><a href='#'>GENRE</a></li>
-				            <li><a href='#'>TOP RATED</a></li>
-				            <li><a href='#'>LATEST</a></li>
-			            </ul>
-		            </div>
-		            <div id='tv-show-menu'>
-			            <a href='#'>TV Shows</a><i class='fa fa-angle-down w3-large'></i>
-			            <ul>
-				            <li><a href='#'>TRENDING</a></li>
-				            <li><a href='#'>GENRE</a></li>
-				            <li><a href='#'>TOP RATED</a></li>
-				            <li><a href='#'>LATEST</a></li>
-			            </ul>
-		            </div>
-		            <div id='popular-menu'><a href='#'>Popular</a></div>
-	            </div>
-
-	            <div id='header' style="background-color:#000000">
-		            <div id='large-header' class='col-12 remove-t remove-m'>
-			            <div class='slider-menu col-1 fa fa-bars w3-large'></div>
-			            <div id='logo-large' class='col-3'>
-				            <a href='#'><img src='../Style/Logo_Large_Final.png' height='80'></a>
-			            </div>
-
-			            <!-- check for logged in/ out user -->
-			            <div class='user-icon col-1'><a href='#' class='fa fa-user-circle  w3-large'></a></div>
-			
-			            <!-- add functionality to search bar -->
-			            <div id='fixed-search-bar' class="col-4">
-		                    <form action="#">
-		                        <input id='search-bar' type='text' placeholder='Search...'/>
-					            <button id='search-btn' class='fa fa-search'/>
-		                    </form>
-		                </div>
-		            </div>
-                </div>
-
-		        <div id='small-header' class='remove col-t-12 col-m-12' style="background-color:#000000">
-			        <div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
-			        <div id='logo-small' class='col-t-1 col-m-1'>
-				        <a href='#'><img src='../Style/Logo_Small_Final.png' height='60'></a>
-			        </div>
-
-			        <!-- check for logged in/ out user -->
-			        <div class='user-icon col-t-1 col-m-1'>			
-				        <a href='#' class='fa fa-user-circle w3-large'></a>
-			        </div>
-
-			        <div id='open-search-bar' class="col-t-1 col-m-1">
-				        <a href='#' class='fa fa-search  w3-large'></a>
-			        </div>
-
-			        <!-- add functionality to search bar -->
-		            <div id='hidden-search-bar' class="col-t-12 col-m-12">
-		                <form action="#">
-		                    <input id='search-bar-s' type='text' placeholder='Search...'/>
-					        <button id='search-btn-s' class='fa fa-arrow-right'/>
-		                </form>
-		            </div>
-		        </div>
+            <div style="background-color:black">
+                <?php include 'header.html' ?>
 	        </div>
 
             <div id="body">
@@ -145,30 +80,9 @@
                 </div>
             </div>
             <div id="bodyfooter" style="padding-bottom:30px;" >
-                <!--footer final, dont touch below!! -->
-	            <div class='footer'>
-		
-		            <div class='footer-heading'>Questions?</div>
-		            <div class='footer-content'><a href='#'>Services</a></div>
-		            <div class='footer-content'><a href='#'>FAQs</a></div>
-		            <div class='footer-content'><a href='#'>Contact Us</a></div>
-		            <div class='footer-content'><a href='#'>Developers</a></div>
-		            <div class='footer-heading'>Find Us</div>
-		            <div class='footer-heading' id='find-us-icons'>
-			            <a href='https://www.youtube.com' target='_blank' class='fa fa-youtube'></a>
-			            <a href='https://www.twitter.com' target='_blank' class='fa fa-twitter'></a>
-			            <a href='https://www.facebook.com' target='_blank' class='fa fa-facebook'></a>
-			            <a href='https://www.instagram.com' target='_blank' class='fa fa-instagram'></a>
-		            </div>
-		            <div id='footer-end' class='footer-heading'> CS-344 Web Engineering, Spring 2020: Semester Project.</div>
-	            </div>
-	            <!--footer final, dont touch above!! -->
+                <?php include 'footer.html' ?>
             </div>
         </div>
-            
-       
-        
-
 	    <script src="../Functionality/jquery-3.2.1.js"></script>
 	    <script src="../Functionality/Header_Footer.js" type="text/javascript">
 		    //took it from here
