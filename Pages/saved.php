@@ -4,7 +4,7 @@
     <title>Saved/edit page</title>
      <link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
     <link rel="stylesheet" href="../Style/edituser.css">
-    <link rel="stylesheet" href="../maira.css">
+    <link rel="stylesheet" href="../Style/maira.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
     
