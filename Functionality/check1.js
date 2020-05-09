@@ -44,84 +44,84 @@ $(document).ready(function(){
 }); 
 		$(document).ready(function() {
             $("#button1").click(function(){
-             document.location.href = '../pages/Edit User.php';
+             document.location.href = '../Pages/Edit User.php';
             });
 
  
     });  
        $(document).ready(function() {
             $("#button2").click(function(){
-             document.location.href = '../pages/password.php';
+             document.location.href = '../Pages/password.php';
             });
 
  
     });  
        $(document).ready(function() {
             $("#button3").click(function(){
-             document.location.href = '../pages/reviews.php';
+             document.location.href = '../Pages/reviews.php';
             });
 
  
     }); 
     $(document).ready(function() {
             $("#button4").click(function(){
-             document.location.href = '../pages/favorites.php';
+             document.location.href = '../Pages/favorites.php';
             });
 
  
     });   
      $(document).ready(function() {
             $("#button5").click(function(){
-             document.location.href = '../pages/watched.php';
+             document.location.href = '../Pages/watched.php';
             });
 
  
     });   
       $(document).ready(function() {
             $("#button6").click(function(){
-             document.location.href = '../pages/saved.php';
+             document.location.href = '../Pages/saved.php';
             });
 
  
     }); 
      $(document).ready(function() {
             $("#mbutton1").click(function(){
-             document.location.href = '../pages/edit user.php';
+             document.location.href = '../Pages/edit user.php';
             });
 
  
     });  
        $(document).ready(function() {
             $("#mbutton2").click(function(){
-             document.location.href = '../pages/password.php';
+             document.location.href = '../Pages/password.php';
             });
 
  
     }); 
         $(document).ready(function() {
             $("#mbutton3").click(function(){
-             document.location.href = '../pages/reviews.php';
+             document.location.href = '../Pages/reviews.php';
             });
 
  
     }); 
     $(document).ready(function() {
             $("#mbutton4").click(function(){
-             document.location.href = '../pages/favorites.php';
+             document.location.href = '../Pages/favorites.php';
             });
 
  
     });   
      $(document).ready(function() {
             $("#mbutton5").click(function(){
-             document.location.href = '../pages/watched.php';
+             document.location.href = '../Pages/watched.php';
             });
 
  
     });   
       $(document).ready(function() {
             $("#mbutton6").click(function(){
-             document.location.href = '../pages/saved.php';
+             document.location.href = '../Pages/saved.php';
             });
 
  
