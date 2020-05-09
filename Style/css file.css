@@ -219,7 +219,6 @@ margin:0px;
 
 .aboutus_container {
     min-height: 100%;
-    height: 2700px;
     filter: brightness(80%);
     position: absolute;
     top: 0px;
@@ -228,6 +227,13 @@ margin:0px;
     background-image: url(https://allegromediamusic.files.wordpress.com/2018/03/8281fadb7336e7ced706e1043e023e1c.jpg)
 }
 
+.aboutuspage {
+    height: 2750px;
+}
+
+.devpage {
+    height: 2800px;
+}
 .wrap_aboutus {
     background-color: #ffffff;
     overflow: hidden;
@@ -250,17 +256,25 @@ margin:0px;
     transform: skew(0deg, 5deg);
 }
 
-    .gif {
+.highlight {
+    text-shadow: 8px 2px 12px rgba(117,51,31,0.55);
+}
+
+.gif {
     z-index: 2;
     height: 300px;
     width: 300px;
     position: absolute;
-    top: 300px;
+    top: 350px; 
     right: 10%;
 }
 
 .gifcontainer {
     height: 350px;
+}
+
+.colorstrip {
+    height: 50px;
 }
 
 .paddingaboutus-d {
@@ -283,8 +297,28 @@ margin:0px;
     text-align: left;
 }
 
-.d0h {
-    height:2750px;
+
+.tcenter {
+    text-align:center;
+}
+
+#bodyfooter {
+    font-family: Optima, Helvetica, sans-serif;
+    font-weight: 500;
+    font-variant: small-caps;
+    background-color: black;
+    margin: 0;
+    color: white;
+}
+
+
+#body {
+    font-family: initial;
+    font-weight: initial;
+    font-variant: initial;
+    background-color:initial;
+    margin: initial;
+    color: initial;
 }
 
 </style>
