@@ -234,10 +234,10 @@ margin:0px;
 .devpage {
     height: 2800px;
 }
+
 .wrap_aboutus {
     background-color: #ffffff;
     overflow: hidden;
-
 }
 
 .skewdiv {
@@ -319,6 +319,41 @@ margin:0px;
     background-color:initial;
     margin: initial;
     color: initial;
+}
+
+/*Services*/
+
+.servicepage {
+    height:3500px;
+}
+.hovering {
+    background-color: #F7D633;
+    border-radius: 10px;
+    overflow: hidden;
+    display: inline-block;
+    justify-content: center;
+    padding: 2%;
+    text-align: justify;
+    animation-name: hovering;
+    animation-duration: 2s;
+    opacity: 0.0;
+    animation-fill-mode: forwards;
+
+}
+
+    .hovering:hover {
+        background-color:black;
+        color:white;
+    }
+
+@keyframes hovering {
+    0% {
+        opacity: 0.0;
+    }
+
+    100% {
+        opacity: 1.0;
+    }
 }
 
 </style>
