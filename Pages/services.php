@@ -11,77 +11,12 @@
 
 <body>
     <!--html for page-->
-    <div class="c- aboutus_container devpage flexwrap">
+    <div class="c- aboutus_container servicepage flexwrap">
     </div>
 
     <div class="c-aboutdesk-d wrap_aboutus">
-        <div>
-            <div id='sliding-menu' class='col-3 col-t-5 col-m-5'>
-                <div id='slider-menu-exit' class="fa fa-times w3-large"></div>
-                <div id='movie-menu'>
-                    <a href='#'>Movies</a><i class='fa fa-angle-down w3-large'></i>
-                    <ul>
-                        <li><a href='#'>TRENDING</a></li>
-                        <li><a href='#'>GENRE</a></li>
-                        <li><a href='#'>TOP RATED</a></li>
-                        <li><a href='#'>LATEST</a></li>
-                    </ul>
-                </div>
-                <div id='tv-show-menu'>
-                    <a href='#'>TV Shows</a><i class='fa fa-angle-down w3-large'></i>
-                    <ul>
-                        <li><a href='#'>TRENDING</a></li>
-                        <li><a href='#'>GENRE</a></li>
-                        <li><a href='#'>TOP RATED</a></li>
-                        <li><a href='#'>LATEST</a></li>
-                    </ul>
-                </div>
-                <div id='popular-menu'><a href='#'>Popular</a></div>
-            </div>
-
-            <div id='header' style="background-color:#000000">
-                <div id='large-header' class='col-12 remove-t remove-m'>
-                    <div class='slider-menu col-1 fa fa-bars w3-large'></div>
-                    <div id='logo-large' class='col-3'>
-                        <a href='#'><img src='../Style/Logo_Large_Final.png' height='80'></a>
-                    </div>
-
-                    <!-- check for logged in/ out user -->
-                    <div class='user-icon col-1'><a href='#' class='fa fa-user-circle  w3-large'></a></div>
-
-                    <!-- add functionality to search bar -->
-                    <div id='fixed-search-bar' class="col-4">
-                        <form action="#">
-                            <input id='search-bar' type='text' placeholder='Search...' />
-                            <button id='search-btn' class='fa fa-search' />
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-            <div id='small-header' class='remove col-t-12 col-m-12' style="background-color:#000000">
-                <div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
-                <div id='logo-small' class='col-t-1 col-m-1'>
-                    <a href='#'><img src='../Style/Logo_Small_Final.png' height='60'></a>
-                </div>
-
-                <!-- check for logged in/ out user -->
-                <div class='user-icon col-t-1 col-m-1'>
-                    <a href='#' class='fa fa-user-circle w3-large'></a>
-                </div>
-
-                <div id='open-search-bar' class="col-t-1 col-m-1">
-                    <a href='#' class='fa fa-search  w3-large'></a>
-                </div>
-
-                <!-- add functionality to search bar -->
-                <div id='hidden-search-bar' class="col-t-12 col-m-12">
-                    <form action="#">
-                        <input id='search-bar-s' type='text' placeholder='Search...' />
-                        <button id='search-btn-s' class='fa fa-arrow-right' />
-                    </form>
-                </div>
-            </div>
+        <div style="background-color:black">
+            <?php include 'header.html' ?>
         </div>
 
         <div id="body">
@@ -107,7 +42,7 @@
                 </div>
             </div>
             <div class="c- paddingaboutus-d" style="padding-bottom:2%">
-                <p class="aboutus-title" style="font-size:23px"></p>
+                <p class="aboutus-title" style="font-size:23px">Track TV allows you create your accounts completely free of cost! You are just one signup away from joining our international community.<br><br>No crazy capchas and no extra billing. It's all free! </p>
             </div>
             <div style="height:120px">
                 <div class="skewdiv" style="height:80px">
@@ -115,7 +50,7 @@
                 </div>
             </div>
             <div class="c- paddingaboutus-d" style="padding-bottom:2%">
-                <p class="aboutus-title" style="font-size:23px"></p>
+                <p class="aboutus-title" style="font-size:23px">You know what kind of movies and TV shows you like. You want to find more. What do you do?<br><br>Yes, you got it right! Track TV allows you to search your shows based on their genre. Looking up a new series have never been easier!</p>
             </div>
             <div style="height:120px">
                 <div class="skewdiv" style="height:80px">
@@ -131,7 +66,7 @@
                 </div>
             </div>
             <div class="c- paddingaboutus-d" style="padding-bottom:2%">
-                <p class="aboutus-title" style="font-size:23px">Track TV allows you to not only keep track of your favourite movies but also to follow people whose taste matches yours.Enter our community with the Track TVs folllower list where you can add people whose taste matches yours! Get to know their watch lists and their preferences too.</p>
+                <p class="aboutus-title" style="font-size:23px">Track TV allows you to not only keep track of your favourite movies but also to follow people whose taste matches yours. Enter our community with the Track TVs folllower list where you can add people whose taste matches yours! Get to know their profiles,watch lists and their preferences too.</p>
             </div>
             <div style="height:120px">
                 <div class="skewdiv" style="height:80px">
@@ -156,7 +91,7 @@
                 </div>
             </div>
             <div class="c- paddingaboutus-d" style="padding-bottom:2%">
-                <p class="aboutus-title" style="font-size:23px"></p>
+                <p class="aboutus-title" style="font-size:23px">Stay up do date with the community's watching trends using this new Trending feature. You can look up shows that have been a preference of our community users the most. Any movie that our users add repeatedly to their watch list will be shown to you in this smart 'trend' section!</p>
             </div>
             <div style="height:120px">
                 <div class="skewdiv" style="height:80px">
@@ -164,10 +99,10 @@
                 </div>
             </div>
             <div class="c- paddingaboutus-d" style="padding-bottom:2%">
-                <p class="aboutus-title" style="font-size:23px"></p>
+                <p class="aboutus-title" style="font-size:23px">Track TV allows you to keep track of various different statistics that help you follow on what you are up to. These exciting new features include the the most popular 'total hours watched' statistics as well! </p>
             </div>
             <div class="c- paddingaboutus-d">
-                <h3 class="highlight form-title" style="padding-bottom:50px">And our teams welcomes you to Track TV!</h3>
+                <h3 class="highlight form-title" style="padding-bottom:50px">Keep enjoying our services at Track TV!</h3>
             </div>
             <div class="colorstrip">
                 <div class="skewdiv" style="height: 50px;">
@@ -177,36 +112,11 @@
                 <div class="skewdiv" style="height: 50px;background-color:#333333">
                 </div>
             </div>
-
-            <div class="gifcontainer" style="padding:1%">
-                <div class="skewdiv" style="height: 340px;background-image:url(https://i.pinimg.com/originals/b9/7d/c2/b97dc288d71e7938c1ce8b7faacdc9ac.gif);background-size:100% 100%;">
-                </div>
-            </div>
         </div>
         <div id="bodyfooter" style="padding-bottom:30px;">
-            <!--footer final, dont touch below!! -->
-            <div class='footer'>
-
-                <div class='footer-heading'>Questions?</div>
-                <div class='footer-content'><a href='#'>Services</a></div>
-                <div class='footer-content'><a href='#'>FAQs</a></div>
-                <div class='footer-content'><a href='#'>Contact Us</a></div>
-                <div class='footer-content'><a href='#'>Developers</a></div>
-                <div class='footer-heading'>Find Us</div>
-                <div class='footer-heading' id='find-us-icons'>
-                    <a href='https://www.youtube.com' target='_blank' class='fa fa-youtube'></a>
-                    <a href='https://www.twitter.com' target='_blank' class='fa fa-twitter'></a>
-                    <a href='https://www.facebook.com' target='_blank' class='fa fa-facebook'></a>
-                    <a href='https://www.instagram.com' target='_blank' class='fa fa-instagram'></a>
-                </div>
-                <div id='footer-end' class='footer-heading'> CS-344 Web Engineering, Spring 2020: Semester Project.</div>
-            </div>
-            <!--footer final, dont touch above!! -->
+            <?php include 'footer.html' ?>
         </div>
     </div>
-
-
-
 
     <script src="../Functionality/jquery-3.2.1.js"></script>
     <script src="../Functionality/Header_Footer.js" type="text/javascript">
