@@ -232,3 +232,37 @@ body {
 	padding-right:6%;
 }
 
+/*style for scrollbar*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: #fcb530;
+  border: 25px none #ffffff;
+  border-radius: 35px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #808080;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #808080;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+  border: 0px none #ffffff;
+  border-radius: 71px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #000000;
+}
+::-webkit-scrollbar-track:active {
+  background: #000000;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
