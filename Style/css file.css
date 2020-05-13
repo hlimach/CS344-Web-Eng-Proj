@@ -5,18 +5,18 @@
 
 @media only screen and (min-width: 600px) {
     /*tablet display: */
-    .c-m-1 { width: 8.33%; }
-    .c-m-2 { width: 16.66%; }
-    .c-m-3 { width: 25%; }
-    .c-m-4 { width: 33.33%; }
-    .c-m-5 { width: 41.66%; }
-    .c-m-6 { width: 50%; }
-    .c-m-7 { width: 58.33%; }
-    .c-m-8 { width: 66.66%; }
-    .c-m-9 { width: 75%; }
-    .c-m-10 { width: 83.33%; }
-    .c-m-11 { width: 91.66%; }
-    .c-m-12 { width: 100%; }
+    .c-t-1 { width: 8.33%; }
+    .c-t-2 { width: 16.66%; }
+    .c-t-3 { width: 25%; }
+    .c-t-4 { width: 33.33%; }
+    .c-t-5 { width: 41.66%; }
+    .c-t-6 { width: 50%; }
+    .c-t-7 { width: 58.33%; }
+    .c-t-8 { width: 66.66%; }
+    .c-t-9 { width: 75%; }
+    .c-t-10 { width: 83.33%; }
+    .c-t-11 { width: 91.66%; }
+    .c-t-12 { width: 100%; }
 }
 
 @media only screen and (min-width: 800px) {
@@ -70,7 +70,7 @@ margin:0px;
 }
 
 .wraplogin {
-    background-color: #f7f7f7;
+    background-color: #ffffff;
     border-radius: 10px;
     overflow: hidden;
     justify-content: center;
@@ -356,4 +356,114 @@ margin:0px;
     }
 }
 
-</style>
+/*Admin Pages*/
+/*mobile display*/
+
+[class*="admincontainer-"] {
+    border: solid;
+    border-color: #FFCB0A;
+}
+
+[class*="adminform-"] {
+    display:initial;
+}
+
+@media only screen and (min-width: 700px) {
+    /*tablet display: */
+
+    .admincontainer-t {
+        border: solid;
+        border-color: #FFCB0A;
+        margin-left: 10%;
+        margin-right: 10%;
+    }
+
+    .adminform-t {
+        display: inline-block;
+    }
+}
+
+.backbutton-t {
+    color: #FFCB0A;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    color: black;
+    outline-style: none;
+}
+
+.submitbutton-t {
+    font-size: 21px;
+    line-height: 5px;
+    padding: 20px;
+    margin:3%;
+    border-radius: 47px;
+    font-family: Georgia, serif;
+    background: linear-gradient(to right, #DBDBDB 0%, #F7D633 50%, #FFFFFF 100%);
+    height: 30px;
+    outline-style: none;
+    color: black;
+    text-align:center;
+    display: inline-block;
+    background-color: #FFCB0A;
+}   
+
+
+@media only screen and (min-width: 900px) {
+    /*desktop display: */
+    
+}
+
+.admintitle {
+    font-family: "Buenard";
+    font-size: 36px;
+    color: #FFFFFF;
+    line-height: 2.0;
+    text-align: center;
+    display: block;
+}
+
+.adminsub {
+    font-family: "Buenard";
+    font-size: 26px;
+    color: #FFFFFF;
+    line-height: 1.2;
+}
+
+.admintable {
+    border: solid 2 #FFCB0A;
+}
+
+.backbuttoncontainer {
+    width: 20%;
+    height: 50px;
+    display: inline-block;
+    padding:7%;
+}
+
+.profilepic {
+    height:70px;
+    width:70px;
+}
+
+.admininput {
+    font-size: 15px;
+    line-height: 1.5;
+    color: #666666;
+    display: inline-block;
+    background: #e6e6e6;
+    border-radius: 25px;
+    outline-style: none;
+    padding: 0 88px 0 10px;
+}
+
+.contactuspage {
+    height: 2500px;
+}
+
+.faqpage {
+    height: 2000px;
+}
+    </style>
