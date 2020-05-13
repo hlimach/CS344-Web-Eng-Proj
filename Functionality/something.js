@@ -1,3 +1,5 @@
+//this should be added to the final common JS file
+
 userpage_rwd();
 	$(window).on('resize',function(){
 		userpage_rwd();
