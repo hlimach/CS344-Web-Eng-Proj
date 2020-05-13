@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200&display=swap');
+
 
 * {
 	box-sizing: border-box;
@@ -6,26 +6,8 @@
 
 
 
-@media only screen and (max-width: 650px) {
+@media only screen and (max-width: 599px) {
 	/* For mobiles: */
-	.col-mo-1 {width: 8.33%;}
-	.col-mo-2 {width: 16.66%;}
-	.col-mo-3 {width: 25%;}
-	.col-mo-4 {width: 33.33%;}
-	.col-mo-5 {width: 41.66%;}
-	.col-mo-6 {width: 50%;}
-	.col-mo-7 {width: 58.33%;}
-	.col-mo-8 {width: 66.66%;}
-	.col-mo-9 {width: 75%;}
-	.col-mo-10 {width: 83.33%;}
-	.col-mo-11 {width: 91.66%;}
-	.col-mo-12 {width: 100%;}
-}
-
-
-
-@media only screen and (min-width: 650px) {
-	/* For tablets: */
 	.col-m-1 {width: 8.33%;}
 	.col-m-2 {width: 16.66%;}
 	.col-m-3 {width: 25%;}
@@ -38,6 +20,24 @@
 	.col-m-10 {width: 83.33%;}
 	.col-m-11 {width: 91.66%;}
 	.col-m-12 {width: 100%;}
+}
+
+
+
+@media only screen and (min-width: 600px) and (max-width: 767px) {
+	/* For tablets: */
+	.col-t-1 {width: 8.33%;}
+	.col-t-2 {width: 16.66%;}
+	.col-t-3 {width: 25%;}
+	.col-t-4 {width: 33.33%;}
+	.col-t-5 {width: 41.66%;}
+	.col-t-6 {width: 50%;}
+	.col-t-7 {width: 58.33%;}
+	.col-t-8 {width: 66.66%;}
+	.col-t-9 {width: 75%;}
+	.col-t-10 {width: 83.33%;}
+	.col-t-11 {width: 91.66%;}
+	.col-t-12 {width: 100%;}
 }
 @media only screen and (min-width: 768px) {
 	/* For desktop: */
@@ -61,57 +61,51 @@
 	padding: 5px;
 }
 
-@media (max-width:650px) {
+@media (max-width:767px) {
 	#optionalstuff {
 	  display: none;
 	}
   }
 
-#user-homepage{
-	background-color: rgb(36, 36, 36);
-	color: white;
-	font-family: 'Dosis', sans-serif;
-}
+
+
+#main-content> h3{
+	margin: 1%;
+	margin-left: 5%;
+	
+	}
+
 
 #user-info{
 	float: left;
-	padding: 10px;
-	margin-left: 10px;
+	padding: 3%;
+	margin-left: 1.5%;
+	display:grid;
+	text-align: center;
 }
 
  #user-picture {
-	width:100%;
-	padding: 20px;
-	text-align: center;
+
+
 	display: block;
 
  }
  #profilepicture{
-	 width: 50%;
+	 width: 100%;
 	 border-radius: 50%;
 	 border: 1px solid white;
 	 box-shadow: 4px 0px 9px 0px rgba(255,255,255,0.64);
  }
 
  #user-name{
-	width:100%;
-	text-align: center;
 	font-size: x-large;
-	
  }
 
 
  #user-handle{
-	width:100%;
-	text-align: center;
-	margin-bottom: 5%;
+	margin-bottom: 2%;
 }
 
-#user-following{
-	width:100%;
-	text-align: center;
-	
-}
 
 #user-following a{
 	color: rgb(228, 228, 228);
@@ -125,17 +119,14 @@
 	
 }
 
-#user-follow{
-	width:100%;
-	padding: 5%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
+ #user-follow-div>div{
+margin-right: 5%;
+} 
 
 .follow-btn{
 	background-color: #23ac45 ;
 	  border-radius: 5px;
+	
 }
 	 
 .follow-btn:hover {
@@ -143,59 +134,53 @@
 		transform: scale(1.1);
  }
 
-#user-bio{
-	text-align: center;
-}
+
 
  #user-bio p{
-	 background-color: #2c2c2c;
 	width:100%;
-	text-align: left;
 	border-radius: 5px;
 }
 #user-edit{
 	width:100%;
-	padding: 5%;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	padding: 2%;
+ 
 }
 .vl {
 	border-left: 1px solid rgb(233, 224, 224);
-	height: 80%;
+	height: 60%;
 	position: absolute;
 	left: 25%;
 	margin-left: 2%;
 	margin-top: 70px;
-	position: fixed;
+	position:absolute;
   }
  
-  #user-movie-content h2, #user-movie-content h4{
+  #user-movie-content h3, #user-movie-content h6{
 	  margin-left: 5%;
+	  margin-top: 2%;
   }
 #user-links{
-	margin-top: 20px;
+	margin-top: 2%;
+	
 }
  
 #user-links-nav{
-	width: 75%;
 	display: flex;
-	margin: 0 auto;
+	font-size: medium;
 
 }
 
-#user-links-nav div{
-	margin-left: 5%;
-	margin-right: 8%;
-	margin-bottom: 10px;	
+#user-links-nav> div{
+margin: auto;	
 }
 
 .nav{
-	background-color: rgb(49, 49, 49);
+	
 	text-align: center;
 	padding: 0;
 	margin: 0;
 	border-bottom: 1px solid rgb(190, 190, 190);
+	border-top: 1px solid rgb(190, 190, 190);
   }
 
    
@@ -207,39 +192,50 @@
   }
    
   .nav a:hover {
-	background-color: #005f5f;
+	background-color: rgb(254,202,49);
+	color: black;
   }
    
  a.active{
 	font-weight: bold;
 	cursor: default;
-	text-decoration: underline;
+	background-color: rgb(254,202,49);
+	color: black;
   } 
 
-#user-movie-list li{
+#user-list li{
 	list-style-type: none;
 }
 
 #user-movie-info{
-background-color: rgb(22, 22, 22);
+background-color: rgb(20, 20, 20);
 margin-top: 5%;
 width: 90%;
-height: 20vh;
+min-height: 15%;
 overflow: hidden;
 box-shadow: 5px -2px 8px 0px rgb(114, 114, 114);
 transition: transform 0.5s;
 
 }
 
+#user-movie-info > h3{
+font-size: large;
+}
+
 #user-movie-info:hover, #user-follow-list:hover{
 transform: scale(1.03);
-
+cursor: pointer;
 }
+
+
+#list-link{
+text-decoration: none;
+	}
 
 
 #list-movie-poster{
 float: left;
-height: 100%;
+max-height:20vh;
 margin-right: 3.5%;
 }
 
@@ -250,16 +246,15 @@ margin-right: 3.5%;
 }
 
 #user-edit-btn {
-	background-color:#444c4a;
-	border-radius:5px;
+	background-color:#0e0f0f;
+	border-radius:2px;
 	display:inline-block;
 	cursor:pointer;
 	color:#ffffff;
-	padding:3px 50px;
 	text-decoration:none;
 }
 #user-edit-btn:hover {
-	background-color:#6c7c7c;
+	background-color:#596363;
 	transform: scale(1.1);
 }
 #user-edit-btn:active {
@@ -293,4 +288,28 @@ margin-right: 3.5%;
 .follower-pic{
 	border-radius:50% ;
 
+}
+#search-results{
+	width: 90%;
+	margin: 5%;
+}
+
+#search-link{
+	width: 100%;
+	font-size: larger;
+	text-decoration: none;
+}
+
+#search-link:hover{
+ color: rgb(254,202,49);;
+}
+
+#top-user, #matched-result{
+	border-left:0.5px solid #444c4a;
+	padding-left: 3%;
+	margin: 2%;
+}
+
+.top-user-content,.matched-result-content{
+	margin-top: 4%;
 }
