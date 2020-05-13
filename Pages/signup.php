@@ -8,16 +8,16 @@
 
     <body>
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" id="myform" ?>
-            <div class="c-12 login_container flexwrap" style=" background-image:url(https://png.pngtree.com/png-vector/20190226/ourlarge/pngtree-vector-background-seamless--retro-film-png-image_704930.jpg)">
-                <div class="c-6 c-m-6 wraplogin " style="margin:2%; padding-bottom:1%" >
-                    <div class="c-12 c-m-12">
+            <div class="c-12 login_container flexwrap" style="background-image:url(https://allegromediamusic.files.wordpress.com/2018/03/8281fadb7336e7ced706e1043e023e1c.jpg)">
+                <div class="c-6 c-t-6 wraplogin " style="margin:2%; padding-bottom:1%" >
+                    <div class="c-12 c-t-12">
                         <span class="form-title" style="padding-bottom:1%">
                             <b>SIGN UP</b>
                         </span>
                     </div>
-                    <div class="c-12 c-m-12" style="text-align:center;margin: 0 auto;">
-                        <div class="c-5 c-m-10" style="display:inline-block;vertical-align:top " >
-                            <table class="c-12 c-m-10" style="table-layout:fixed">
+                    <div class="c-12 c-t-12" style="text-align:center;margin: 0 auto;">
+                        <div class="c-5 c-t-10" style="display:inline-block;vertical-align:top " >
+                            <table class="c-12 c-t-10" style="table-layout:fixed">
                                 <tr>
                                     <td class="logintag">First Name</td>
                                 </tr>
@@ -81,8 +81,8 @@
                                 </tr>
                             </table>
                         </div> 
-                        <div class="c-5 c-m-10" style=" margin: 0 auto;display:inline-block;vertical-align:top">
-                            <table class="c-12 c-m-10" style="table-layout:fixed">
+                        <div class="c-5 c-t-10" style=" margin: 0 auto;display:inline-block;vertical-align:top">
+                            <table class="c-12 c-t-10" style="table-layout:fixed">
                                 <tr>
                                     <td class="logintag">User Name</td>
                                 </tr>
@@ -167,18 +167,7 @@
         <!--login php script-->
         <?php if (isset($_POST['submit'])){
 
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "movieswebsite";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-    
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            } 
+            include 'dbconnect.php'; 
 
             $check = true;        
 
@@ -281,7 +270,7 @@
             $sql = "INSERT INTO user (username, password, f_name, l_name, age, bio, gender, email, pic_url) VALUES ('$_POST[username]', '$_POST[pass1]', '$_POST[fname]', '$_POST[lname]', '$_POST[age]', '$_POST[bio]', '$_POST[gender]', '$_POST[email]', '$_POST[pic]')";
 
             if ($conn->query($sql) == TRUE) {
-                echo '<script>console.log("New record created successfully");</script>';
+                echo '<script>alert("signup successful");</script>';
             } else {
                 echo '<script>console.log("Error")</script>';
             }
