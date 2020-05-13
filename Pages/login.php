@@ -9,8 +9,8 @@
     <body>
         <!--html for page-->
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" id="myform" ?>
-            <div class="c- login_container flexwrap" style="background-image:url(https://png.pngtree.com/png-vector/20190226/ourlarge/pngtree-vector-background-seamless--retro-film-png-image_704930.jpg)">
-                <div class="c-4 c-m-6 wraplogin flexwrap">
+            <div class="c- login_container flexwrap" style="background-image:url(https://allegromediamusic.files.wordpress.com/2018/03/8281fadb7336e7ced706e1043e023e1c.jpg)">
+                <div class="c-4 c-t-6 wraplogin flexwrap">
                     <div>
                         <table>
                             <tr>
@@ -64,18 +64,7 @@
         <!--login php script-->
         <?php if (isset($_POST['login'])){
 
-            //database connection
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "movieswebsite";
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-            die("Connection failed: " . $conn->connect_error);}
+            include 'dbconnect.php';
         
             //get results
             $dom = new DOMDocument();
@@ -117,7 +106,14 @@
             else {
                 echo '<script>console.log("password not match");</script>';
                 echo '<script>$("#wrongpass").removeAttr("hidden");</script>';
+                $flagname = 1;
 	        }
+
+            //logging in
+            if($flagname == 0) {
+                echo '<script>alert("logged in");</script>';
+            }
+
         }?>
     </body>
 </html>
