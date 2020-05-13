@@ -1,55 +1,71 @@
 <?php 
-include 'userpage_top.php';
 
+//display user info and header
+include 'userpage_top.php';
 
 include 'dbconnect.php';
 
-
+//get list of favorite movies from database
 $sql='select * from watched_movies where user=1 and favourite=true';
 $result=mysqli_query($conn, $sql);
-echo  "<h2>Favorite Movies</h2>";
+echo  "<h3>Favorite Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
 
-if ($result->num_rows > 0) {
-    echo "<ul id='user-movie-list'>";
+    if ($result->num_rows > 0) {
+        echo "<ul id='user-list'>";
+        
     
-// loop through all watched movie row
-while($row = $result->fetch_assoc()) {
-//$userid=$row["user"];
-$movieID=$row["movie"];
-$fav=$row["favourite"];
-$sql2='select * from movie where movieid='.$movieID;
-$result2=mysqli_query($conn,$sql2);
-if ($result2->num_rows > 0)
-{
-    while($row=$result2->fetch_assoc())
+    while($row = $result->fetch_assoc()) {
     
-    {
-    $title=$row["title"];
-    $description=$row["description"];
-    $poster=$row["poster_url"];
+    $movieID=$row["movie"];
+    
 
-echo "<li>
-    <div id=\"user-movie-info\">
-    <img id=\"list-movie-poster\" src=\"".$poster."\">
-    <h3>".$title."</h3>
-    <div id='list-movie-desc'>
-    <p>".$description."</p>
-    </div>
-    </div>
-    </li>";
-    
-}
+    $sql2='select * from movie where movieid='.$movieID;
+    $result2=mysqli_query($conn,$sql2);
+    if ($result2->num_rows > 0)
+        {
+            while($row=$result2->fetch_assoc())
+            
+            {
+            $title=$row["title"];
+            $rating=$row["rating"];
+            $poster=$row["image_url"];
+            $seasons=$row["seasons"];
 
-}
-    
-}
-echo "</ul>";
-}
+            //show number of seasons for tv shows, show nothing for movies
+                if ($seasons>0) {
+                $seasons="(".$seasons." Seasons)";
+                }
+                else {
+                    $seasons="";
+                }
+
+        echo 
+            "<li>
+            <a id='list-link' href='search-result.php?id=$movieID'>
+            <div id=\"user-movie-info\">
+            <img id=\"list-movie-poster\" src=\"".$poster."\">
+            <h3>$title $seasons</h3>
+            <p>Rating: ".$rating."/10</p>
+            </div>
+            </a>
+            </li>";
+            
+            }//end of inner while
+
+        }//end of inner if
+        
+    }//end of outer while
+
+        echo "</ul>";
+        
+    }//end of outer if
 else
-echo 'NO MOVIES FOUND';
+echo '<h6>NO MOVIES FOUND</h6>';
+
+//close database connection
 $conn -> close();
 
 
-
+//display footer
  include 'userpage_bottom.php';
  ?>
