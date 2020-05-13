@@ -1,13 +1,16 @@
  
+ 
  </div>
 
     </div>
 </div>
 
-<div class='footer'></div> 
+
+<?php
+include '../Pages/footer.html';
+?>
 
 
 
 </body>
 </html>
-
