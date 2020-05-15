@@ -74,5 +74,7 @@
     <div style="display:inline-block;width:100%">
         <?php include 'footer.html'; ?>
     </div>
+	 <script src="../Functionality/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../Functionality/admin.js"></script>   
 </body>
 </html>
