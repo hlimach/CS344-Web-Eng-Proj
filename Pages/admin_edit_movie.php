@@ -6,10 +6,12 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
     <title>Admin Edit Movie Page</title>
 </head>
 
 <body>
+    <?php $set = 0; ?>
     <?php if (isset($_POST['search'])){
         include 'dbconnect.php';
         $set = 0;    
