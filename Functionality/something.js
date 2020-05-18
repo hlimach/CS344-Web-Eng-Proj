@@ -1,14 +1,45 @@
 //this should be added to the final common JS file
 
+	follow_unfollow();
+	$('.follow-btn').click(function(){
+	 	follow_unfollow();
+ 		location.reload();
+
+	});
+
 userpage_rwd();
 	$(window).on('resize',function(){
 		userpage_rwd();
 		
 	});
 			
+		
+function follow_unfollow(){
+			var userid=$('.follow-btn').attr("data");
+			
+			var followstate=($('.follow-btn').text());
+			$.get('follow.php', {state:followstate, user:userid },function (data) { 
+				data = $.trim(data);
+				console.log(data==='Unfollow');
+				if (data==='Unfollow') {
+					$('.follow-btn').css("background-color","red");
+					$('.follow-btn').css("color","white");
+					$('.follow-btn').text("Unfollow");
+				}
+				else{
+					console.log(data);
+					$('.follow-btn').css("background-color","#23ac45");
+					$('.follow-btn').text("Follow");
+				}
+			
+				
+		  });
+			
+
+		}
 	
 	
-	function userpage_rwd(){
+function userpage_rwd(){
 	if($(window).width()<580){
 			
 				$('#user-info').css('text-align','center');
