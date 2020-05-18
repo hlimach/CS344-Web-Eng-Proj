@@ -1,6 +1,6 @@
 <?php 
 session_start();
-$_SESSION["userid"]=2;
+
 $username=$_GET['id'];
 
 include '../Pages/userpage_top.php'; 
