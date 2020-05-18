@@ -18,7 +18,7 @@ function follow_unfollow(){
 			var userid=$('.follow-btn').attr("data");
 			
 			var followstate=($('.follow-btn').text());
-			$.get('follow.php', {state:followstate, user:userid },function (data) { 
+			$.get('../Functionality/follow.php', {state:followstate, user:userid },function (data) { 
 				data = $.trim(data);
 				console.log(data==='Unfollow');
 				if (data==='Unfollow') {
