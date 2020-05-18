@@ -1,6 +1,5 @@
 <?php
-	
-	
+	session_start();
 	 $dbhost = 'localhost';
       $dbuser = 'root';
        $dbpass = '';
@@ -21,7 +20,8 @@
         while($row= mysqli_fetch_array($result2)){
           echo 'sett';
           $movieid=$row['movie'];
-        	 $sql = mysqli_query($conn,"update watched_movies set favourite='false' where user='3' and movie='$movieid';");
+		$id=$_SESSION["userid"];
+        	 $sql = mysqli_query($conn,"update watched_movies set favourite='false' where user='$id' and movie='$movieid';");
         	  $result = mysqli_query($conn, $sql);         
                 mysqli_close($conn);
               }}
