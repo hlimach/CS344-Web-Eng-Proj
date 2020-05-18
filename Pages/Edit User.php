@@ -1,3 +1,6 @@
+<?php
+    session_start();
+ ?>
 <!doctype html>
 <html>
 <head>
@@ -30,7 +33,8 @@
                     $dbname='movieswebsite';
                     $link = mysqli_init();
                     $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
-                    $query="select * from user where userID='3'";
+		    $id=$_SESSION["userid"];
+                    $query="select * from user where userID='$id'";
                     $result=mysqli_query($conn,$query);
                 ?>
                 
