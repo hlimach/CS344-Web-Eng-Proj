@@ -85,14 +85,14 @@
 }
 
  #user-picture {
-
-
 	display: block;
+	overflow: hidden;
 
  }
  #profilepicture{
+	border-radius: 50%;
 	 width: 100%;
-	 border-radius: 50%;
+	 object-fit:cover;
 	 border: 1px solid white;
 	 box-shadow: 4px 0px 9px 0px rgba(255,255,255,0.64);
  }
@@ -281,12 +281,13 @@ margin-right: 3.5%;
 	width: 90%;
 	height: 8vh;
 	overflow: hidden;
-
 	transition: transform 0.5s;
 }
 
 .follower-pic{
+	clip-path: circle();
 	border-radius:50% ;
+	height: 100%;
 
 }
 #search-results{

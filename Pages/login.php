@@ -1,8 +1,13 @@
+﻿<?php
+        // Start the session
+        session_start();
+?>
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
         <link rel="stylesheet" type="text/css" href="../Style/css file.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
         <title>Login</title>
     </head>
 
@@ -71,7 +76,7 @@
             $dom->loadHTML("./login.php");
             $name = $_POST['username'];
             $pass = $_POST['pass'];
-            $sql = "SELECT username FROM user";
+            $sql = "SELECT username,email FROM user";
             $result_uname = $conn->query($sql);
             $current_name = null;
             $flagname = 0;
@@ -79,7 +84,7 @@
 
             // compare username of each row
                 while($row = $result_uname->fetch_assoc()){
-                    if($name === $row["username"]){
+                    if(($name === $row["username"]) || ($name === $row["email"])){
                         $flagname = 0;
                         $current_name = $row["username"];
                         echo '<script>console.log("user found");</script>';
@@ -109,11 +114,18 @@
                 $flagname = 1;
 	        }
 
-            //logging in
             if($flagname == 0) {
-                echo '<script>alert("logged in");</script>';
-            }
+            // get userID
+            $sql = "SELECT userID FROM user WHERE username= '$current_name'";
+            $result_pass = $conn->query($sql);
+            $userid= $result_pass->fetch_assoc();
 
+            //logging in
+            $_SESSION["userid"] = $userid["userID"];
+            $_SESSION["username"] = $_POST['username'];            
+
+            header("Location:Userhome.php");
+            }
         }?>
     </body>
 </html>

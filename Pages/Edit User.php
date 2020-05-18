@@ -1,3 +1,6 @@
+<?php
+    session_start();
+ ?>
 <!doctype html>
 <html>
 <head>
@@ -30,7 +33,8 @@
                     $dbname='movieswebsite';
                     $link = mysqli_init();
                     $conn = mysqli_connect($dbhost, $dbuser, $dbpass,$dbname);
-                    $query="select * from user where userID='3'";
+		    $id=$_SESSION["userid"];
+                    $query="select * from user where userID='$id'";
                     $result=mysqli_query($conn,$query);
                 ?>
                 
@@ -187,7 +191,7 @@
                                      
             $sql = mysqli_query($conn,"Update user Set
                 username='$username', f_name='$fname',pic_url='$image',
-                l_name='$lname',gender='$gender',age='$age',bio='$desc', email='$email' where userID='3'");
+                l_name='$lname',gender='$gender',age='$age',bio='$desc', email='$email' where userID='$id'");
             $result = mysqli_query($conn, $sql);  
             mysqli_close($conn);                 
         ?>

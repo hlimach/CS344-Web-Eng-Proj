@@ -1,12 +1,22 @@
 <?php 
-
+session_start();
 //display user info and header
-include 'userpage_top.php';
+include '../Pages/userpage_top.php';
 
-include 'dbconnect.php';
+
+$username=$_GET["id"];
+
+$sql='select userID from user where username="'.$username.'"';
+$result=mysqli_query($conn, $sql);
+    if ($result->num_rows) {
+        while($row = $result->fetch_assoc()) {
+           $userID=$row["userID"];
+
+        }
+     }
 
 //get list of favorite movies from database
-$sql='select * from watched_movies where user=1 and favourite=true';
+$sql='select * from watched_movies where user='.$userID.' and favourite=true';
 $result=mysqli_query($conn, $sql);
 echo  "<h3>Favorite Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
 
@@ -67,5 +77,5 @@ $conn -> close();
 
 
 //display footer
- include 'userpage_bottom.php';
+ include '../Pages/userpage_bottom.php';
  ?>

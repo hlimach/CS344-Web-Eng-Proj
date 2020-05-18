@@ -1,12 +1,24 @@
 <?php 
-
+session_start();
 //display user info and header
-include 'userpage_top.php';
+include '../Pages/userpage_top.php';
 
-include 'dbconnect.php';
+
+
+$username=$_GET["id"];
+    
+
+$sql='select userID from user where username="'.$username.'"';
+$result=mysqli_query($conn, $sql);
+    if ($result->num_rows) {
+        while($row = $result->fetch_assoc()) {
+           $userID=$row["userID"];
+
+        }
+     }
 
 //get all movies in wishlist from database
-$sql='select * from wishlist where user=1 ';
+$sql='select * from wishlist where user='.$userID;
 $result=mysqli_query($conn, $sql);
 echo  "<h3>Watch Later (".mysqli_num_rows($result).")</h3>";
 
@@ -66,5 +78,5 @@ echo '<h6>NO MOVIES FOUND</h6>';
 $conn -> close();
 
 //display footer
-include 'userpage_bottom.php';
+include '../Pages/userpage_bottom.php';
 ?>
