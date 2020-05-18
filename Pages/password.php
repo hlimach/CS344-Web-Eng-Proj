@@ -1,3 +1,6 @@
+<?php
+    session_start();
+    ?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -31,7 +34,8 @@
                 ?>
 
                 <?php 
-                        $query="select * from user where userID='3'";
+			    $id=$_SESSION["userid"];
+                        $query="select * from user where userID='$id'";
                          $result=mysqli_query($conn,$query);
 
                          while($row = mysqli_fetch_array($result))
@@ -93,7 +97,7 @@
                  
                 if( $password === $pass && $newpassword === $confirm){
                     $sql1 = mysqli_query($conn,"Update user Set
-                         password='$newpassword' where userID='3'");
+                         password='$newpassword' where userID='$id'");
                      echo '<script>alert("Successfully updated");</script>';
 
                            
