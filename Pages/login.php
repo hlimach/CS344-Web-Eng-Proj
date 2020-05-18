@@ -124,7 +124,7 @@
             $_SESSION["userid"] = $userid["userID"];
             $_SESSION["username"] = $_POST['username'];            
 
-            header("Location:Userhome.php");
+            header("Location:HomePage.php");
             }
         }?>
     </body>

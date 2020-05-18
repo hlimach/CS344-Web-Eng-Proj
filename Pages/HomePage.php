@@ -1,9 +1,12 @@
-<!doctype html>
-<html>
 <?php
 	require "config.php";
 	require "Search.php";
+	
+	session_start();
 ?>
+
+<!doctype html>
+<html>
 
 <head>
 	<meta name="viewport" content="width=device-width">
@@ -46,7 +49,7 @@
 				<a href='#'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			<!-- check for logged in/ out user -->
-			<div class='user-icon col-1'><a href='#' class='fa fa-user-circle  w3-large'></a></div>
+			<div class='user-icon col-1'><a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
 			<!-- add functionality to search bar -->
 			<div id='fixed-search-bar' class="col-4">
 				<!--changes inside of this-->
@@ -67,7 +70,7 @@
 				<a href='#' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
-				<a href='#' class='fa fa-search  w3-large'></a>
+				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-search  w3-large'></a>
 			</div>
 			<!-- add functionality to search bar -->
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
@@ -136,10 +139,10 @@
 	<div id='footer-box'>
 		<div class='footer'>
 			<div class='footer-heading'>Questions?</div>
-			<div class='footer-content'><a href='#'>Services</a></div>
-			<div class='footer-content'><a href='#'>FAQs</a></div>
-			<div class='footer-content'><a href='#'>Contact Us</a></div>
-			<div class='footer-content'><a href='#'>Developers</a></div>
+			<div class='footer-content'><a href='./services.php'>Services</a></div>
+			<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
+			<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
+			<div class='footer-content'><a href='./developers.php'>Developers</a></div>
 		
 			<div class='footer-heading'>Find Us</div>
 			<div class='footer-heading' id='find-us-icons'>

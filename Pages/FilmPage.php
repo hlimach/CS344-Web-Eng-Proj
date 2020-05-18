@@ -1,6 +1,8 @@
 <?php
 	require 'config.php';
 	require "Search.php";
+	session_start();
+	
 	$movie_id = $_GET['id'];
 	$movie = $conn->query("SELECT * FROM movie WHERE movieID =".$movie_id)->fetch_assoc();
 	$genres = $conn->query("SELECT genre_name FROM genre where genreID in (select genreID from movie_genre where movieID=".$movie_id.")");
@@ -152,7 +154,7 @@
 								<div class='rev-img'><img src='".$user['pic_url']."'></div>
 								<div class='rev'>
 									<div class='rev-title'>".$rev['title']."</div>
-									<div class='rev-user'>Review by <a href='#'><b>".$user['username']." </b></a>";
+									<div class='rev-user'>Review by <a href='userhome.php?id=".$user['username']."'><b>".$user['username']." </b></a>";
 										for($x = 0; $x < $rev['review_rating']; $x++)
 											echo "<i class='fa fa-star fa-xs'></i>";
 							echo	"</div>
@@ -170,10 +172,10 @@
 	<!--footer final-->
 	<div class='footer'>
 		<div class='footer-heading'>Questions?</div>
-		<div class='footer-content'><a href='#'>Services</a></div>
-		<div class='footer-content'><a href='#'>FAQs</a></div>
-		<div class='footer-content'><a href='#'>Contact Us</a></div>
-		<div class='footer-content'><a href='#'>Developers</a></div>
+		<div class='footer-content'><a href='./services.php'>Services</a></div>
+		<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
+		<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
+		<div class='footer-content'><a href='./developers.php'>Developers</a></div>
 	
 		<div class='footer-heading'>Find Us</div>
 		<div class='footer-heading' id='find-us-icons'>

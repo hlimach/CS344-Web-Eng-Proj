@@ -7,7 +7,7 @@
 	if($searchu->num_rows > 0) {
 		while($ures = $searchu->fetch_assoc()) {
 			echo "<div class='user-list'>
-					<a href='Userhome.php?id=".$ures['userID']."'>
+					<a href='Userhome.php?id=".$ures['username']."'>
 						<div class='ures-img'><img src='".$ures['pic_url']."'></div>
 						<div class='ures'>
 							<div class='handle'>".$ures['username']."</div>

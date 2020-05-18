@@ -68,7 +68,7 @@
     		 		    <div class="col-12  col-t-12 login_container flexwrap login_containert flexwrapt tabborder" style="float: left;border-left: 1px solid grey">	
     		 		        <div class="col-8 col-t-8" style="padding-top: 30px">
     		 				    <div class="col-2 col-m-2 col-t-2 mobiledata" style="float: left;height: 78px">
-  								    <a href=""><img src="<?=$image?>" class="col-12 col-t-12 col-m-12 imagesettingst imagesettingsm imagediv"></a>
+  								    <a href="userhome.php?id=<?php echo $_SESSION['username']?>"><img src="<?=$image?>" class="col-12 col-t-12 col-m-12 imagesettingst imagesettingsm imagediv"></a>
 							    </div>
 
 						        <div class="col-10 col-mo-10 col-m-10" style="float: left">

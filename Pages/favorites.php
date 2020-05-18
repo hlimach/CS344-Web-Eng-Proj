@@ -77,7 +77,7 @@
                                    $season=$row['seasons'];
                                    $poster=$row['image_url'];
                                    
-                                   echo "
+                                   echo "<a href='FilmPage.php?id=$movieID'>
                                          <div class='col-11 col-t-11 col-m-11 user-movie-info' id='".++$num."'>
                                          <button class='remove-movie' id='butt'> Remove </button>
                                          <img  class='col-3 col-t-3 col-m-3' style='float:left;height:100%' src=\"".$poster."\">
@@ -86,7 +86,7 @@
                                          <p>Seasons: ".$season."</p>
                                          <p>Rating: ".$rating." stars</p>
                                         </div>
-                                             </div>";
+                                             </div></a>";
                             
                        } } } }  
 

@@ -1,4 +1,8 @@
 <!doctype html>
+<?php
+	require 'DatabaseSetup.php';
+?>
+
 <html>
 
 <head>
@@ -13,7 +17,7 @@
 	<div id='b0' class='m-reset'>
 		<div id='entry-image'></div>
 		<h1>Discover ulimited movies and TV shows</h1>
-		<button class='get-started'>Get Started</button>
+		<a href='login.php'><button class='get-started'>Get Started</button></a>
 	</div>
 
 	<div id='b1'>
@@ -59,10 +63,10 @@
 	<div id='footer-box'>
 		<div class='footer'>
 			<div class='footer-heading'>Questions?</div>
-			<div class='footer-content'><a href='#'>Services</a></div>
-			<div class='footer-content'><a href='#'>FAQs</a></div>
-			<div class='footer-content'><a href='#'>Contact Us</a></div>
-			<div class='footer-content'><a href='#'>Developers</a></div>
+			<div class='footer-content'><a href='./services.php'>Services</a></div>
+			<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
+			<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
+			<div class='footer-content'><a href='./developers.php'>Developers</a></div>
 		
 			<div class='footer-heading'>Find Us</div>
 			<div class='footer-heading' id='find-us-icons'>

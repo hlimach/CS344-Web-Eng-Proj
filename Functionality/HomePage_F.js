@@ -1,11 +1,18 @@
 $(document).ready(function(){
 
-	
-
 	if ((window.location.hash).includes('#dt')) {
 		var updatedString = window.location.hash.replace("#", "");
 		$load_page = "BrowsePageListing.php?" + updatedString;
 		$('#poster-listings').load($load_page);
+	}
+
+	$('.redir').click(function(event){
+		$redir_query = event.target.id;
+		window.location.href = 'BrowsePage.php#' + event.target.id;
+	});
+
+	if((window.location.href).includes('Results.php?w=')) {
+		$('#res-listings').load('MovieResults.php?w='+word);
 	}
 
 	$(window).scroll(function() {
@@ -24,11 +31,7 @@ $(document).ready(function(){
 			$('.slider-menu, #logo-small, .user-icon, #open-search-bar').css('display','block');
 		});
 	});
-
-	//SEARCH RESULT PAGE
-	if((window.location.href).includes('Results.php?w=')) {
-		$('#res-listings').load('MovieResults.php?w='+word);
-	}
+	
 
 	//sliding menu functionality
 	$('.slider-menu').click(function(){
@@ -83,11 +86,6 @@ $(document).ready(function(){
 	//close when cross pressed 
 	$('.l-pos-exit').click(function(){
 		$('#sect1-e, #sect2-e, #sect3-e, #sect4-e, #sect1-e *, #sect2-e *, #sect3-e *, #sect4-e *').slideUp();
-	});
-
-	$('.redir').click(function(event){
-		$redir_query = event.target.id;
-		window.location.href = 'BrowsePage.php#' + event.target.id;
 	});
 
 	//BROWSE PAGE FUNCTIONALITY 

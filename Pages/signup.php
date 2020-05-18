@@ -272,7 +272,7 @@
             if ($conn->query($sql) == TRUE) {
                 echo '<script>alert("signup successful");</script>';
             } else {
-                echo '<script>console.log("Error")</script>';
+                echo '<script>alert("Error")</script>';
             }
             
         }

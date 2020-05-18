@@ -127,6 +127,7 @@
 			('Short', 21);";
 
     $sql .= "INSERT INTO user (username,password,f_name,l_name,age, bio,gender,email,pic_url) VALUES 
+            ('admin', 'admin', 'admin', 'admin' ,0 ,'na', 'na','admin@track.tv','https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg'),
             ('matariq', 'maira123', 'maira', 'tariq', 20, 'Life was meant for good friends and great adventures.', 'female', 'matariq@gmail.com', 'https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg'),
             ('uhani', 'uhani123', 'ume', 'hani', 18,'Life was meant for good friends and great adventures.', 'female', 'uhani@gmail.com', 'https://i.pinimg.com/originals/3d/37/36/3d37369dd8c864e4c21f803c28cf3170.jpg'),
             ('mrana', 'mrana111', 'maha', 'rana', 18, 'A day spent with a friend is always a day well spent.', 'female', 'mrana@gmail.com', 'https://i.pinimg.com/originals/7d/a7/f8/7da7f84652f8d5ef017a0903fd9fe3b0.jpg'),
@@ -1454,9 +1455,9 @@
             (14,62,'I love it','The first thing I want to say before I start, is that I do not binge watch TV series. It''s extremely rare for me, and I often don''t even finish the season. This TV series had me hooked from start to finish and I spent all day watching it.','4.8');";
 
     if ($result = $conn->multi_query($sql)) 
-	  	echo "<p>Database created successfully</p>";
+	  	echo "<script type='text/javascript'>alert('Database loaded successfully');</script>";
 	else 
-	  	echo "<br>Error creating database: " . $conn->error;
+	  	echo "<script type='text/javascript'>alert('Error creating database: '.$conn->error);</script>";
 
 	$conn->close();
 ?>
