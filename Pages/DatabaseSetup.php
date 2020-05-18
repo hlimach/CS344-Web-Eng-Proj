@@ -12,185 +12,98 @@
 	}
 
 	// Create database
-	$sql = "drop database if exists movieswebsite;";
-	$sql .=	"create database movieswebsite;";
-	$sql .= "use movieswebsite;";
+    $sql = "drop database if exists movieswebsite;";
+    $sql .=	"create database movieswebsite;";
+    $sql .= "use movieswebsite;";
 
-	$result = $conn->multi_query($sql);
-	if ($result) {
-	  	echo "<p>Database created successfully</p>";
-	} else {
-	  	echo "<br>Error creating database: " . $conn->error;
-	}
+    $sql .= "drop table if exists user;
+    create table user(
+    userID int NOT NULL primary key AUTO_INCREMENT,
+    username varchar(20) NOT NULL UNIQUE,
+    password varchar(10) NOT NULL,
+    f_name varchar(15) NOT NULL,
+    l_name varchar(15),
+    age int,
+    bio text(100),
+    gender varchar(10),
+    email varchar(20),
+    pic_url varchar(150)
+    );";
 
-	$sql = "create table user(
-			userID int NOT NULL primary key AUTO_INCREMENT,
-			username varchar(20) NOT NULL UNIQUE,
-			password varchar(10) NOT NULL,
-			f_name varchar(15) NOT NULL,
-			l_name varchar(15),
-			age int,
-			bio text(100),
-			gender varchar(10),
-			email varchar(20),
-			pic_url varchar(150)
-			);";
+    $sql .= "drop table if exists genre;
+    create table genre(
+    genreID int NOT NULL PRIMARY KEY,
+    genre_name varchar(15) NOT NULL
+    );";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>user table created successfully</p>";
-	  	$conn->close();
-	} else {
-	  	echo "<br>Error creating user table " . $conn->error;
-	}
+    $sql .= "drop table if exists movie;
+    create table movie(
+    movieID int NOT NULL PRIMARY KEY,
+    title text(100) NOT NULL,
+    rating double,
+    seasons int,
+    image_url text(500)
+    );";
 
-	$sql = "create table genre(
-			genreID int NOT NULL PRIMARY KEY,
-			genre_name varchar(15) NOT NULL
-			);";	
+    $sql .= "drop table if exists review;
+    create table review(
+    reviewID int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user int NOT NULL,
+    movie int NOT NULL,
+    title varchar(50) NOT NULL,
+    review_text text(250) NOT NULL,
+    review_rating int
+    );";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>genre table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating genre table " . $conn->error;
-	}
+    $sql .= "drop table if exists followers;
+    create table followers(
+    user int NOT NULL,
+    followerID int not null,
+    primary key (user, followerID)
+    );";
 
-	$sql = "create table movie(
-			movieID int NOT NULL PRIMARY KEY,
-			title text(100) NOT NULL,
-			rating double,
-			seasons int,
-			image_url text(500)
-			);";
+    $sql .= "drop table if exists wishlist;
+    create table wishlist(
+    user int NOT NULL,
+    movie int NOT NULL,
+    primary key (user,movie)
+    );";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>movie table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating movie table " . $conn->error;
-	}
+    $sql .= "drop table if exists watched_movies;
+    create table watched_movies(
+    user int NOT NULL,
+    movie int NOT NULL,
+    favourite boolean NOT NULL,
+    primary key (user, movie)
+    );";
 
-	$sql = "create table review(
-			reviewID int NOT NULL PRIMARY KEY,
-			user int NOT NULL,
-			movie int NOT NULL,
-			title varchar(50) NOT NULL,
-			review_text text(250) NOT NULL,
-			review_rating int
-			);";
+    $sql .= "drop table if exists movie_genre;
+    create table movie_genre(
+    movieID int NOT NULL,
+    genreID int NOT NULL,
+    primary key (movieID, genreID)
+    );";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>review table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating review table " . $conn->error;
-	}
+    $sql .= "drop table if exists large_posters;
+    create table large_posters(
+    posterID int NOT NULL primary key AUTO_INCREMENT,
+    movieID int NOT NULL,
+    title text(100) NOT NULL,
+    image_url text(500)
+    );";
 
-	$sql = "create table followers(
-			user int NOT NULL,
-			followerID int not null
-			);";
+    $sql .= "alter table review add foreign key (user) references user(userID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table review add foreign key (movie) references movie(movieID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table followers add foreign key (user) references user(userID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table wishlist add foreign key (user) references user(userID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table wishlist add foreign key (movie) references movie(movieID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table watched_movies add foreign key (user) references user(userID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table watched_movies add foreign key (movie) references movie(movieID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table movie_genre add foreign key (movieID) references movie(movieID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table movie_genre add foreign key (genreID) references genre(genreID) ON UPDATE CASCADE ON DELETE CASCADE;";
+    $sql .= "alter table large_posters add foreign key (movieID) references movie(movieID) ON UPDATE CASCADE ON DELETE CASCADE;";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>followers table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating followers table " . $conn->error;
-	}
-
-	$sql = "create table wishlist(
-			user int NOT NULL,
-			movie int NOT NULL
-			);";
-
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>wishlist table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating wishlist table " . $conn->error;
-	}
-
-	$sql = "create table watched_movies(
-			user int NOT NULL,
-			movie int NOT NULL,
-			favourite boolean NOT NULL
-			);";
-
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>watched_movies table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating watched_movies table " . $conn->error;
-	}
-
-	$sql = "create table movie_genre(
-			movieID int NOT NULL,
-			genreID int NOT NULL,
-			primary key (movieID, genreID)
-			);";
-
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>movie_genre table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating movie_genre table " . $conn->error;
-	}
-
-	$sql = "create table large_posters(
-			posterID int NOT NULL primary key AUTO_INCREMENT,
-			movieID int NOT NULL,
-			title text(100) NOT NULL,
-			image_url text(500)
-			);";
-
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>large_posters table created successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error creating large_posters table " . $conn->error;
-	}
-
-	$sql = "alter table review add foreign key (user) references user(userID);";
-	$sql .= "alter table review add foreign key (movie) references movie(movieID);";
-	$sql .= "alter table followers add foreign key (user) references user(userID);";
-	$sql .= "alter table followers add foreign key (followerID) references user(userID);";
-	$sql .= "alter table wishlist add foreign key (user) references user(userID);";
-	$sql .= "alter table wishlist add foreign key (movie) references movie(movieID);";
-	$sql .= "alter table watched_movies add foreign key (user) references user(userID);";
-	$sql .= "alter table watched_movies add foreign key (movie) references movie(movieID);";
-	$sql .= "alter table movie_genre add foreign key (movieID) references movie(movieID);";
-	$sql .= "alter table movie_genre add foreign key (genreID) references genre(genreID);";
-	$sql .= "alter table large_posters add foreign key (movieID) references movie(movieID);";
-
-
-	$result = $conn->multi_query($sql);
-	if ($result) {
-	  	echo "<br><p>foreign keys references added successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error adding foreign keys references " . $conn->error;
-	}
-
-
-	$sql = "INSERT INTO genre (genre_name, genreID) VALUES 
+	$sql .= "INSERT INTO genre (genre_name, genreID) VALUES 
 			('Crime', 1),
 			('Drama', 2),
 			('Thriller', 3),
@@ -213,308 +126,307 @@
 			('Music', 20),
 			('Short', 21);";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>genre table populated successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error populating genre table " . $conn->error;
-	}
+    $sql .= "INSERT INTO user (username,password,f_name,l_name,age, bio,gender,email,pic_url) VALUES 
+            ('matariq', 'maira123', 'maira', 'tariq', 20, 'Life was meant for good friends and great adventures.', 'female', 'matariq@gmail.com', 'https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg'),
+            ('uhani', 'uhani123', 'ume', 'hani', 18,'Life was meant for good friends and great adventures.', 'female', 'uhani@gmail.com', 'https://i.pinimg.com/originals/3d/37/36/3d37369dd8c864e4c21f803c28cf3170.jpg'),
+            ('mrana', 'mrana111', 'maha', 'rana', 18, 'A day spent with a friend is always a day well spent.', 'female', 'mrana@gmail.com', 'https://i.pinimg.com/originals/7d/a7/f8/7da7f84652f8d5ef017a0903fd9fe3b0.jpg'),
+            ('hramzan', 'hramzan999', 'haleema', 'ramzan', 20, 'Friends never say ?goodbye?. They simply say ?see you again?.', 'female', 'hramzan@gmail.com', 'https://i.pinimg.com/originals/8b/1b/b9/8b1bb9e2ce871b6b7e720cece03ec066.jpg'),
+            ('sarah', 'iamsarah', 'sarah', 'ahmed', 21, 'Life is not about how fast you run or how high you climb but how well you bounce', 'female', 'sarah123@ymail.com', 'https://i.pinimg.com/originals/e1/df/68/e1df68fe5111e8f6f467d103db6a03da.jpg'),
+            ('ach', 'abd123', 'abdullah', 'chaudhary', 35, 'The past cannot be changed. The future is yet in your power.', 'male', 'achaud@hotmail.com', 'https://i.pinimg.com/originals/94/cc/24/94cc24b25cef26eef4e5729126c8b70c.jpg'),
+            ('fkm', 'faraz245', 'faraz', 'khan', 20, '?The ladder of success is best climbed by stepping on the rungs of opportunity.? ? Ayn Rand', 'male', 'faraz.khan@gmail.com', 'https://i.pinimg.com/originals/32/57/1f/32571f23d576bb69facd918f704b186f.jpg'),
+            ('huda_asif', 'huda 111', 'huda', 'asif', 20, 'Fewer Mondays: more summer!', 'female', 'huda.asif@gmail.com', 'https://i.pinimg.com/originals/70/80/13/7080139c00c8d232e4648233643e0f8d.jpg'),
+            ('vinxi', 'yasalam', 'hamdan', 'rashid', 21, 'Sea Sun and Smiles.', 'male', 'hrashid@gmail.com', 'https://i.pinimg.com/736x/7a/93/62/7a9362c12c5e6a9d4aa8a8cbb8b1f7a1.jpg'),
+            ('ali', 'ali999', 'ali', 'ahmed', 19, 'My life is a constant battle between my love for food and not wanting to get fat.', 'male', 'ali.ahmed@gmail.com', 'https://i.pinimg.com/236x/48/0a/7e/480a7e7b691046de058f45e5068783cf.jpg'),
+            ('salman456', 's567', 'salman', 'ahmed', 22, 'There are two rules in life. 1. Never give out all the information. 2. ?', 'male', 'salman222@gmail.com', 'https://i.pinimg.com/originals/f5/01/34/f50134328fa1730c68e631316bcf1cb6.jpg'),
+            ('sharique', 'sharique', 'sharique', 'pervaiz', 23, 'On Mercury, a day lasts 1408 hours. Just like Monday does on Earth.', 'male', 'spervaiz@gmail.com', 'https://i.pinimg.com/originals/fb/55/24/fb55244036ea68a2e511dd86917582f5.jpg'),
+            ('blink', 'hamiz101', 'hamiz', 'ali', 20, 'Life is not a fairy tale. If you lose your shoe at midnight, you?re probably drunk.', 'male', 'hali@gmail.com', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRJyac8d8-Sx9VAjQBSy9JRabxPGdWBo6td87K6MiN-wyM07XsU&usqp=CAU'),
+            ('fatimah', 'f111', 'fatimah', 'zulfiqar', 19, 'I made a huge list for today. I just can?t figure out who?s going to do it.', 'female', 'fzulfiqar@gmail.com', 'https://i.pinimg.com/236x/df/98/5f/df985f50600c837200d5b73201bc32be--cute-stuff-eiffel.jpg'),
+            ('smunir','s123', 'sadia', 'munir', 22, 'Life doesn?t have any hands but it can sure give you a slap sometimes.', 'female', 'smunir@hotmail.com', 'https://i.pinimg.com/originals/91/85/e3/9185e39fd47fa1c4cd5a9732009f5fb6.jpg');";
 
-	$sql = "INSERT INTO movie VALUES 
+	$sql .= "INSERT INTO movie VALUES 
 			(1, 'Mr. Robot', 8.5, 4, 'https://m.media-amazon.com/images/M/MV5BMzgxMmQxZjQtNDdmMC00MjRlLTk1MDEtZDcwNTdmOTg0YzA2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(2, 'The Simpsons', 8.7, 31, 'https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
-			(3, 'Supernatural', 8.4, 15, 'https://m.media-amazon.com/images/M/MV5BMTJhM2VhZDItMTk4OS00MTRjLTlmMDQtNzEyYmM0NDA0YjhjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(4, 'Doctor Who', 8.6, 12, 'https://m.media-amazon.com/images/M/MV5BZWJhYjFmZDEtNTVlYy00NGExLWJhZWItNTAxODY5YTc3MDFmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(5, 'The Walking Dead', 8.2, 11, 'https://m.media-amazon.com/images/M/MV5BYTUwOTM3ZGUtMDZiNy00M2I3LWI1ZWEtYzhhNGMyZjI3MjBmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(6, 'Friends', 8.9, 10, 'https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
-			(7, 'Suits', 8.5, 9, 'https://m.media-amazon.com/images/M/MV5BNmVmMmM5ZmItZDg0OC00NTFiLWIxNzctZjNmYTY5OTU3ZWU3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
-			(8, 'The Office', 8.8, 9, 'https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(9, 'Game of Thrones', 9.5, 8, 'https://m.media-amazon.com/images/M/MV5BMjA5NzA5NjMwNl5BMl5BanBnXkFtZTgwNjg2OTk2NzM@._V1_SX300.jpg'),
-			(10, 'The Blacklist', 8, 8, 'https://m.media-amazon.com/images/M/MV5BZDU1OGI3NWItZTliOS00OWYxLTliNDktYTFjODcxNmE1NTNmXkEyXkFqcGdeQXVyODUxOTU0OTg@._V1_SX300.jpg'),
-			(11, 'Monk', 7.9, 8, 'https://m.media-amazon.com/images/M/MV5BM2M4NjM0N2QtMDlmNi00NzNkLWEyYjItOTczMjk1ZjU2NDdiXkEyXkFqcGdeQXVyNzA5NjUyNjM@._V1_SX300.jpg'),
-			(12, 'Psych', 8.3, 8, 'https://m.media-amazon.com/images/M/MV5BYzRkOWRmNGUtYzM0Zi00ZGRkLThhMjktNmI4NDYwZDVmODBkXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
-			(13, 'Ray Donovan', 8.3, 7, 'https://m.media-amazon.com/images/M/MV5BYWY1MTE2MmItNzQyNi00YThjLWE4ZDctMDA0ZGE3OWJhYTMzXkEyXkFqcGdeQXVyOTA3MTMyOTk@._V1_SX300.jpg'),
-			(14, 'The Mentalist', 8.1, 7, 'https://m.media-amazon.com/images/M/MV5BMTQ5OTgzOTczM15BMl5BanBnXkFtZTcwMDM2OTY4MQ@@._V1_SX300.jpg'),
-			(15, 'Arli$$', 7, 7, 'https://m.media-amazon.com/images/M/MV5BNzIxNzkwMDgyN15BMl5BanBnXkFtZTcwMDAxOTcxMQ@@._V1_SX300.jpg'),
-			(16, 'Mad Men', 8.6, 7, 'https://m.media-amazon.com/images/M/MV5BMjMwNzk5Nzg2OV5BMl5BanBnXkFtZTgwMjg1OTk1NDE@._V1_SX300.jpg'),
-			(17, 'Burn Notice', 7.9, 7, 'https://m.media-amazon.com/images/M/MV5BMTczMzg4NjU1Ml5BMl5BanBnXkFtZTcwODc4NzY5Nw@@._V1_SX300.jpg'),
-			(18, 'Parks and Recreation', 8.6, 7, 'https://m.media-amazon.com/images/M/MV5BMjA5MjUxNDgwNF5BMl5BanBnXkFtZTgwMDI5NjMwNDE@._V1_SX300.jpg'),
-			(19, 'Veep', 8.3, 7, 'https://m.media-amazon.com/images/M/MV5BMjE2NDM0OTEwMl5BMl5BanBnXkFtZTgwNzgwNDI0ODE@._V1_SX300.jpg'),
-			(20, 'Better Call Saul', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BMGE4YzY4NGEtOWYyYS00ZDk2LWExMmMtZDIyODhiMmNlMGE0XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(21, 'Vikings', 8.6, 6, 'https://m.media-amazon.com/images/M/MV5BNjIzZjljZmQtOGNiYi00YmY2LWE1MGYtN2VlMmEyZDBlMzRmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(22, 'Cable Girls', 7.7, 6, 'https://m.media-amazon.com/images/M/MV5BYmRhMWM4NzQtNTE1OS00NWMxLTgzYzYtMTllZTcyY2NjZDgxXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(23, 'The Flash', 7.8, 6, 'https://m.media-amazon.com/images/M/MV5BNTM4YThiMzktMDRlNi00NzAyLWI1YmQtNTdkMTNiN2Q0NzU1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(24, 'Power', 8.2, 6, 'https://m.media-amazon.com/images/M/MV5BYjllZjcwNjItMzc1OC00YjRkLWI5YzUtODM1YmEzNjFiYzNhXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg'),
-			(25, 'Silicon Valley', 8.5, 6, 'https://m.media-amazon.com/images/M/MV5BOTcwNzU2MGEtMzUzNC00MzMwLWJhZGItNDY3NDllYjU5YzAyXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(26, 'House of Cards', 8.8, 6, 'https://m.media-amazon.com/images/M/MV5BODM1MDU2NjY5NF5BMl5BanBnXkFtZTgwMDkxNTcwNjM@._V1_SX300.jpg'),
-			(27, 'BoJack Horseman', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BYWQwMDNkM2MtODU4OS00OTY3LTgwOTItNjE2Yzc0MzRkMDllXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(28, 'Oz', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BY2ZjNGZiZWUtMDM5ZS00NWUwLWEwZTItZjRmZGVkOTkzMmI4XkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg'),
-			(29, 'Sex and the City', 7.1, 6, 'https://m.media-amazon.com/images/M/MV5BNGEyNDRjM2QtY2VlYy00OWRhLWI4N2UtZTM4NDc0MGM0YzBkXkEyXkFqcGdeQXVyNjk1Njg5NTA@._V1_SX300.jpg'),
-			(30, 'White Collar', 8.2, 6, 'https://m.media-amazon.com/images/M/MV5BNDI5MDgyMTYzNF5BMl5BanBnXkFtZTcwMjAwNzk1Mw@@._V1_SX300.jpg'),
-			(31, 'Girls', 7.3, 6, 'https://m.media-amazon.com/images/M/MV5BMTU1Mzk2ODEzN15BMl5BanBnXkFtZTgwNDQwMjAxMTI@._V1_SX300.jpg'),
-			(32, 'DCs Legends of Tomorrow', 6.8, 6, 'https://m.media-amazon.com/images/M/MV5BMTc1NTA2YWMtOTc1ZC00ZDk0LThmZDktODhhZjZiMjdkYmNkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(33, 'Peaky Blinders', 8.8, 5, 'https://m.media-amazon.com/images/M/MV5BMTkzNjEzMDEzMF5BMl5BanBnXkFtZTgwMDI0MjE4MjE@._V1_SX300.jpg'),
-			(34, 'Breaking Bad', 9.5, 5, 'https://m.media-amazon.com/images/M/MV5BMjhiMzgxZTctNDc1Ni00OTIxLTlhMTYtZTA3ZWFkODRkNmE2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg'),
-			(35, 'The Wire', 9.3, 5, 'https://m.media-amazon.com/images/M/MV5BZmY5ZDMxODEtNWIwOS00NjdkLTkyMjktNWRjMDhmYjJjN2RmXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
-			(36, 'Six Feet Under', 8.7, 5, 'https://m.media-amazon.com/images/M/MV5BMTQzODk5N2UtYjE4ZC00YWM1LWJkMGYtYmY2NjNjMjIzZDRmXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg'),
-			(37, 'Big Love', 7.5, 5, 'https://m.media-amazon.com/images/M/MV5BMTkxMjEzNTE0Ml5BMl5BanBnXkFtZTcwNTM3MDAzNA@@._V1_SX300.jpg'),
-			(38, 'Boardwalk Empire', 8.5, 5, 'https://m.media-amazon.com/images/M/MV5BYTYxNzc5ZmYtODcyNi00ZWUwLWExNWUtY2Y0YTlhZDBlMGU1XkEyXkFqcGdeQXVyNzQ1ODk3MTQ@._V1_SX300.jpg'),
-			(39, 'Prison Break', 8.3, 5, 'https://m.media-amazon.com/images/M/MV5BMTg3NTkwNzAxOF5BMl5BanBnXkFtZTcwMjM1NjI5MQ@@._V1_SX300.jpg'),
-			(40, 'Black Mirror', 8.8, 5, 'https://m.media-amazon.com/images/M/MV5BYTM3YWVhMDMtNjczMy00NGEyLWJhZDctYjNhMTRkNDE0ZTI1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(41, 'Luther', 8.5, 5, 'https://m.media-amazon.com/images/M/MV5BYTdhNWMwYTMtNzQ3OC00ODZjLWI0YzQtYjVlODZiOWVlYTJlXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
-			(42, 'In Plain Sight', 7.2, 5, 'https://m.media-amazon.com/images/M/MV5BNDQxNzM5NzU0OF5BMl5BanBnXkFtZTcwNDg0MjY0Mg@@._V1_SX300.jpg'),
-			(43, 'Covert Affairs', 7.3, 5, 'https://m.media-amazon.com/images/M/MV5BMTM3Nzk5Njc3M15BMl5BanBnXkFtZTcwMTUxNzc4Nw@@._V1_SX300.jpg'),
-			(44, 'Ballers', 7.6, 5, 'https://m.media-amazon.com/images/M/MV5BYzM5NDRkNzItN2FkZC00ZjQyLTlmYzctYmNiNTA4YzIxYTg2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(45, 'The Magicians', 7.6, 5, 'https://m.media-amazon.com/images/M/MV5BYTU3ZWRmNDktMDQ0My00OGQzLTkzMzktOTVjZjUzMzVmNjNmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(46, 'The Crown', 8.7, 4, 'https://m.media-amazon.com/images/M/MV5BNGI1ODkzZDQtZTYxYS00MTg1LWFlY2QtMTM5MGNhNWRhYmVmXkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
-			(47, 'Preacher', 8, 4, 'https://m.media-amazon.com/images/M/MV5BNzIyMDY4NmUtMGRhZS00ZjE4LWI5YWYtYTYxMzcwZWNlZWRkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(48, 'Lucifer', 8.2, 4, 'https://m.media-amazon.com/images/M/MV5BZTA2NTBkYWUtMzM4Zi00YzhlLTk4NWItY2U1ODczNDMyNDAzXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'),
-			(49, 'American Crime Story', 8.4, 4, 'https://m.media-amazon.com/images/M/MV5BNzc2MzJmM2ItMjgzYy00MjgxLTljYjctZjJhYzM1ODFhMzU0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(50, 'Fargo', 8.9, 4, 'https://m.media-amazon.com/images/M/MV5BMTg5NTYxNjkyNl5BMl5BanBnXkFtZTgwNzY1Mjg4MTI@._V1_SX300.jpg'),
-			(51, 'Killing Eve', 8.3, 4, 'https://m.media-amazon.com/images/M/MV5BZDE0NTc0NjMtNDc2Mi00NTY2LWJiNTItNDBlOWQxMTM5ZmMyXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(52, 'This Is Us', 8.7, 4, 'https://m.media-amazon.com/images/M/MV5BMDM2YTMzMWMtNmFhZi00ZWY4LTk1ZmUtMWExNzg3NDZmMTY4XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(53, 'Channel Zero', 7.2, 4, 'https://m.media-amazon.com/images/M/MV5BMjExMTMxNjMwNl5BMl5BanBnXkFtZTgwNDA2OTYzNjM@._V1_SX300.jpg'),
-			(54, 'Dark', 8.7, 3, 'https://m.media-amazon.com/images/M/MV5BMmIyZjA3NGUtYjlhNS00ZDlkLWI0MDgtMDc2YWNjNGMwYWZhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
-			(55, 'True Detective', 9, 3, 'https://m.media-amazon.com/images/M/MV5BMTUwMGM2ZmYtZGEyZC00OWQyLWI2Y2QtMTdjYzMxZGJmNjhjXkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
-			(56, 'Westworld', 8.7, 3, 'https://m.media-amazon.com/images/M/MV5BYjQwODU3ZDgtNmNmNC00YWRmLTk0MmYtYTdhYzY0M2I0Mzk1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(57, 'The Good Doctor', 8.2, 3, 'https://m.media-amazon.com/images/M/MV5BMmUyNTQwYjItMzc5Ny00MDg4LWIxMTMtNDBmNjQ0MmIwNjNmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(58, 'In Treatment', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BNjM4NzMzMDI1NF5BMl5BanBnXkFtZTcwOTE2MTMwNA@@._V1_SX300.jpg'),
-			(59, 'Stranger Things', 8.8, 3, 'https://m.media-amazon.com/images/M/MV5BZGExYjQzNTQtNGNhMi00YmY1LTlhY2MtMTRjODg3MjU4YTAyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(60, 'The Sinner', 8, 3, 'https://m.media-amazon.com/images/M/MV5BODIwYmE0MGQtYmNhMS00ZjM4LWJkMzAtNjg5YzI4MzZjMjg3XkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
-			(61, 'Atypical', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BYjg1ZmQ0ZDktMjNhZS00MDJjLTllZTItMmIyYTBkYjM2MzQzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(62, '13 Reasons Why', 7.8, 3, 'https://m.media-amazon.com/images/M/MV5BMTA2OTQxNzQtMDQ5OC00NDczLWFhYjEtN2UyMmIwNGZlZDM4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(63, 'The Good Fight', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BODc2MDE2NTEyNl5BMl5BanBnXkFtZTgwMjIwNjUzNzM@._V1_SX300.jpg'),
-			(64, 'Dope', 7.3, 3, 'https://m.media-amazon.com/images/M/MV5BYmQ3YzNhYjktZDcwMy00ZTI4LWI0ODEtZWJhZDcxNjA0MGFiXkEyXkFqcGdeQXVyNjgwMTgyODE@._V1_SX300.jpg'),
-			(65, 'Shooter', 7.5, 3, 'https://m.media-amazon.com/images/M/MV5BNmViMGQzMzMtNzgyYy00YzA4LWIzYzAtYmU5OTA4YWJjZWNjXkEyXkFqcGdeQXVyNjgyMjQ2NjM@._V1_SX300.jpg'),
-			(66, 'Sneaky Pete', 8.2, 3, 'https://m.media-amazon.com/images/M/MV5BMTc2OTExNDE3MF5BMl5BanBnXkFtZTgwMzk2MjU5NzM@._V1_SX300.jpg'),
-			(67, 'Jessica Jones', 8, 3, 'https://m.media-amazon.com/images/M/MV5BM2QyNmZkNTYtZWQyZi00NDhhLWEzMDItYmIzY2U4ZWVmOWNhXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'),
-			(68, 'Narcos', 8.8, 3, 'https://m.media-amazon.com/images/M/MV5BNmFjODU3YzgtMGUwNC00ZGI3LWFkZjQtMjkxZDc3NmQ1MzcyXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg'),
-			(69, 'Deadwood', 8.6, 3, 'https://m.media-amazon.com/images/M/MV5BNDJhMjUzMDYtNzc4MS00Nzk2LTkyMGQtN2M5NTczYTZmYmY5XkEyXkFqcGdeQXVyMzU3MTc5OTE@._V1_SX300.jpg'),
-			(70, 'Harlots', 7.7, 3, 'https://m.media-amazon.com/images/M/MV5BMTY5MDgyMjY2M15BMl5BanBnXkFtZTgwMzAzNDQ4NTM@._V1_SX300.jpg'),
-			(71, 'The Newsroom', 8.6, 3, 'https://m.media-amazon.com/images/M/MV5BZjg5OGU2OGMtNTM3ZC00YTEzLWFmZjMtOWQ3NGI5YjIzODJlXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg'),
-			(72, 'Graceland', 7.7, 3, 'https://m.media-amazon.com/images/M/MV5BMTQzNjM5OTc5NV5BMl5BanBnXkFtZTgwMjExMTg5MTE@._V1_SX300.jpg'),
-			(73, 'Sex Education', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BZjgyMzFiMDgtNWNmMS00ZDEyLTkzYzgtMjMzZjk4YjhjZWUxXkEyXkFqcGdeQXVyNDg4MjkzNDk@._V1_SX300.jpg'),
-			(74, 'You', 7.8, 2, 'https://m.media-amazon.com/images/M/MV5BZDJjOTg4OWYtYWIyOS00MjQ3LTg5ZDktYzU2N2RkNmYzNjZlXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(75, 'The Purge', 6.4, 2, 'https://m.media-amazon.com/images/M/MV5BMjk1YWE0OWYtMzYwMi00MGZhLTkyMGMtMzU1YjRlZjE1OWQyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
-			(76, 'The Witcher', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BOGE4MmVjMDgtMzIzYy00NjEwLWJlODMtMDI1MGY2ZDlhMzE2XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
-			(77, 'Big Little Lies', 8.5, 2, 'https://m.media-amazon.com/images/M/MV5BZmNjYzdjN2ItOTBlNy00Mjc0LWE4YmMtYTQ4ZjQzNTMyNDc4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(78, 'Kingdom', 8.2, 2, 'https://m.media-amazon.com/images/M/MV5BMmMzYzE5NzctZGZmZC00MmVkLTllMWUtZDY3YzIzYWEyMTIxXkEyXkFqcGdeQXVyNTI2MzI4NTU@._V1_SX300.jpg'),
-			(79, 'Servant', 7.7, 2, 'https://m.media-amazon.com/images/M/MV5BNjQ2MzIzMGMtN2I4Yi00NzdkLWE1NTAtMTI0NWZiNzAwMDM5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(80, 'Dirty Money', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BZWVmYjJlZjgtMzU4YS00MDQxLWJmYjQtNTcyMjJkMDNmOTZkXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(81, 'Britannia', 6.7, 2, 'https://m.media-amazon.com/images/M/MV5BOTI3OGY1MGQtNTdlMS00Yzg5LTk1MDItMzRmNDhlMTFmYmM4XkEyXkFqcGdeQXVyOTA0ODk2NTc@._V1_SX300.jpg'),
-			(82, 'The Punisher', 8.5, 2, 'https://m.media-amazon.com/images/M/MV5BMTExODIwOTUxNzFeQTJeQWpwZ15BbWU4MDE5MDA0MTcz._V1_SX300.jpg'),
-			(83, 'Bad Blood', 7.5, 2, 'https://m.media-amazon.com/images/M/MV5BMzRmNzZkMmMtMzU5YS00ZThhLWE2YzItZTNhNGMwMmI1MjQyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(84, 'Genius', 8.4, 2, 'https://m.media-amazon.com/images/M/MV5BNTkwYzVjZjEtODI2NS00ZDk5LTliNWItMzJiYzYwM2RiNjNhXkEyXkFqcGdeQXVyNzg5MzIyOA@@._V1_SX300.jpg'),
-			(85, 'Utopia', 8.4, 2, 'https://m.media-amazon.com/images/M/MV5BMjMwMTA5NDc5M15BMl5BanBnXkFtZTgwMjQ4MTY0MjE@._V1_SX300.jpg'),
-			(86, 'The Bridge', 7.6, 2, 'https://m.media-amazon.com/images/M/MV5BMTQyNjEzMjIyMV5BMl5BanBnXkFtZTgwMTg0NjYxMjE@._V1_SX300.jpg'),
-			(87, 'Amazing Stories', 7.4, 2, 'https://m.media-amazon.com/images/M/MV5BYzBkMTEzZDktYmQyMS00ZDE5LWI5MWUtMGEwYzQ3ZjJhYjMxXkEyXkFqcGdeQXVyMjIzMTQ5NjE@._V1_SX300.jpg'),
-			(88, 'Pose', 8.6, 2, 'https://m.media-amazon.com/images/M/MV5BMjQwMTQ0MTIxNl5BMl5BanBnXkFtZTgwMDYzNjYwODM@._V1_SX300.jpg'),
-			(89, 'Homecoming', 7.5, 2, 'https://m.media-amazon.com/images/M/MV5BMTZlZDM2YjAtYzdjNS00ZDQxLTgyZTQtYTY0ZDdlYWExMGMxXkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_SX300.jpg'),
-			(90, 'Mindhunter', 8.6, 2, 'https://m.media-amazon.com/images/M/MV5BNWNmYzQ1ZWUtYTQ3ZS00Y2UwLTlkMDctZThlOTJkMGJiNzBiXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX300.jpg'),
-			(91, 'The Exorcist', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BMjEzNjI5Njg4MV5BMl5BanBnXkFtZTgwMjkwMjU2MzI@._V1_SX300.jpg'),
-			(92, 'Sense8', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BMjA4MTEyMzcwMl5BMl5BanBnXkFtZTgwMTIwODczNTM@._V1_SX300.jpg'),
-			(93, 'Rome', 8.7, 2, 'https://m.media-amazon.com/images/M/MV5BZTM4NjBkMWEtZDA4My00MzA0LWI0ZWMtNzUwYWVhOThiMTgwXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
-			(94, 'Vice Principals', 8, 2, 'https://m.media-amazon.com/images/M/MV5BMjQ2MjY0ODI4M15BMl5BanBnXkFtZTgwNTY3MjQyMzI@._V1_SX300.jpg'),
-			(95, 'Barry', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BMmY1NTk5N2QtYWQyOS00NjhiLWFhZmYtYWZmZGFlMjEzY2E2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(96, 'The End of the F***ing World', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BN2ZhNmQ2MjQtMmQzMi00YjE5LTlkMWMtMjk5YzIxMjk2NDc2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(97, 'See', 7.6, 1, 'https://m.media-amazon.com/images/M/MV5BYWI2ZmM5ZTgtOTgxYS00MTQ4LThkMjQtZjBlNGM3NjQ5YTI5XkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg'),
-			(98, 'His Dark Materials', 8, 1, 'https://m.media-amazon.com/images/M/MV5BN2RjNWQzNTQtMmY4Yi00Yzk5LWFiODItY2EyZjBmNjZmYmI2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(99, 'Here and Now', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BMTk2NDIwOTg4M15BMl5BanBnXkFtZTgwOTAxMzc1NDM@._V1_SX300.jpg'),
-			(100, 'John from Cincinnati', 7.1, 1, 'https://m.media-amazon.com/images/M/MV5BMTMyNTM2MDYyMF5BMl5BanBnXkFtZTcwOTg4NDA1MQ@@._V1_SX300.jpg'),
-			(101, 'Dracula', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BNTBmNzM4ZGMtMTE3OC00Mjc4LWE3OGEtYzA3ZmQ1MGJkNjMyXkEyXkFqcGdeQXVyNDk3ODk4OQ@@._V1_SX300.jpg'),
-			(102, 'Truth Be Told', 7.1, 1, 'https://m.media-amazon.com/images/M/MV5BOGZiYWEzYmYtYWZkNy00MjAyLWI5MGYtNmVhYWI5MjIwZjgxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
-			(103, 'Watchmen', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BYjhhZDE3NjgtMjkzNC00NzI3LWJhOTItMWQ5ZjljODA5NWNkXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(104, 'Sharp Objects', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BZDk2NzY1MGQtYTA2MS00ZDcxLWJiMzYtNWRmMGU3ZjQ0YTFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(105, 'Patrick Melrose', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BMjIwNzk4OTQ1NV5BMl5BanBnXkFtZTgwMjE0NDMyNTM@._V1_SX300.jpg'),
-			(106, 'Safe', 7.3, 1, 'https://m.media-amazon.com/images/M/MV5BNTRjNTA4YmEtNmU5ZC00YjFjLTk0YzMtNmFhZDI0ZGYxNmI5XkEyXkFqcGdeQXVyMTk3NDAwMzI@._V1_SX300.jpg'),
-			(107, 'The Rain', 6.3, 1, 'https://m.media-amazon.com/images/M/MV5BMGMwMDgxODgtYzJiMC00MWRhLTliODktOTc1NzZiNmM5NGNjXkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_SX300.jpg'),
-			(108, 'Seven Seconds', 7.7, 1, 'https://m.media-amazon.com/images/M/MV5BNzZiN2E4NTAtNWJlOC00ODA0LTgzODQtNGZkM2IxOWMxNDE0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
-			(109, 'Godless', 8.3, 1, 'https://m.media-amazon.com/images/M/MV5BMTY0NzkxNDcxNF5BMl5BanBnXkFtZTgwOTI5ODM5MzI@._V1_SX300.jpg'),
-			(110, '11.22.63', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BMTk1NjE5MjUwM15BMl5BanBnXkFtZTgwODk3NTk2OTE@._V1_SX300.jpg'),
-			(111, 'Generation War', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BMTYwMzIyMjg5M15BMl5BanBnXkFtZTgwNzM1NjI2MDE@._V1_SX300.jpg'),
-			(112, 'Generation Kill', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BMTM2NjAxOTQzNl5BMl5BanBnXkFtZTcwMjk4NzU3MQ@@._V1_SX300.jpg'),
-			(113, 'Planet Earth', 9.4, 1, 'https://m.media-amazon.com/images/M/MV5BNmZlYzIzMTItY2EzYS00YTEyLTg0ZjEtMDMzZjM3ODdhN2UzXkEyXkFqcGdeQXVyNjI0MDg2NzE@._V1_SX300.jpg'),
-			(114, 'The Lost Room', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BOTIzODYzNzMtZTE1ZS00MWRkLThhMTUtYzU4N2M0MDExZTI0XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
-			(115, 'Devs', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BNjFiMTYwNGYtZWUxZS00MjAzLTg2NzctNTc1NTI2MTRhYzc0XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
-			(116, 'The New Pope', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BZGQzZDk2NTgtNTRjMS00MDI0LWIwZWQtNDZjODZhOGI1YzliXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(117, 'The Outsider', 8.4, 1, 'https://m.media-amazon.com/images/M/MV5BNzgxOTc4ODctNDNhZC00M2UzLTgyYzgtM2Q2OTk3NmQ5NTljXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
-			(118, 'Prodigal Son', 7.6, 1, 'https://m.media-amazon.com/images/M/MV5BMDU4MGRlYzctMzk5ZC00NWE0LWJhN2ItMWQ2OWJiODAyYmM3XkEyXkFqcGdeQXVyODU4NjY3NDA@._V1_SX300.jpg'),
-			(119, 'Bard of Blood', 7.4, 1, 'https://m.media-amazon.com/images/M/MV5BNjAzZGI0MDctMTgyYi00NDgwLWFmMjgtNTIyMmZhN2FkM2YxXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
-			(120, 'Unbelievable', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BN2Q3OWQ1Y2UtN2E3OS00ODA2LWE1Y2EtYmY5OWMzNWYzMDZmXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
-			(121, 'Masum', 8.6, 1, 'https://m.media-amazon.com/images/M/MV5BOGViOWQxYTgtMTMzZC00MjQ1LWJjY2YtNWY5ZTYzNjk1MGQ2L2ltYWdlXkEyXkFqcGdeQXVyNDQ2MTMzODA@._V1_SX300.jpg'),
-			(122, 'The Corner', 8.6, 1, 'https://m.media-amazon.com/images/M/MV5BMTI3NzU0ODAwOF5BMl5BanBnXkFtZTYwMDcwOTk5._V1_SX300.jpg'),
-			(123, 'The Pacific', 8.3, 1, 'https://m.media-amazon.com/images/M/MV5BNmEwNmI1MjItNjNjYy00NDE5LWJiNTYtM2QxMTI5ZjllZTBhL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
-			(124, 'Political Animals', 7.8, 1, 'https://m.media-amazon.com/images/M/MV5BMjIxMjY3MjgyNl5BMl5BanBnXkFtZTcwOTc1Mjc5Nw@@._V1_SX300.jpg'),
-			(125, 'Benched', 7.2, 1, 'https://m.media-amazon.com/images/M/MV5BMjA4OTg5NjUwMl5BMl5BanBnXkFtZTgwMTU5ODQxMzE@._V1_SX300.jpg'),
-			(126, 'Collateral', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BNzY2MDg2Njk3MV5BMl5BanBnXkFtZTgwMTE4MTY4NDM@._V1_SX300.jpg'),
-			(127, 'Bodyguard', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BOTQ2YmU5YWYtYTdhMS00YjdmLThlMWMtMWVkZGVmNTVhOWE0XkEyXkFqcGdeQXVyODEyMzI2OTE@._V1_SX300.jpg'),
-			(128, 'Mrs. Fletcher', 6.9, 1, 'https://m.media-amazon.com/images/M/MV5BZTVlMDViYzItMGVhMS00YmQyLTg4ZTAtYjA4ZDZlY2RlNmExXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
-			(129, 'Pack Up Your Troubles (1932)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjczOTYxMjMxNF5BMl5BanBnXkFtZTgwODA4MDI0MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(130, 'Pinocchio (1940)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU4Mzk3ODIyOF5BMl5BanBnXkFtZTgwODgyNzk2NjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(131, 'The Emperors New Groove (2000)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjFkMzk2OWUtNjFmZC00ZTJhLTlkNGYtYjc2YWNkNmJmNzczXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(132, 'The Exorcist (1973)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYzczOGRlMzQtNDAzMS00MjdlLTk5Y2QtNTM3MDE3NjRkYzQwXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(133, 'Jaws (1975)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMmVmODY1MzEtYTMwZC00MzNhLWFkNDMtZjAwM2EwODUxZTA5XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(134, 'Taxi Driver (1976)', 8.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNGQxNDgzZWQtZTNjNi00M2RkLWExZmEtNmE1NjEyZDEwMzA5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(135, 'Star Wars: Episode IV - A New Hope (1977)', 8.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYzQ2OTk4N2QtOGQwNy00MmI3LWEwNmEtOTk0OTY3NDk2MGJkL2ltYWdlL2ltYWdlXkEyXkFqcGdeQXVyNjc1NTYyMjg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(136, 'Holocaust', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NTEzMjkxMV5BMl5BanBnXkFtZTcwMTUzOTAyMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(137, 'Star Wars: Episode V - The Empire Strikes Back (1980)', 8.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYmViY2M2MTYtY2MzOS00YjQ1LWIzYmEtOTBiNjhlMGM0NjZjXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(138, 'The Shining (1980)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(139, 'Star Wars: Episode VI - Return of the Jedi (1983)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODllZjg2YjUtNWEzNy00ZGY2LTgyZmQtYTkxNDYyOWM3OTUyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(140, 'A Nightmare on Elm Street (1984)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzFjZmM1ODgtMDBkMS00NWFlLTg2YmUtZjc3ZTgxMjE1OTI2L2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(141, 'A Nightmare on Elm Street 2: Freddys Revenge (1985)', 5.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZjBmNWNiN2ItYzM0ZC00MWQyLWFmZjctMmZkNTVhMjE1ZjFhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(142, 'A Nightmare on Elm Street 3: Dream Warriors (1987)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BY2UyYjhiNzktNzkzNi00MzVlLWIwMGItMTU4YTY2ZDM5YjgzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(143, 'A Nightmare on Elm Street 4: The Dream Master (1988)', 5.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTM5NWJjNWEtODgwNC00ODM1LWE4NzctMWNlNGNkNjg3NjE0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(144, 'Dead Poets Society (1989)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOGYwYWNjMzgtNGU4ZC00NWQ2LWEwZjUtMzE1Zjc3NjY3YTU1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(145, 'A Nightmare on Elm Street 5: The Dream Child (1989)', 5.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BM2E3YzFhOGItZjRiOC00MTExLTg0YzctOGJmZmMyMTEwMDVkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(146, 'The Woman in Black (1989)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTMzZDA0MTUtODI5YS00ZmE5LTlkMmYtNDNiNTllNmQwYjAzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(147, 'The Civil War', 9.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc0NTY5MzAwOV5BMl5BanBnXkFtZTcwNTk3MzcyMQ@@._V1_UY268_CR6,0,182,268_AL_.jpg'),
-			(148, 'Home Alone (1990)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNmQzYjEzYTQtNzNhZi00NmEwLThiZDMtMWYyNjRmZWY0ZTdkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(149, 'Home Alone 2: Lost in New York (1992)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDI1MzM0Y2YtYmIyMS00ODE3LTlhZjEtZTUyNmEzMTNhZWU5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(150, 'Jurassic Park (1993)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(151, 'The Shawshank Redemption (1994)', 9.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODU4MjU4NjIwNl5BMl5BanBnXkFtZTgwMDU2MjEyMDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(152, 'Clueless (1995)', 6.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTgxODIxODE2MF5BMl5BanBnXkFtZTgwOTA4NjQxMTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(153, 'Pocahontas (1995)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzc4YzhiN2ItY2Y4NC00YTA0LWEyMjEtNzllNTcxZDdjODhiXkEyXkFqcGdeQXVyNTUyMzE4Mzg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(154, 'Home Alone 3 (1997)', 4.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZTJhYjVhOWMtYTUyOS00NWM0LThjNzYtZWYxOTkwN2FhODg2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(155, 'Titanic (1997)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(156, 'The Lord of the Rings: The Fellowship of the Ring (2001)', 8.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNmFmZDdkODMtNzUyMy00NzhhLWFjZmEtMGMzYjNhMDA1NTBkXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_UY268_CR0,0,182,268_AL_.jpg'),
-			(157, 'Star Wars: Episode I - The Phantom Menace (1999)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BM2FmZGIwMzAtZTBkMS00M2JiLTk2MDctM2FlNTQ2OWYwZDZkXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(158, 'Corpse Bride (2005)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk1MTY1NjU4MF5BMl5BanBnXkFtZTcwNjIzMTEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(159, 'Star Wars: Episode II - Attack of the Clones (2002)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDRkYzA4OGYtOTBjYy00YzFiLThhYmYtMWUzMDBmMmZkM2M3XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_UY268_CR10,0,182,268_AL_.jpg'),
-			(160, 'Star Wars: Episode III - Revenge of the Sith (2005)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_UY268_CR9,0,182,268_AL_.jpg'),
-			(161, '10 Things I Hate About You (1999)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMmVhZjhlZDYtMDAwZi00MDcyLTgzOTItOWNiZjY0YmE0MGE0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(162, 'The Lord of the Rings: The Return of the King (2003)', 8.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYWY1ZWQ5YjMtMDE0MS00NWIzLWE1M2YtODYzYTk2OTNlYWZmXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(163, 'The Lord of the Rings: The Two Towers (2002)', 8.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAyNDU0NjY4NTheQTJeQWpwZ15BbWU2MDk4MTY2Nw@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
-			(164, 'Gladiator (2000)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(165, 'Requiem for a Dream (2000)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTdiNzJlOWUtNWMwNS00NmFlLWI0YTEtZmI3YjIzZWUyY2Y3XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(166, 'Pearl Harbor (2001)', 6.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ3MDc0MDc1NF5BMl5BanBnXkFtZTYwODI1ODY2._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(167, 'The Others (2001)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxMDE4Mzc3ODNeQTJeQWpwZ15BbWU4MDY2Mjg4MDcx._V1_UY268_CR0,0,182,268_AL_.jpg'),
-			(168, 'Harry Potter and the Sorcerers Stone (2001)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(169, 'Legally Blonde (2001)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTEyNjUwMTkxMV5BMl5BanBnXkFtZTcwNjk0NDk0NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(170, 'The Pianist (2002)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UY268_CR6,0,182,268_AL_.jpg'),
-			(171, 'Catch Me If You Can (2002)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(172, 'Ice Age (2002)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyNzI1ODA0MF5BMl5BanBnXkFtZTYwODIxODY3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(173, 'A Beautiful Mind (2001)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzcwYWFkYzktZjAzNC00OGY1LWI4YTgtNzc5MzVjMDVmNjY0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(174, 'A Walk to Remember (2002)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzU3NTYxM2MtNjViMS00YmNlLWEwM2MtYWI2MzgzNTkxODFjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(175, 'Harry Potter and the Chamber of Secrets (2002)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxODgwMDkxNV5BMl5BanBnXkFtZTYwMDk2MDg3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(176, 'Harry Potter and the Prisoner of Azkaban (2004)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY4NTIwODg0N15BMl5BanBnXkFtZTcwOTc0MjEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(177, 'Pirates of the Caribbean: The Curse of the Black Pearl (2003)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAyNDM4MTc2N15BMl5BanBnXkFtZTYwNDk0Mjc3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(178, 'Harry Potter and the Goblet of Fire (2005)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTI1NDMyMjExOF5BMl5BanBnXkFtZTcwOTc4MjQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(179, 'Troy (2004)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk5MzU1MDMwMF5BMl5BanBnXkFtZTcwNjczODMzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(180, 'Kal Ho Naa Ho (2003)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxNzU2MDczOV5BMl5BanBnXkFtZTcwNTU5NTk5Mw@@._V1_UY268_CR43,0,182,268_AL_.jpg'),
-			(181, 'Mr. & Mrs. Smith (2005)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUxMzcxNzQzOF5BMl5BanBnXkFtZTcwMzQxNjUyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(182, 'The Secret Life of Walter Mitty (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODYwNDYxNDk1Nl5BMl5BanBnXkFtZTgwOTAwMTk2MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(183, 'Harold & Kumar Go to White Castle (2004)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDc2M2I5MDQtNzliMS00ZmFjLWJmNzEtMTQwYTkxOWI4YzJlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(184, 'Jurassic World (2015)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5MTE0MTk3Nl5BMl5BanBnXkFtZTgwMjczMzk2NTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(185, 'Iron Man (2008)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(186, 'Harry Potter and the Order of the Phoenix (2007)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0NTczMTUzOV5BMl5BanBnXkFtZTYwMzIxNTg3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(187, 'Mean Girls (2004)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE1MDQ4MjI1OV5BMl5BanBnXkFtZTcwNzcwODAzMw@@._V1_UY268_CR3,0,182,268_AL_.jpg'),
-			(188, 'Pirates of the Caribbean: Dead Mans Chest (2006)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcwODc1MTMxM15BMl5BanBnXkFtZTYwMDg1NzY3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(189, 'Saw (2004)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE4MDYzNDE1OV5BMl5BanBnXkFtZTcwNDY2OTYwNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(190, 'The Skeleton Key (2005)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNDYzODE3NF5BMl5BanBnXkFtZTcwMDc1NDAzMQ@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
-			(191, 'Flightplan (2005)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNGJkYTNiZjUtOTBhMi00NjY5LTkwZWEtNjBkNmE1YTZlMDc4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(192, 'Pride & Prejudice (2005)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(193, 'Harry Potter and the Half-Blood Prince (2009)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzU3NDg4NTAyNV5BMl5BanBnXkFtZTcwOTg2ODg1Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(194, 'Saw II (2005)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTRjMDNmNjctNjg4ZC00N2ZkLThkMzMtOWRmYTFhMzA1ZDZlXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(195, 'V for Vendetta (2005)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTI5ODc3NzExNV5BMl5BanBnXkFtZTcwNzYxNzQzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(196, 'The Illusionist (2006)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1MjQyMDkzN15BMl5BanBnXkFtZTcwNzAyNTQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(197, 'Pirates of the Caribbean: At Worlds End (2007)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(198, 'The Pursuit of Happyness (2006)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5NjQ0NDI3NF5BMl5BanBnXkFtZTcwNDI0MjEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(199, 'Shes the Man (2006)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyMzAzMDk1Ml5BMl5BanBnXkFtZTcwNjg0OTEzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(200, 'Captain America: The First Avenger (2011)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(201, 'Step Up (2006)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTIxMDM5Mjc1Nl5BMl5BanBnXkFtZTcwMDkyODQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(202, 'The Dark Knight (2008)', 9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(203, 'The Prestige (2006)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA4NDI0MTIxNF5BMl5BanBnXkFtZTYwNTM0MzY2._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(204, 'Saw III (2006)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg3MzI5NjYxMl5BMl5BanBnXkFtZTcwOTA0NDkzMQ@@._V1_UY268_CR2,0,182,268_AL_.jpg'),
-			(205, 'Saw (2003)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjY3MTU1OGEtZTI4ZS00ZjgyLThlNzctYTJiNjJkNGI3YWNkXkEyXkFqcGdeQXVyMzAzODY0NzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(206, 'Man of Steel (2013)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjI5OTYzNjI0Ml5BMl5BanBnXkFtZTcwMzM1NDA1OQ@@._V1_UY268_CR1,0,182,268_AL_.jpg'),
-			(207, 'Atonement (2007)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0ODc2Mzg1Nl5BMl5BanBnXkFtZTcwMTg4MDU1MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(208, 'The Incredible Hulk (2008)', 6.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUyNzk3MjA1OF5BMl5BanBnXkFtZTcwMTE1Njg2MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(209, 'The Book Thief (2013)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTE3NzkyMjAyNF5BMl5BanBnXkFtZTgwMDc5MTE0MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(210, 'Flipped (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NjQ1Nzc4MF5BMl5BanBnXkFtZTcwNTM0NDk1Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(211, 'Hotel Transylvania (2012)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM3NjQyODI3M15BMl5BanBnXkFtZTcwMDM4NjM0OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(212, 'Cloudy with a Chance of Meatballs (2009)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg0MjAwNDI5MV5BMl5BanBnXkFtZTcwODkyMzg2Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(213, 'The Avengers (2012)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(214, 'Ice Age Columbus: Who Were the First Americans? (2005)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjU3ZDk2YTItNTQxYi00YzUwLWJlODEtNjQ0OWVlOTFmZjQ2XkEyXkFqcGdeQXVyNjc4NzAyODQ@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(215, 'How to Train Your Dragon (2010)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(216, 'How to Train Your Dragon (2010)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(217, 'Harry Potter and the Deathly Hallows: Part 1 (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(218, 'Salt (2010)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyODA2NDg4NV5BMl5BanBnXkFtZTcwMjg4NDAwMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(219, 'Step Up 2: The Streets (2008)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc0NzYxOTgxOF5BMl5BanBnXkFtZTcwMTgxMjc1MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(220, 'Argo (2012)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3MjI0MjM0NF5BMl5BanBnXkFtZTcwMTYxMTQ1OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(221, '[Rec] (2007)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZTJmNTZlZWUtZTQ2Yi00YTFjLWFiNzctYzFlNmZmZGMzYTlmXkEyXkFqcGdeQXVyMjQ2MTk1OTE@._V1_UY268_CR4,0,182,268_AL_.jpg'),
-			(222, 'The Proposal (2009)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MzY1ODIyNV5BMl5BanBnXkFtZTcwNDU4NTE3Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(223, 'Paddington (2014)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxOTMwOTkwNDZeQTJeQWpwZ15BbWU4MDEyMTI1NjMx._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(224, 'Shutter Island (2010)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxMTIyNzMxMV5BMl5BanBnXkFtZTcwOTc4OTI3Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(225, 'Beastly (2011)', 5.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzUzMTcxMTEzNV5BMl5BanBnXkFtZTcwMTcwNjcxNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(226, 'A Nightmare on Elm Street (2010)', 5.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODIxMTQ0NTIxM15BMl5BanBnXkFtZTcwMzY1NDAyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(227, 'Step Up 3D (2010)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDU2NTE4Nl5BMl5BanBnXkFtZTcwNzQ1MTEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(228, 'Diary of a Wimpy Kid (2010)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg3NzQ2NDgyNF5BMl5BanBnXkFtZTcwMDc1NzIyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(229, 'Harry Potter and the Deathly Hallows: Part 2 (2011)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY2MTk3MDQ1N15BMl5BanBnXkFtZTcwMzI4NzA2NQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(230, 'Iron Man 2 (2010)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(231, '21 Jump Street (2012)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3NzQ3OTg3NF5BMl5BanBnXkFtZTcwMjk5OTcxNw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(232, '[Rec] 2 (2009)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTI4MjQ1MDE1MV5BMl5BanBnXkFtZTcwNzIxMDk0Mw@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
-			(233, 'Pirates of the Caribbean: On Stranger Tides (2011)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE5MjkwODI3Nl5BMl5BanBnXkFtZTcwNjcwMDk4NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(234, 'Iron Man Three (2013)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkzMjEzMjY1M15BMl5BanBnXkFtZTcwNTMxOTYyOQ@@._V1_UY268_CR3,0,182,268_AL_.jpg'),
-			(235, 'Despicable Me (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3NjY0MTQ0Nl5BMl5BanBnXkFtZTcwMzQ2MTc0Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(236, 'The Great Gatsby (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxNTk1ODcxNl5BMl5BanBnXkFtZTcwMDI1OTMzOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(237, 'The Dark Knight Rises (2012)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(238, 'Rio (2011)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2MDY3MzAzMl5BMl5BanBnXkFtZTcwMTg0NjM5NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(239, 'Rise of the Guardians (2012)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkzMjgwMDg1M15BMl5BanBnXkFtZTcwMTgzNTI1OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(240, 'The Help (2011)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM5OTMyMjIxOV5BMl5BanBnXkFtZTcwNzU4MjIwNQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(241, 'The Lorax (2012)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MTAwMjk1NF5BMl5BanBnXkFtZTcwMDI5NDc4Ng@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(242, 'Maleficent (2014)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwMzAzMzExOF5BMl5BanBnXkFtZTgwOTcwMDA5MTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(243, 'Warm Bodies (2013)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MjY2MjMzOV5BMl5BanBnXkFtZTcwMDUxNzIwOQ@@._V1._CR43,43.16667175292969,1298,1960.9999542236328_UX182_CR0,0,182,268_AL_.jpg'),
-			(244, 'How to Train Your Dragon 2 (2014)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTAwODczN15BMl5BanBnXkFtZTgwMDk2NDA4MTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(245, 'Diary of a Wimpy Kid: Rodrick Rules (2011)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDYwOTEzMl5BMl5BanBnXkFtZTcwOTA3MzY3NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(246, 'Pacific Rim (2013)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(247, 'The DUFF (2015)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3OTg3MDUwN15BMl5BanBnXkFtZTgwMTAwMTkxNDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(248, 'Now You See Me (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY0NDY3MDMxN15BMl5BanBnXkFtZTcwOTM5NzMzOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(249, 'Despicable Me 2 (2013)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjExNjAyNTcyMF5BMl5BanBnXkFtZTgwODQzMjQ3MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(250, 'Anna Karenina (2012)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU0NDgxNDg0NV5BMl5BanBnXkFtZTcwMjE4MzkwOA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(251, 'American Hustle (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjkxMTc0MDc4N15BMl5BanBnXkFtZTgwODUyNTI1MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(252, 'Captain America: The Winter Soldier (2014)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzA2NDkwODAwM15BMl5BanBnXkFtZTgwODk5MTgzMTE@._V1_UY268_CR1,0,182,268_AL_.jpg'),
-			(253, 'The Edge of Seventeen (2016)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY1NTM1NTQ1OF5BMl5BanBnXkFtZTgwNTk4MTM2MDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(254, 'The Hunger Games: Catching Fire (2013)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAyMjQ3OTAxMzNeQTJeQWpwZ15BbWU4MDU0NzA1MzAx._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(255, 'The Hunger Games: Mockingjay - Part 1 (2014)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDI2NDAzNl5BMl5BanBnXkFtZTgwODM3MTc2MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(256, 'The Hunger Games: Mockingjay - Part 2 (2015)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjQzNDI2NTU1Ml5BMl5BanBnXkFtZTgwNTAyMDQ5NjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(257, 'Cloudy with a Chance of Meatballs 2 (2013)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTYzNDM0MDI1NF5BMl5BanBnXkFtZTcwNzQ5NzYxOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(258, 'Guardians of the Galaxy (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(259, 'Diary of a Wimpy Kid: Dog Days (2012)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc2MTk4MTk4Nl5BMl5BanBnXkFtZTcwMzgzOTY2Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(260, 'Ice Age: A Mammoth Christmas (2011)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYTMzMjZhNjAtZDBmMS00MzA0LTljNjUtZGNlMGNiYTc5ODg4XkEyXkFqcGdeQXVyNTE0MDY4Mjk@._V1_UY268_CR4,0,182,268_AL_.jpg'),
-			(261, 'Batman: The Dark Knight Returns Part 2 (2013)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ1Mjk1NTY2NV5BMl5BanBnXkFtZTgwMTA2MDEwNzE@._V1_UY268_CR3,0,182,268_AL_.jpg'),
-			(262, 'Dead Souls (2012)', 4.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwMDc0OTk0OF5BMl5BanBnXkFtZTcwNDUzODI5Nw@@._V1_UY268_CR12,0,182,268_AL_.jpg'),
-			(263, 'Big Hero 6 (2014)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDliOTIzNmUtOTllOC00NDU3LWFiNjYtMGM0NDc1YTMxNjYxXkEyXkFqcGdeQXVyNTM3NzExMDQ@._V1_UY268_CR3,0,182,268_AL_.jpg'),
-			(264, 'Gone Girl (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk0MDQ3MzAzOV5BMl5BanBnXkFtZTgwNzU1NzE3MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(265, 'The Grand Budapest Hotel (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(266, 'Batman: The Dark Knight Returns Part 1 (2012)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzIxMDkxNDM2M15BMl5BanBnXkFtZTcwMDA5ODY1OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(267, 'Rio 2 (2014)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTgzMDczMDYzNl5BMl5BanBnXkFtZTgwMzk2MDIwMTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(268, 'Avengers: Age of Ultron (2015)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(269, 'The Heat (2013)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA2MDQ2ODM3MV5BMl5BanBnXkFtZTcwNDUzMTQ3OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(270, 'Star Wars: Episode VII - The Force Awakens (2015)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(271, 'Hotel Transylvania 2 (2015)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEzNzc4NzEyMV5BMl5BanBnXkFtZTgwMTAxMDQ2NTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(272, 'Blackfish (2013)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTkyNTkwMzkxMl5BMl5BanBnXkFtZTcwMzAwOTE2OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(273, 'John Wick (2014)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(274, 'Zootopia (2016)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(275, 'Spy (2015)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjI5OTQ0MDQxM15BMl5BanBnXkFtZTgwMzcwNjMyNTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(276, 'Now You See Me 2 (2016)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzQ0NDgwODQ3NV5BMl5BanBnXkFtZTgwOTYxNjc2ODE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(277, 'Avengers Confidential: Black Widow & Punisher (2014)', 5.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2MDg0Njk4MF5BMl5BanBnXkFtZTgwMTY0OTIyMTE@._V1_UY268_CR19,0,182,268_AL_.jpg'),
-			(278, 'Captain America: Civil War (2016)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(279, 'The Girl on the Train (2016)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzFlMjA0ZmUtZWI0Mi00ZGJkLTlmMmYtZmE1ODZiMjhjMGM0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg'),
-			(280, 'Avengers Grimm (2015)', 2.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg5NDEzNDIyOV5BMl5BanBnXkFtZTgwODY3ODA5MzE@._V1_UY268_CR4,0,182,268_AL_.jpg');
+            (2, 'The Simpsons', 8.7, 31, 'https://m.media-amazon.com/images/M/MV5BYjFkMTlkYWUtZWFhNy00M2FmLThiOTYtYTRiYjVlZWYxNmJkXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
+            (3, 'Supernatural', 8.4, 15, 'https://m.media-amazon.com/images/M/MV5BMTJhM2VhZDItMTk4OS00MTRjLTlmMDQtNzEyYmM0NDA0YjhjXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (4, 'Doctor Who', 8.6, 12, 'https://m.media-amazon.com/images/M/MV5BZWJhYjFmZDEtNTVlYy00NGExLWJhZWItNTAxODY5YTc3MDFmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (5, 'The Walking Dead', 8.2, 11, 'https://m.media-amazon.com/images/M/MV5BYTUwOTM3ZGUtMDZiNy00M2I3LWI1ZWEtYzhhNGMyZjI3MjBmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (6, 'Friends', 8.9, 10, 'https://m.media-amazon.com/images/M/MV5BNDVkYjU0MzctMWRmZi00NTkxLTgwZWEtOWVhYjZlYjllYmU4XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
+            (7, 'Suits', 8.5, 9, 'https://m.media-amazon.com/images/M/MV5BNmVmMmM5ZmItZDg0OC00NTFiLWIxNzctZjNmYTY5OTU3ZWU3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
+            (8, 'The Office', 8.8, 9, 'https://m.media-amazon.com/images/M/MV5BMDNkOTE4NDQtMTNmYi00MWE0LWE4ZTktYTc0NzhhNWIzNzJiXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (9, 'Game of Thrones', 9.5, 8, 'https://m.media-amazon.com/images/M/MV5BMjA5NzA5NjMwNl5BMl5BanBnXkFtZTgwNjg2OTk2NzM@._V1_SX300.jpg'),
+            (10, 'The Blacklist', 8, 8, 'https://m.media-amazon.com/images/M/MV5BZDU1OGI3NWItZTliOS00OWYxLTliNDktYTFjODcxNmE1NTNmXkEyXkFqcGdeQXVyODUxOTU0OTg@._V1_SX300.jpg'),
+            (11, 'Monk', 7.9, 8, 'https://m.media-amazon.com/images/M/MV5BM2M4NjM0N2QtMDlmNi00NzNkLWEyYjItOTczMjk1ZjU2NDdiXkEyXkFqcGdeQXVyNzA5NjUyNjM@._V1_SX300.jpg'),
+            (12, 'Psych', 8.3, 8, 'https://m.media-amazon.com/images/M/MV5BYzRkOWRmNGUtYzM0Zi00ZGRkLThhMjktNmI4NDYwZDVmODBkXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
+            (13, 'Ray Donovan', 8.3, 7, 'https://m.media-amazon.com/images/M/MV5BYWY1MTE2MmItNzQyNi00YThjLWE4ZDctMDA0ZGE3OWJhYTMzXkEyXkFqcGdeQXVyOTA3MTMyOTk@._V1_SX300.jpg'),
+            (14, 'The Mentalist', 8.1, 7, 'https://m.media-amazon.com/images/M/MV5BMTQ5OTgzOTczM15BMl5BanBnXkFtZTcwMDM2OTY4MQ@@._V1_SX300.jpg'),
+            (15, 'Arli$$', 7, 7, 'https://m.media-amazon.com/images/M/MV5BNzIxNzkwMDgyN15BMl5BanBnXkFtZTcwMDAxOTcxMQ@@._V1_SX300.jpg'),
+            (16, 'Mad Men', 8.6, 7, 'https://m.media-amazon.com/images/M/MV5BMjMwNzk5Nzg2OV5BMl5BanBnXkFtZTgwMjg1OTk1NDE@._V1_SX300.jpg'),
+            (17, 'Burn Notice', 7.9, 7, 'https://m.media-amazon.com/images/M/MV5BMTczMzg4NjU1Ml5BMl5BanBnXkFtZTcwODc4NzY5Nw@@._V1_SX300.jpg'),
+            (18, 'Parks and Recreation', 8.6, 7, 'https://m.media-amazon.com/images/M/MV5BMjA5MjUxNDgwNF5BMl5BanBnXkFtZTgwMDI5NjMwNDE@._V1_SX300.jpg'),
+            (19, 'Veep', 8.3, 7, 'https://m.media-amazon.com/images/M/MV5BMjE2NDM0OTEwMl5BMl5BanBnXkFtZTgwNzgwNDI0ODE@._V1_SX300.jpg'),
+            (20, 'Better Call Saul', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BMGE4YzY4NGEtOWYyYS00ZDk2LWExMmMtZDIyODhiMmNlMGE0XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (21, 'Vikings', 8.6, 6, 'https://m.media-amazon.com/images/M/MV5BNjIzZjljZmQtOGNiYi00YmY2LWE1MGYtN2VlMmEyZDBlMzRmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (22, 'Cable Girls', 7.7, 6, 'https://m.media-amazon.com/images/M/MV5BYmRhMWM4NzQtNTE1OS00NWMxLTgzYzYtMTllZTcyY2NjZDgxXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (23, 'The Flash', 7.8, 6, 'https://m.media-amazon.com/images/M/MV5BNTM4YThiMzktMDRlNi00NzAyLWI1YmQtNTdkMTNiN2Q0NzU1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (24, 'Power', 8.2, 6, 'https://m.media-amazon.com/images/M/MV5BYjllZjcwNjItMzc1OC00YjRkLWI5YzUtODM1YmEzNjFiYzNhXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg'),
+            (25, 'Silicon Valley', 8.5, 6, 'https://m.media-amazon.com/images/M/MV5BOTcwNzU2MGEtMzUzNC00MzMwLWJhZGItNDY3NDllYjU5YzAyXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (26, 'House of Cards', 8.8, 6, 'https://m.media-amazon.com/images/M/MV5BODM1MDU2NjY5NF5BMl5BanBnXkFtZTgwMDkxNTcwNjM@._V1_SX300.jpg'),
+            (27, 'BoJack Horseman', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BYWQwMDNkM2MtODU4OS00OTY3LTgwOTItNjE2Yzc0MzRkMDllXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (28, 'Oz', 8.7, 6, 'https://m.media-amazon.com/images/M/MV5BY2ZjNGZiZWUtMDM5ZS00NWUwLWEwZTItZjRmZGVkOTkzMmI4XkEyXkFqcGdeQXVyNDIzMzcwNjc@._V1_SX300.jpg'),
+            (29, 'Sex and the City', 7.1, 6, 'https://m.media-amazon.com/images/M/MV5BNGEyNDRjM2QtY2VlYy00OWRhLWI4N2UtZTM4NDc0MGM0YzBkXkEyXkFqcGdeQXVyNjk1Njg5NTA@._V1_SX300.jpg'),
+            (30, 'White Collar', 8.2, 6, 'https://m.media-amazon.com/images/M/MV5BNDI5MDgyMTYzNF5BMl5BanBnXkFtZTcwMjAwNzk1Mw@@._V1_SX300.jpg'),
+            (31, 'Girls', 7.3, 6, 'https://m.media-amazon.com/images/M/MV5BMTU1Mzk2ODEzN15BMl5BanBnXkFtZTgwNDQwMjAxMTI@._V1_SX300.jpg'),
+            (32, 'DCs Legends of Tomorrow', 6.8, 6, 'https://m.media-amazon.com/images/M/MV5BMTc1NTA2YWMtOTc1ZC00ZDk0LThmZDktODhhZjZiMjdkYmNkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (33, 'Peaky Blinders', 8.8, 5, 'https://m.media-amazon.com/images/M/MV5BMTkzNjEzMDEzMF5BMl5BanBnXkFtZTgwMDI0MjE4MjE@._V1_SX300.jpg'),
+            (34, 'Breaking Bad', 9.5, 5, 'https://m.media-amazon.com/images/M/MV5BMjhiMzgxZTctNDc1Ni00OTIxLTlhMTYtZTA3ZWFkODRkNmE2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX300.jpg'),
+            (35, 'The Wire', 9.3, 5, 'https://m.media-amazon.com/images/M/MV5BZmY5ZDMxODEtNWIwOS00NjdkLTkyMjktNWRjMDhmYjJjN2RmXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
+            (36, 'Six Feet Under', 8.7, 5, 'https://m.media-amazon.com/images/M/MV5BMTQzODk5N2UtYjE4ZC00YWM1LWJkMGYtYmY2NjNjMjIzZDRmXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg'),
+            (37, 'Big Love', 7.5, 5, 'https://m.media-amazon.com/images/M/MV5BMTkxMjEzNTE0Ml5BMl5BanBnXkFtZTcwNTM3MDAzNA@@._V1_SX300.jpg'),
+            (38, 'Boardwalk Empire', 8.5, 5, 'https://m.media-amazon.com/images/M/MV5BYTYxNzc5ZmYtODcyNi00ZWUwLWExNWUtY2Y0YTlhZDBlMGU1XkEyXkFqcGdeQXVyNzQ1ODk3MTQ@._V1_SX300.jpg'),
+            (39, 'Prison Break', 8.3, 5, 'https://m.media-amazon.com/images/M/MV5BMTg3NTkwNzAxOF5BMl5BanBnXkFtZTcwMjM1NjI5MQ@@._V1_SX300.jpg'),
+            (40, 'Black Mirror', 8.8, 5, 'https://m.media-amazon.com/images/M/MV5BYTM3YWVhMDMtNjczMy00NGEyLWJhZDctYjNhMTRkNDE0ZTI1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (41, 'Luther', 8.5, 5, 'https://m.media-amazon.com/images/M/MV5BYTdhNWMwYTMtNzQ3OC00ODZjLWI0YzQtYjVlODZiOWVlYTJlXkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_SX300.jpg'),
+            (42, 'In Plain Sight', 7.2, 5, 'https://m.media-amazon.com/images/M/MV5BNDQxNzM5NzU0OF5BMl5BanBnXkFtZTcwNDg0MjY0Mg@@._V1_SX300.jpg'),
+            (43, 'Covert Affairs', 7.3, 5, 'https://m.media-amazon.com/images/M/MV5BMTM3Nzk5Njc3M15BMl5BanBnXkFtZTcwMTUxNzc4Nw@@._V1_SX300.jpg'),
+            (44, 'Ballers', 7.6, 5, 'https://m.media-amazon.com/images/M/MV5BYzM5NDRkNzItN2FkZC00ZjQyLTlmYzctYmNiNTA4YzIxYTg2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (45, 'The Magicians', 7.6, 5, 'https://m.media-amazon.com/images/M/MV5BYTU3ZWRmNDktMDQ0My00OGQzLTkzMzktOTVjZjUzMzVmNjNmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (46, 'The Crown', 8.7, 4, 'https://m.media-amazon.com/images/M/MV5BNGI1ODkzZDQtZTYxYS00MTg1LWFlY2QtMTM5MGNhNWRhYmVmXkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
+            (47, 'Preacher', 8, 4, 'https://m.media-amazon.com/images/M/MV5BNzIyMDY4NmUtMGRhZS00ZjE4LWI5YWYtYTYxMzcwZWNlZWRkXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (48, 'Lucifer', 8.2, 4, 'https://m.media-amazon.com/images/M/MV5BZTA2NTBkYWUtMzM4Zi00YzhlLTk4NWItY2U1ODczNDMyNDAzXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'),
+            (49, 'American Crime Story', 8.4, 4, 'https://m.media-amazon.com/images/M/MV5BNzc2MzJmM2ItMjgzYy00MjgxLTljYjctZjJhYzM1ODFhMzU0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (50, 'Fargo', 8.9, 4, 'https://m.media-amazon.com/images/M/MV5BMTg5NTYxNjkyNl5BMl5BanBnXkFtZTgwNzY1Mjg4MTI@._V1_SX300.jpg'),
+            (51, 'Killing Eve', 8.3, 4, 'https://m.media-amazon.com/images/M/MV5BZDE0NTc0NjMtNDc2Mi00NTY2LWJiNTItNDBlOWQxMTM5ZmMyXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (52, 'This Is Us', 8.7, 4, 'https://m.media-amazon.com/images/M/MV5BMDM2YTMzMWMtNmFhZi00ZWY4LTk1ZmUtMWExNzg3NDZmMTY4XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (53, 'Channel Zero', 7.2, 4, 'https://m.media-amazon.com/images/M/MV5BMjExMTMxNjMwNl5BMl5BanBnXkFtZTgwNDA2OTYzNjM@._V1_SX300.jpg'),
+            (54, 'Dark', 8.7, 3, 'https://m.media-amazon.com/images/M/MV5BMmIyZjA3NGUtYjlhNS00ZDlkLWI0MDgtMDc2YWNjNGMwYWZhXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
+            (55, 'True Detective', 9, 3, 'https://m.media-amazon.com/images/M/MV5BMTUwMGM2ZmYtZGEyZC00OWQyLWI2Y2QtMTdjYzMxZGJmNjhjXkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
+            (56, 'Westworld', 8.7, 3, 'https://m.media-amazon.com/images/M/MV5BYjQwODU3ZDgtNmNmNC00YWRmLTk0MmYtYTdhYzY0M2I0Mzk1XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (57, 'The Good Doctor', 8.2, 3, 'https://m.media-amazon.com/images/M/MV5BMmUyNTQwYjItMzc5Ny00MDg4LWIxMTMtNDBmNjQ0MmIwNjNmXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (58, 'In Treatment', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BNjM4NzMzMDI1NF5BMl5BanBnXkFtZTcwOTE2MTMwNA@@._V1_SX300.jpg'),
+            (59, 'Stranger Things', 8.8, 3, 'https://m.media-amazon.com/images/M/MV5BZGExYjQzNTQtNGNhMi00YmY1LTlhY2MtMTRjODg3MjU4YTAyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (60, 'The Sinner', 8, 3, 'https://m.media-amazon.com/images/M/MV5BODIwYmE0MGQtYmNhMS00ZjM4LWJkMzAtNjg5YzI4MzZjMjg3XkEyXkFqcGdeQXVyNjU2ODM5MjU@._V1_SX300.jpg'),
+            (61, 'Atypical', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BYjg1ZmQ0ZDktMjNhZS00MDJjLTllZTItMmIyYTBkYjM2MzQzXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (62, '13 Reasons Why', 7.8, 3, 'https://m.media-amazon.com/images/M/MV5BMTA2OTQxNzQtMDQ5OC00NDczLWFhYjEtN2UyMmIwNGZlZDM4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (63, 'The Good Fight', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BODc2MDE2NTEyNl5BMl5BanBnXkFtZTgwMjIwNjUzNzM@._V1_SX300.jpg'),
+            (64, 'Dope', 7.3, 3, 'https://m.media-amazon.com/images/M/MV5BYmQ3YzNhYjktZDcwMy00ZTI4LWI0ODEtZWJhZDcxNjA0MGFiXkEyXkFqcGdeQXVyNjgwMTgyODE@._V1_SX300.jpg'),
+            (65, 'Shooter', 7.5, 3, 'https://m.media-amazon.com/images/M/MV5BNmViMGQzMzMtNzgyYy00YzA4LWIzYzAtYmU5OTA4YWJjZWNjXkEyXkFqcGdeQXVyNjgyMjQ2NjM@._V1_SX300.jpg'),
+            (66, 'Sneaky Pete', 8.2, 3, 'https://m.media-amazon.com/images/M/MV5BMTc2OTExNDE3MF5BMl5BanBnXkFtZTgwMzk2MjU5NzM@._V1_SX300.jpg'),
+            (67, 'Jessica Jones', 8, 3, 'https://m.media-amazon.com/images/M/MV5BM2QyNmZkNTYtZWQyZi00NDhhLWEzMDItYmIzY2U4ZWVmOWNhXkEyXkFqcGdeQXVyNDg4NjY5OTQ@._V1_SX300.jpg'),
+            (68, 'Narcos', 8.8, 3, 'https://m.media-amazon.com/images/M/MV5BNmFjODU3YzgtMGUwNC00ZGI3LWFkZjQtMjkxZDc3NmQ1MzcyXkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_SX300.jpg'),
+            (69, 'Deadwood', 8.6, 3, 'https://m.media-amazon.com/images/M/MV5BNDJhMjUzMDYtNzc4MS00Nzk2LTkyMGQtN2M5NTczYTZmYmY5XkEyXkFqcGdeQXVyMzU3MTc5OTE@._V1_SX300.jpg'),
+            (70, 'Harlots', 7.7, 3, 'https://m.media-amazon.com/images/M/MV5BMTY5MDgyMjY2M15BMl5BanBnXkFtZTgwMzAzNDQ4NTM@._V1_SX300.jpg'),
+            (71, 'The Newsroom', 8.6, 3, 'https://m.media-amazon.com/images/M/MV5BZjg5OGU2OGMtNTM3ZC00YTEzLWFmZjMtOWQ3NGI5YjIzODJlXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_SX300.jpg'),
+            (72, 'Graceland', 7.7, 3, 'https://m.media-amazon.com/images/M/MV5BMTQzNjM5OTc5NV5BMl5BanBnXkFtZTgwMjExMTg5MTE@._V1_SX300.jpg'),
+            (73, 'Sex Education', 8.3, 3, 'https://m.media-amazon.com/images/M/MV5BZjgyMzFiMDgtNWNmMS00ZDEyLTkzYzgtMjMzZjk4YjhjZWUxXkEyXkFqcGdeQXVyNDg4MjkzNDk@._V1_SX300.jpg'),
+            (74, 'You', 7.8, 2, 'https://m.media-amazon.com/images/M/MV5BZDJjOTg4OWYtYWIyOS00MjQ3LTg5ZDktYzU2N2RkNmYzNjZlXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (75, 'The Purge', 6.4, 2, 'https://m.media-amazon.com/images/M/MV5BMjk1YWE0OWYtMzYwMi00MGZhLTkyMGMtMzU1YjRlZjE1OWQyXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
+            (76, 'The Witcher', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BOGE4MmVjMDgtMzIzYy00NjEwLWJlODMtMDI1MGY2ZDlhMzE2XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
+            (77, 'Big Little Lies', 8.5, 2, 'https://m.media-amazon.com/images/M/MV5BZmNjYzdjN2ItOTBlNy00Mjc0LWE4YmMtYTQ4ZjQzNTMyNDc4XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (78, 'Kingdom', 8.2, 2, 'https://m.media-amazon.com/images/M/MV5BMmMzYzE5NzctZGZmZC00MmVkLTllMWUtZDY3YzIzYWEyMTIxXkEyXkFqcGdeQXVyNTI2MzI4NTU@._V1_SX300.jpg'),
+            (79, 'Servant', 7.7, 2, 'https://m.media-amazon.com/images/M/MV5BNjQ2MzIzMGMtN2I4Yi00NzdkLWE1NTAtMTI0NWZiNzAwMDM5XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (80, 'Dirty Money', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BZWVmYjJlZjgtMzU4YS00MDQxLWJmYjQtNTcyMjJkMDNmOTZkXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (81, 'Britannia', 6.7, 2, 'https://m.media-amazon.com/images/M/MV5BOTI3OGY1MGQtNTdlMS00Yzg5LTk1MDItMzRmNDhlMTFmYmM4XkEyXkFqcGdeQXVyOTA0ODk2NTc@._V1_SX300.jpg'),
+            (82, 'The Punisher', 8.5, 2, 'https://m.media-amazon.com/images/M/MV5BMTExODIwOTUxNzFeQTJeQWpwZ15BbWU4MDE5MDA0MTcz._V1_SX300.jpg'),
+            (83, 'Bad Blood', 7.5, 2, 'https://m.media-amazon.com/images/M/MV5BMzRmNzZkMmMtMzU5YS00ZThhLWE2YzItZTNhNGMwMmI1MjQyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (84, 'Genius', 8.4, 2, 'https://m.media-amazon.com/images/M/MV5BNTkwYzVjZjEtODI2NS00ZDk5LTliNWItMzJiYzYwM2RiNjNhXkEyXkFqcGdeQXVyNzg5MzIyOA@@._V1_SX300.jpg'),
+            (85, 'Utopia', 8.4, 2, 'https://m.media-amazon.com/images/M/MV5BMjMwMTA5NDc5M15BMl5BanBnXkFtZTgwMjQ4MTY0MjE@._V1_SX300.jpg'),
+            (86, 'The Bridge', 7.6, 2, 'https://m.media-amazon.com/images/M/MV5BMTQyNjEzMjIyMV5BMl5BanBnXkFtZTgwMTg0NjYxMjE@._V1_SX300.jpg'),
+            (87, 'Amazing Stories', 7.4, 2, 'https://m.media-amazon.com/images/M/MV5BYzBkMTEzZDktYmQyMS00ZDE5LWI5MWUtMGEwYzQ3ZjJhYjMxXkEyXkFqcGdeQXVyMjIzMTQ5NjE@._V1_SX300.jpg'),
+            (88, 'Pose', 8.6, 2, 'https://m.media-amazon.com/images/M/MV5BMjQwMTQ0MTIxNl5BMl5BanBnXkFtZTgwMDYzNjYwODM@._V1_SX300.jpg'),
+            (89, 'Homecoming', 7.5, 2, 'https://m.media-amazon.com/images/M/MV5BMTZlZDM2YjAtYzdjNS00ZDQxLTgyZTQtYTY0ZDdlYWExMGMxXkEyXkFqcGdeQXVyMDA4NzMyOA@@._V1_SX300.jpg'),
+            (90, 'Mindhunter', 8.6, 2, 'https://m.media-amazon.com/images/M/MV5BNWNmYzQ1ZWUtYTQ3ZS00Y2UwLTlkMDctZThlOTJkMGJiNzBiXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX300.jpg'),
+            (91, 'The Exorcist', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BMjEzNjI5Njg4MV5BMl5BanBnXkFtZTgwMjkwMjU2MzI@._V1_SX300.jpg'),
+            (92, 'Sense8', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BMjA4MTEyMzcwMl5BMl5BanBnXkFtZTgwMTIwODczNTM@._V1_SX300.jpg'),
+            (93, 'Rome', 8.7, 2, 'https://m.media-amazon.com/images/M/MV5BZTM4NjBkMWEtZDA4My00MzA0LWI0ZWMtNzUwYWVhOThiMTgwXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
+            (94, 'Vice Principals', 8, 2, 'https://m.media-amazon.com/images/M/MV5BMjQ2MjY0ODI4M15BMl5BanBnXkFtZTgwNTY3MjQyMzI@._V1_SX300.jpg'),
+            (95, 'Barry', 8.3, 2, 'https://m.media-amazon.com/images/M/MV5BMmY1NTk5N2QtYWQyOS00NjhiLWFhZmYtYWZmZGFlMjEzY2E2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (96, 'The End of the F***ing World', 8.1, 2, 'https://m.media-amazon.com/images/M/MV5BN2ZhNmQ2MjQtMmQzMi00YjE5LTlkMWMtMjk5YzIxMjk2NDc2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (97, 'See', 7.6, 1, 'https://m.media-amazon.com/images/M/MV5BYWI2ZmM5ZTgtOTgxYS00MTQ4LThkMjQtZjBlNGM3NjQ5YTI5XkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg'),
+            (98, 'His Dark Materials', 8, 1, 'https://m.media-amazon.com/images/M/MV5BN2RjNWQzNTQtMmY4Yi00Yzk5LWFiODItY2EyZjBmNjZmYmI2XkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (99, 'Here and Now', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BMTk2NDIwOTg4M15BMl5BanBnXkFtZTgwOTAxMzc1NDM@._V1_SX300.jpg'),
+            (100, 'John from Cincinnati', 7.1, 1, 'https://m.media-amazon.com/images/M/MV5BMTMyNTM2MDYyMF5BMl5BanBnXkFtZTcwOTg4NDA1MQ@@._V1_SX300.jpg'),
+            (101, 'Dracula', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BNTBmNzM4ZGMtMTE3OC00Mjc4LWE3OGEtYzA3ZmQ1MGJkNjMyXkEyXkFqcGdeQXVyNDk3ODk4OQ@@._V1_SX300.jpg'),
+            (102, 'Truth Be Told', 7.1, 1, 'https://m.media-amazon.com/images/M/MV5BOGZiYWEzYmYtYWZkNy00MjAyLWI5MGYtNmVhYWI5MjIwZjgxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg'),
+            (103, 'Watchmen', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BYjhhZDE3NjgtMjkzNC00NzI3LWJhOTItMWQ5ZjljODA5NWNkXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (104, 'Sharp Objects', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BZDk2NzY1MGQtYTA2MS00ZDcxLWJiMzYtNWRmMGU3ZjQ0YTFjXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (105, 'Patrick Melrose', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BMjIwNzk4OTQ1NV5BMl5BanBnXkFtZTgwMjE0NDMyNTM@._V1_SX300.jpg'),
+            (106, 'Safe', 7.3, 1, 'https://m.media-amazon.com/images/M/MV5BNTRjNTA4YmEtNmU5ZC00YjFjLTk0YzMtNmFhZDI0ZGYxNmI5XkEyXkFqcGdeQXVyMTk3NDAwMzI@._V1_SX300.jpg'),
+            (107, 'The Rain', 6.3, 1, 'https://m.media-amazon.com/images/M/MV5BMGMwMDgxODgtYzJiMC00MWRhLTliODktOTc1NzZiNmM5NGNjXkEyXkFqcGdeQXVyODc0OTEyNDU@._V1_SX300.jpg'),
+            (108, 'Seven Seconds', 7.7, 1, 'https://m.media-amazon.com/images/M/MV5BNzZiN2E4NTAtNWJlOC00ODA0LTgzODQtNGZkM2IxOWMxNDE0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg'),
+            (109, 'Godless', 8.3, 1, 'https://m.media-amazon.com/images/M/MV5BMTY0NzkxNDcxNF5BMl5BanBnXkFtZTgwOTI5ODM5MzI@._V1_SX300.jpg'),
+            (110, '11.22.63', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BMTk1NjE5MjUwM15BMl5BanBnXkFtZTgwODk3NTk2OTE@._V1_SX300.jpg'),
+            (111, 'Generation War', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BMTYwMzIyMjg5M15BMl5BanBnXkFtZTgwNzM1NjI2MDE@._V1_SX300.jpg'),
+            (112, 'Generation Kill', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BMTM2NjAxOTQzNl5BMl5BanBnXkFtZTcwMjk4NzU3MQ@@._V1_SX300.jpg'),
+            (113, 'Planet Earth', 9.4, 1, 'https://m.media-amazon.com/images/M/MV5BNmZlYzIzMTItY2EzYS00YTEyLTg0ZjEtMDMzZjM3ODdhN2UzXkEyXkFqcGdeQXVyNjI0MDg2NzE@._V1_SX300.jpg'),
+            (114, 'The Lost Room', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BOTIzODYzNzMtZTE1ZS00MWRkLThhMTUtYzU4N2M0MDExZTI0XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
+            (115, 'Devs', 8.1, 1, 'https://m.media-amazon.com/images/M/MV5BNjFiMTYwNGYtZWUxZS00MjAzLTg2NzctNTc1NTI2MTRhYzc0XkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
+            (116, 'The New Pope', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BZGQzZDk2NTgtNTRjMS00MDI0LWIwZWQtNDZjODZhOGI1YzliXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (117, 'The Outsider', 8.4, 1, 'https://m.media-amazon.com/images/M/MV5BNzgxOTc4ODctNDNhZC00M2UzLTgyYzgtM2Q2OTk3NmQ5NTljXkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),
+            (118, 'Prodigal Son', 7.6, 1, 'https://m.media-amazon.com/images/M/MV5BMDU4MGRlYzctMzk5ZC00NWE0LWJhN2ItMWQ2OWJiODAyYmM3XkEyXkFqcGdeQXVyODU4NjY3NDA@._V1_SX300.jpg'),
+            (119, 'Bard of Blood', 7.4, 1, 'https://m.media-amazon.com/images/M/MV5BNjAzZGI0MDctMTgyYi00NDgwLWFmMjgtNTIyMmZhN2FkM2YxXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg'),
+            (120, 'Unbelievable', 8.5, 1, 'https://m.media-amazon.com/images/M/MV5BN2Q3OWQ1Y2UtN2E3OS00ODA2LWE1Y2EtYmY5OWMzNWYzMDZmXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
+            (121, 'Masum', 8.6, 1, 'https://m.media-amazon.com/images/M/MV5BOGViOWQxYTgtMTMzZC00MjQ1LWJjY2YtNWY5ZTYzNjk1MGQ2L2ltYWdlXkEyXkFqcGdeQXVyNDQ2MTMzODA@._V1_SX300.jpg'),
+            (122, 'The Corner', 8.6, 1, 'https://m.media-amazon.com/images/M/MV5BMTI3NzU0ODAwOF5BMl5BanBnXkFtZTYwMDcwOTk5._V1_SX300.jpg'),
+            (123, 'The Pacific', 8.3, 1, 'https://m.media-amazon.com/images/M/MV5BNmEwNmI1MjItNjNjYy00NDE5LWJiNTYtM2QxMTI5ZjllZTBhL2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_SX300.jpg'),
+            (124, 'Political Animals', 7.8, 1, 'https://m.media-amazon.com/images/M/MV5BMjIxMjY3MjgyNl5BMl5BanBnXkFtZTcwOTc1Mjc5Nw@@._V1_SX300.jpg'),
+            (125, 'Benched', 7.2, 1, 'https://m.media-amazon.com/images/M/MV5BMjA4OTg5NjUwMl5BMl5BanBnXkFtZTgwMTU5ODQxMzE@._V1_SX300.jpg'),
+            (126, 'Collateral', 6.8, 1, 'https://m.media-amazon.com/images/M/MV5BNzY2MDg2Njk3MV5BMl5BanBnXkFtZTgwMTE4MTY4NDM@._V1_SX300.jpg'),
+            (127, 'Bodyguard', 8.2, 1, 'https://m.media-amazon.com/images/M/MV5BOTQ2YmU5YWYtYTdhMS00YjdmLThlMWMtMWVkZGVmNTVhOWE0XkEyXkFqcGdeQXVyODEyMzI2OTE@._V1_SX300.jpg'),
+            (128, 'Mrs. Fletcher', 6.9, 1, 'https://m.media-amazon.com/images/M/MV5BZTVlMDViYzItMGVhMS00YmQyLTg4ZTAtYjA4ZDZlY2RlNmExXkEyXkFqcGdeQXVyMzY0MTE3NzU@._V1_SX300.jpg'),
+            (129, 'Pack Up Your Troubles (1932)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjczOTYxMjMxNF5BMl5BanBnXkFtZTgwODA4MDI0MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (130, 'Pinocchio (1940)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU4Mzk3ODIyOF5BMl5BanBnXkFtZTgwODgyNzk2NjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (131, 'The Emperors New Groove (2000)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjFkMzk2OWUtNjFmZC00ZTJhLTlkNGYtYjc2YWNkNmJmNzczXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (132, 'The Exorcist (1973)', 8, 0, 'https://i.pinimg.com/originals/9d/06/37/9d06378b2a966b7bede6f1b96b4fb55c.jpg'),
+            (133, 'Jaws (1975)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMmVmODY1MzEtYTMwZC00MzNhLWFkNDMtZjAwM2EwODUxZTA5XkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (134, 'Taxi Driver (1976)', 8.3, 0, 'https://m.media-amazon.com/images/M/MV5BM2M1MmVhNDgtNmI0YS00ZDNmLTkyNjctNTJiYTQ2N2NmYzc2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg'),
+            (135, 'Star Wars: Episode IV - A New Hope (1977)', 8.7, 0, 'https://m.media-amazon.com/images/M/MV5BNzVlY2MwMjktM2E4OS00Y2Y3LWE3ZjctYzhkZGM3YzA1ZWM2XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg'),
+            (136, 'Holocaust', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NTEzMjkxMV5BMl5BanBnXkFtZTcwMTUzOTAyMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (137, 'Star Wars: Episode V - The Empire Strikes Back (1980)', 8.8, 0, 'https://m.media-amazon.com/images/M/MV5BYmU1NDRjNDgtMzhiMi00NjZmLTg5NGItZDNiZjU5NTU4OTE0XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg'),
+            (138, 'The Shining (1980)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (139, 'Star Wars: Episode VI - Return of the Jedi (1983)', 8.4, 0, 'https://upload.wikimedia.org/wikipedia/en/b/b2/ReturnOfTheJediPoster1983.jpg'),
+            (140, 'A Nightmare on Elm Street (1984)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzFjZmM1ODgtMDBkMS00NWFlLTg2YmUtZjc3ZTgxMjE1OTI2L2ltYWdlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (141, 'A Nightmare on Elm Street 2: Freddys Revenge (1985)', 5.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZjBmNWNiN2ItYzM0ZC00MWQyLWFmZjctMmZkNTVhMjE1ZjFhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (142, 'A Nightmare on Elm Street 3: Dream Warriors (1987)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BY2UyYjhiNzktNzkzNi00MzVlLWIwMGItMTU4YTY2ZDM5YjgzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (143, 'A Nightmare on Elm Street 4: The Dream Master (1988)', 5.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTM5NWJjNWEtODgwNC00ODM1LWE4NzctMWNlNGNkNjg3NjE0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (144, 'Dead Poets Society (1989)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOGYwYWNjMzgtNGU4ZC00NWQ2LWEwZjUtMzE1Zjc3NjY3YTU1XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (145, 'A Nightmare on Elm Street 5: The Dream Child (1989)', 5.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BM2E3YzFhOGItZjRiOC00MTExLTg0YzctOGJmZmMyMTEwMDVkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (146, 'The Woman in Black (1989)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTMzZDA0MTUtODI5YS00ZmE5LTlkMmYtNDNiNTllNmQwYjAzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (147, 'The Civil War', 9.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc0NTY5MzAwOV5BMl5BanBnXkFtZTcwNTk3MzcyMQ@@._V1_UY268_CR6,0,182,268_AL_.jpg'),
+            (148, 'Home Alone (1990)', 7.5, 0, 'https://m.media-amazon.com/images/M/MV5BMzFkM2YwOTQtYzk2Mi00N2VlLWE3NTItN2YwNDg1YmY0ZDNmXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg'),
+            (149, 'Home Alone 2: Lost in New York (1992)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDI1MzM0Y2YtYmIyMS00ODE3LTlhZjEtZTUyNmEzMTNhZWU5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (150, 'Jurassic Park (1993)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjM2MDgxMDg0Nl5BMl5BanBnXkFtZTgwNTM2OTM5NDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (151, 'The Shawshank Redemption (1994)', 9.3, 0, 'https://m.media-amazon.com/images/M/MV5BMTQ1ODM2MjY3OV5BMl5BanBnXkFtZTgwMTU2MjEyMDE@._V1_.jpg'),
+            (152, 'Clueless (1995)', 6.8, 0, 'https://m.media-amazon.com/images/M/MV5BMzBmOGQ0NWItOTZjZC00ZDAxLTgyOTEtODJiYWQ2YWNiYWVjXkEyXkFqcGdeQXVyNTE1NjY5Mg@@._V1_.jpg'),
+            (153, 'Pocahontas (1995)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzc4YzhiN2ItY2Y4NC00YTA0LWEyMjEtNzllNTcxZDdjODhiXkEyXkFqcGdeQXVyNTUyMzE4Mzg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (154, 'Home Alone 3 (1997)', 4.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZTJhYjVhOWMtYTUyOS00NWM0LThjNzYtZWYxOTkwN2FhODg2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (155, 'Titanic (1997)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDdmZGU3NDQtY2E5My00ZTliLWIzOTUtMTY4ZGI1YjdiNjk3XkEyXkFqcGdeQXVyNTA4NzY1MzY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (156, 'The Lord of the Rings: The Fellowship of the Ring (2001)', 8.8, 0, 'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg'),
+            (157, 'Star Wars: Episode I - The Phantom Menace (1999)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BM2FmZGIwMzAtZTBkMS00M2JiLTk2MDctM2FlNTQ2OWYwZDZkXkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (158, 'Corpse Bride (2005)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk1MTY1NjU4MF5BMl5BanBnXkFtZTcwNjIzMTEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (159, 'Star Wars: Episode II - Attack of the Clones (2002)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNDRkYzA4OGYtOTBjYy00YzFiLThhYmYtMWUzMDBmMmZkM2M3XkEyXkFqcGdeQXVyNDYyMDk5MTU@._V1_UY268_CR10,0,182,268_AL_.jpg'),
+            (160, 'Star Wars: Episode III - Revenge of the Sith (2005)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTc4MTc3NTQ5OF5BMl5BanBnXkFtZTcwOTg0NjI4NA@@._V1_UY268_CR9,0,182,268_AL_.jpg'),
+            (161, '10 Things I Hate About You (1999)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMmVhZjhlZDYtMDAwZi00MDcyLTgzOTItOWNiZjY0YmE0MGE0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (162, 'The Lord of the Rings: The Return of the King (2003)', 8.9, 0, 'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg'),
+            (163, 'The Lord of the Rings: The Two Towers (2002)', 8.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAyNDU0NjY4NTheQTJeQWpwZ15BbWU2MDk4MTY2Nw@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
+            (164, 'Gladiator (2000)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDliMmNhNDEtODUyOS00MjNlLTgxODEtN2U3NzIxMGVkZTA1L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (165, 'Requiem for a Dream (2000)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTdiNzJlOWUtNWMwNS00NmFlLWI0YTEtZmI3YjIzZWUyY2Y3XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (166, 'Pearl Harbor (2001)', 6.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ3MDc0MDc1NF5BMl5BanBnXkFtZTYwODI1ODY2._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (167, 'The Others (2001)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxMDE4Mzc3ODNeQTJeQWpwZ15BbWU4MDY2Mjg4MDcx._V1_UY268_CR0,0,182,268_AL_.jpg'),
+            (168, 'Harry Potter and the Sorcerers Stone (2001)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjQ3NWNlNmQtMTE5ZS00MDdmLTlkZjUtZTBlM2UxMGFiMTU3XkEyXkFqcGdeQXVyNjUwNzk3NDc@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (169, 'Legally Blonde (2001)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTEyNjUwMTkxMV5BMl5BanBnXkFtZTcwNjk0NDk0NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (170, 'The Pianist (2002)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOWRiZDIxZjktMTA1NC00MDQ2LWEzMjUtMTliZmY3NjQ3ODJiXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_UY268_CR6,0,182,268_AL_.jpg'),
+            (171, 'Catch Me If You Can (2002)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY5MzYzNjc5NV5BMl5BanBnXkFtZTYwNTUyNTc2._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (172, 'Ice Age (2002)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyNzI1ODA0MF5BMl5BanBnXkFtZTYwODIxODY3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (173, 'A Beautiful Mind (2001)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzcwYWFkYzktZjAzNC00OGY1LWI4YTgtNzc5MzVjMDVmNjY0XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (174, 'A Walk to Remember (2002)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzU3NTYxM2MtNjViMS00YmNlLWEwM2MtYWI2MzgzNTkxODFjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (175, 'Harry Potter and the Chamber of Secrets (2002)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxODgwMDkxNV5BMl5BanBnXkFtZTYwMDk2MDg3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (176, 'Harry Potter and the Prisoner of Azkaban (2004)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY4NTIwODg0N15BMl5BanBnXkFtZTcwOTc0MjEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (177, 'Pirates of the Caribbean: The Curse of the Black Pearl (2003)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAyNDM4MTc2N15BMl5BanBnXkFtZTYwNDk0Mjc3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (178, 'Harry Potter and the Goblet of Fire (2005)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTI1NDMyMjExOF5BMl5BanBnXkFtZTcwOTc4MjQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (179, 'Troy (2004)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk5MzU1MDMwMF5BMl5BanBnXkFtZTcwNjczODMzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (180, 'Kal Ho Naa Ho (2003)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxNzU2MDczOV5BMl5BanBnXkFtZTcwNTU5NTk5Mw@@._V1_UY268_CR43,0,182,268_AL_.jpg'),
+            (181, 'Mr. & Mrs. Smith (2005)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUxMzcxNzQzOF5BMl5BanBnXkFtZTcwMzQxNjUyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (182, 'The Secret Life of Walter Mitty (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODYwNDYxNDk1Nl5BMl5BanBnXkFtZTgwOTAwMTk2MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (183, 'Harold & Kumar Go to White Castle (2004)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDc2M2I5MDQtNzliMS00ZmFjLWJmNzEtMTQwYTkxOWI4YzJlXkEyXkFqcGdeQXVyNTAyODkwOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (184, 'Jurassic World (2015)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5MTE0MTk3Nl5BMl5BanBnXkFtZTgwMjczMzk2NTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (185, 'Iron Man (2008)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (186, 'Harry Potter and the Order of the Phoenix (2007)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0NTczMTUzOV5BMl5BanBnXkFtZTYwMzIxNTg3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (187, 'Mean Girls (2004)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE1MDQ4MjI1OV5BMl5BanBnXkFtZTcwNzcwODAzMw@@._V1_UY268_CR3,0,182,268_AL_.jpg'),
+            (188, 'Pirates of the Caribbean: Dead Mans Chest (2006)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcwODc1MTMxM15BMl5BanBnXkFtZTYwMDg1NzY3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (189, 'Saw (2004)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE4MDYzNDE1OV5BMl5BanBnXkFtZTcwNDY2OTYwNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (190, 'The Skeleton Key (2005)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNDYzODE3NF5BMl5BanBnXkFtZTcwMDc1NDAzMQ@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
+            (191, 'Flightplan (2005)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNGJkYTNiZjUtOTBhMi00NjY5LTkwZWEtNjBkNmE1YTZlMDc4XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (192, 'Pride & Prejudice (2005)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTA1NDQ3NTcyOTNeQTJeQWpwZ15BbWU3MDA0MzA4MzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (193, 'Harry Potter and the Half-Blood Prince (2009)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzU3NDg4NTAyNV5BMl5BanBnXkFtZTcwOTg2ODg1Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (194, 'Saw II (2005)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTRjMDNmNjctNjg4ZC00N2ZkLThkMzMtOWRmYTFhMzA1ZDZlXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (195, 'V for Vendetta (2005)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTI5ODc3NzExNV5BMl5BanBnXkFtZTcwNzYxNzQzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (196, 'The Illusionist (2006)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM1MjQyMDkzN15BMl5BanBnXkFtZTcwNzAyNTQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (197, 'Pirates of the Caribbean: At Worlds End (2007)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyNjkxNzEyMl5BMl5BanBnXkFtZTYwMjc3MDE3._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (198, 'The Pursuit of Happyness (2006)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ5NjQ0NDI3NF5BMl5BanBnXkFtZTcwNDI0MjEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (199, 'Shes the Man (2006)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEyMzAzMDk1Ml5BMl5BanBnXkFtZTcwNjg0OTEzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (200, 'Captain America: The First Avenger (2011)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTYzOTc2NzU3N15BMl5BanBnXkFtZTcwNjY3MDE3NQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (201, 'Step Up (2006)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTIxMDM5Mjc1Nl5BMl5BanBnXkFtZTcwMDkyODQzMQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (202, 'The Dark Knight (2008)', 9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (203, 'The Prestige (2006)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA4NDI0MTIxNF5BMl5BanBnXkFtZTYwNTM0MzY2._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (204, 'Saw III (2006)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg3MzI5NjYxMl5BMl5BanBnXkFtZTcwOTA0NDkzMQ@@._V1_UY268_CR2,0,182,268_AL_.jpg'),
+            (205, 'Saw (2003)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjY3MTU1OGEtZTI4ZS00ZjgyLThlNzctYTJiNjJkNGI3YWNkXkEyXkFqcGdeQXVyMzAzODY0NzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (206, 'Man of Steel (2013)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjI5OTYzNjI0Ml5BMl5BanBnXkFtZTcwMzM1NDA1OQ@@._V1_UY268_CR1,0,182,268_AL_.jpg'),
+            (207, 'Atonement (2007)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0ODc2Mzg1Nl5BMl5BanBnXkFtZTcwMTg4MDU1MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (208, 'The Incredible Hulk (2008)', 6.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTUyNzk3MjA1OF5BMl5BanBnXkFtZTcwMTE1Njg2MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (209, 'The Book Thief (2013)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTE3NzkyMjAyNF5BMl5BanBnXkFtZTgwMDc5MTE0MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (210, 'Flipped (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NjQ1Nzc4MF5BMl5BanBnXkFtZTcwNTM0NDk1Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (211, 'Hotel Transylvania (2012)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM3NjQyODI3M15BMl5BanBnXkFtZTcwMDM4NjM0OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (212, 'Cloudy with a Chance of Meatballs (2009)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg0MjAwNDI5MV5BMl5BanBnXkFtZTcwODkyMzg2Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (213, 'The Avengers (2012)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk2NTI1MTU4N15BMl5BanBnXkFtZTcwODg0OTY0Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (214, 'Ice Age Columbus: Who Were the First Americans? (2005)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjU3ZDk2YTItNTQxYi00YzUwLWJlODEtNjQ0OWVlOTFmZjQ2XkEyXkFqcGdeQXVyNjc4NzAyODQ@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (215, 'How to Train Your Dragon (2010)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (216, 'How to Train Your Dragon (2010)', 8.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA5NDQyMjc2NF5BMl5BanBnXkFtZTcwMjg5ODcyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (217, 'Harry Potter and the Deathly Hallows: Part 1 (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ2OTE1Mjk0N15BMl5BanBnXkFtZTcwODE3MDAwNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (218, 'Salt (2010)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjIyODA2NDg4NV5BMl5BanBnXkFtZTcwMjg4NDAwMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (219, 'Step Up 2: The Streets (2008)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc0NzYxOTgxOF5BMl5BanBnXkFtZTcwMTgxMjc1MQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (220, 'Argo (2012)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3MjI0MjM0NF5BMl5BanBnXkFtZTcwMTYxMTQ1OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (221, '[Rec] (2007)', 7.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BZTJmNTZlZWUtZTQ2Yi00YTFjLWFiNzctYzFlNmZmZGMzYTlmXkEyXkFqcGdeQXVyMjQ2MTk1OTE@._V1_UY268_CR4,0,182,268_AL_.jpg'),
+            (222, 'The Proposal (2009)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MzY1ODIyNV5BMl5BanBnXkFtZTcwNDU4NTE3Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (223, 'Paddington (2014)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAxOTMwOTkwNDZeQTJeQWpwZ15BbWU4MDEyMTI1NjMx._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (224, 'Shutter Island (2010)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTMxMTIyNzMxMV5BMl5BanBnXkFtZTcwOTc4OTI3Mg@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (225, 'Beastly (2011)', 5.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzUzMTcxMTEzNV5BMl5BanBnXkFtZTcwMTcwNjcxNA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (226, 'A Nightmare on Elm Street (2010)', 5.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BODIxMTQ0NTIxM15BMl5BanBnXkFtZTcwMzY1NDAyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (227, 'Step Up 3D (2010)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDU2NTE4Nl5BMl5BanBnXkFtZTcwNzQ1MTEzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (228, 'Diary of a Wimpy Kid (2010)', 6.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg3NzQ2NDgyNF5BMl5BanBnXkFtZTcwMDc1NzIyMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (229, 'Harry Potter and the Deathly Hallows: Part 2 (2011)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY2MTk3MDQ1N15BMl5BanBnXkFtZTcwMzI4NzA2NQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (230, 'Iron Man 2 (2010)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (231, '21 Jump Street (2012)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3NzQ3OTg3NF5BMl5BanBnXkFtZTcwMjk5OTcxNw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (232, '[Rec] 2 (2009)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTI4MjQ1MDE1MV5BMl5BanBnXkFtZTcwNzIxMDk0Mw@@._V1_UY268_CR0,0,182,268_AL_.jpg'),
+            (233, 'Pirates of the Caribbean: On Stranger Tides (2011)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjE5MjkwODI3Nl5BMl5BanBnXkFtZTcwNjcwMDk4NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (234, 'Iron Man Three (2013)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkzMjEzMjY1M15BMl5BanBnXkFtZTcwNTMxOTYyOQ@@._V1_UY268_CR3,0,182,268_AL_.jpg'),
+            (235, 'Despicable Me (2010)', 7.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3NjY0MTQ0Nl5BMl5BanBnXkFtZTcwMzQ2MTc0Mw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (236, 'The Great Gatsby (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkxNTk1ODcxNl5BMl5BanBnXkFtZTcwMDI1OTMzOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (237, 'The Dark Knight Rises (2012)', 8.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (238, 'Rio (2011)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2MDY3MzAzMl5BMl5BanBnXkFtZTcwMTg0NjM5NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (239, 'Rise of the Guardians (2012)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkzMjgwMDg1M15BMl5BanBnXkFtZTcwMTgzNTI1OA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (240, 'The Help (2011)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM5OTMyMjIxOV5BMl5BanBnXkFtZTcwNzU4MjIwNQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (241, 'The Lorax (2012)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU1MTAwMjk1NF5BMl5BanBnXkFtZTcwMDI5NDc4Ng@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (242, 'Maleficent (2014)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjAwMzAzMzExOF5BMl5BanBnXkFtZTgwOTcwMDA5MTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (243, 'Warm Bodies (2013)', 6.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ4MjY2MjMzOV5BMl5BanBnXkFtZTcwMDUxNzIwOQ@@._V1._CR43,43.16667175292969,1298,1960.9999542236328_UX182_CR0,0,182,268_AL_.jpg'),
+            (244, 'How to Train Your Dragon 2 (2014)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzMwMTAwODczN15BMl5BanBnXkFtZTgwMDk2NDA4MTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (245, 'Diary of a Wimpy Kid: Rodrick Rules (2011)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDYwOTEzMl5BMl5BanBnXkFtZTcwOTA3MzY3NA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (246, 'Pacific Rim (2013)', 7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY3MTI5NjQ4Nl5BMl5BanBnXkFtZTcwOTU1OTU0OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (247, 'The DUFF (2015)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc3OTg3MDUwN15BMl5BanBnXkFtZTgwMTAwMTkxNDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (248, 'Now You See Me (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY0NDY3MDMxN15BMl5BanBnXkFtZTcwOTM5NzMzOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (249, 'Despicable Me 2 (2013)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjExNjAyNTcyMF5BMl5BanBnXkFtZTgwODQzMjQ3MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (250, 'Anna Karenina (2012)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU0NDgxNDg0NV5BMl5BanBnXkFtZTcwMjE4MzkwOA@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (251, 'American Hustle (2013)', 7.3, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjkxMTc0MDc4N15BMl5BanBnXkFtZTgwODUyNTI1MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (252, 'Captain America: The Winter Soldier (2014)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzA2NDkwODAwM15BMl5BanBnXkFtZTgwODk5MTgzMTE@._V1_UY268_CR1,0,182,268_AL_.jpg'),
+            (253, 'The Edge of Seventeen (2016)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTY1NTM1NTQ1OF5BMl5BanBnXkFtZTgwNTk4MTM2MDI@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (254, 'The Hunger Games: Catching Fire (2013)', 7.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAyMjQ3OTAxMzNeQTJeQWpwZ15BbWU4MDU0NzA1MzAx._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (255, 'The Hunger Games: Mockingjay - Part 1 (2014)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTcxNDI2NDAzNl5BMl5BanBnXkFtZTgwODM3MTc2MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (256, 'The Hunger Games: Mockingjay - Part 2 (2015)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjQzNDI2NTU1Ml5BMl5BanBnXkFtZTgwNTAyMDQ5NjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (257, 'Cloudy with a Chance of Meatballs 2 (2013)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTYzNDM0MDI1NF5BMl5BanBnXkFtZTcwNzQ5NzYxOQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (258, 'Guardians of the Galaxy (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTAwMjU5OTgxNjZeQTJeQWpwZ15BbWU4MDUxNDYxODEx._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (259, 'Diary of a Wimpy Kid: Dog Days (2012)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTc2MTk4MTk4Nl5BMl5BanBnXkFtZTcwMzgzOTY2Nw@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (260, 'Ice Age: A Mammoth Christmas (2011)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BYTMzMjZhNjAtZDBmMS00MzA0LTljNjUtZGNlMGNiYTc5ODg4XkEyXkFqcGdeQXVyNTE0MDY4Mjk@._V1_UY268_CR4,0,182,268_AL_.jpg'),
+            (261, 'Batman: The Dark Knight Returns Part 2 (2013)', 8.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTQ1Mjk1NTY2NV5BMl5BanBnXkFtZTgwMTA2MDEwNzE@._V1_UY268_CR3,0,182,268_AL_.jpg'),
+            (262, 'Dead Souls (2012)', 4.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTkwMDc0OTk0OF5BMl5BanBnXkFtZTcwNDUzODI5Nw@@._V1_UY268_CR12,0,182,268_AL_.jpg'),
+            (263, 'Big Hero 6 (2014)', 7.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMDliOTIzNmUtOTllOC00NDU3LWFiNjYtMGM0NDc1YTMxNjYxXkEyXkFqcGdeQXVyNTM3NzExMDQ@._V1_UY268_CR3,0,182,268_AL_.jpg'),
+            (264, 'Gone Girl (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTk0MDQ3MzAzOV5BMl5BanBnXkFtZTgwNzU1NzE3MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (265, 'The Grand Budapest Hotel (2014)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzM5NjUxOTEyMl5BMl5BanBnXkFtZTgwNjEyMDM0MDE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (266, 'Batman: The Dark Knight Returns Part 1 (2012)', 8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMzIxMDkxNDM2M15BMl5BanBnXkFtZTcwMDA5ODY1OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (267, 'Rio 2 (2014)', 6.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTgzMDczMDYzNl5BMl5BanBnXkFtZTgwMzk2MDIwMTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (268, 'Avengers: Age of Ultron (2015)', 7.4, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTM4OGJmNWMtOTM4Ni00NTE3LTg3MDItZmQxYjc4N2JhNmUxXkEyXkFqcGdeQXVyNTgzMDMzMTg@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (269, 'The Heat (2013)', 6.6, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjA2MDQ2ODM3MV5BMl5BanBnXkFtZTcwNDUzMTQ3OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (270, 'Star Wars: Episode VII - The Force Awakens (2015)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTAzODEzNDAzMl5BMl5BanBnXkFtZTgwMDU1MTgzNzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (271, 'Hotel Transylvania 2 (2015)', 6.7, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjEzNzc4NzEyMV5BMl5BanBnXkFtZTgwMTAxMDQ2NTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (272, 'Blackfish (2013)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNTkyNTkwMzkxMl5BMl5BanBnXkFtZTcwMzAwOTE2OQ@@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (273, 'John Wick (2014)', 7.2, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (274, 'Zootopia (2016)', 8.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (275, 'Spy (2015)', 7.1, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNjI5OTQ0MDQxM15BMl5BanBnXkFtZTgwMzcwNjMyNTE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (276, 'Now You See Me 2 (2016)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzQ0NDgwODQ3NV5BMl5BanBnXkFtZTgwOTYxNjc2ODE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (277, 'Avengers Confidential: Black Widow & Punisher (2014)', 5.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTU2MDg0Njk4MF5BMl5BanBnXkFtZTgwMTY0OTIyMTE@._V1_UY268_CR19,0,182,268_AL_.jpg'),
+            (278, 'Captain America: Civil War (2016)', 7.9, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMjQ0MTgyNjAxMV5BMl5BanBnXkFtZTgwNjUzMDkyODE@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (279, 'The Girl on the Train (2016)', 6.5, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BNzFlMjA0ZmUtZWI0Mi00ZGJkLTlmMmYtZmE1ODZiMjhjMGM0XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_UX182_CR0,0,182,268_AL_.jpg'),
+            (280, 'Avengers Grimm (2015)', 2.8, 0, 'https://images-na.ssl-images-amazon.com/images/M/MV5BMTg5NDEzNDIyOV5BMl5BanBnXkFtZTgwODY3ODA5MzE@._V1_UY268_CR4,0,182,268_AL_.jpg');
 			";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>movie table populated successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error populating movie table " . $conn->error;
-	}
-
-	$sql = "INSERT INTO movie_genre (genreID, movieID) VALUES 
+	$sql .= "INSERT INTO movie_genre (genreID, movieID) VALUES 
 			(1, 1),
 			(2, 1),
 			(3, 1),
@@ -1311,57 +1223,240 @@
 			(9, 280),
 			(6, 280);";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>movie_genre table populated successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error populating movie_genre table " . $conn->error;
-	}
+    $sql .= "INSERT INTO large_posters (movieID, title, image_url) VALUES (2, 'The Simpsons', 'https://i.imgur.com/4MNrTGL.jpg'),
+        (4, 'Doctor Who', 'https://i.imgur.com/ymwXysb.jpg'),
+        (5, 'The Walking Dead', 'https://i.imgur.com/yFHBlKc.jpg'),
+        (6, 'Friends', 'https://i.imgur.com/3TOZQpa.jpg'),
+        (8, 'The Office', 'https://i.imgur.com/4M5S9Z4.jpg'),
+        (9, 'Game of Thrones', 'https://i.imgur.com/u8VRoJp.jpg'),
+        (18, 'Parks and Recreation', 'https://i.imgur.com/4M5S9Z4.jpg'),
+        (26, 'House of Cards', 'https://i.imgur.com/cuThyef.jpg'),
+        (33, 'Peaky Blinders', 'https://i.imgur.com/4WCSym0.jpg'),
+        (34, 'Breaking Bad', 'https://i.imgur.com/37E5MGL.jpg'),
+        (39, 'Prison Break', 'https://i.imgur.com/8UNcfr4.jpg'),
+        (59, 'Stranger Things', 'https://i.imgur.com/gWYCqRc.jpg'),
+        (62, '13 Reasons Why', 'https://i.imgur.com/rpMaRQ4.jpg'),
+        (68, 'Narcos', 'https://i.imgur.com/9kct8Zq.jpg'),
+        (76, 'The Witcher', 'https://i.imgur.com/fO1BRIK.jpg'),
+        (92, 'Sense8', 'https://i.imgur.com/jDxZyhp.jpg'),
+        (163, 'The Lord of the Rings: The Two Towers', 'https://i.imgur.com/7gHpXqt.jpg'),
+        (164, 'Gladiator', 'https://i.imgur.com/WGeE2kR.jpg'),
+        (192, 'Pride & Prejudice', 'https://i.imgur.com/IklKu4L.jpg'),
+        (193, 'Harry Potter and the Half-Blood Prince', 'https://i.imgur.com/Im75Q6V.jpg'),
+        (202, 'The Dark Knight', 'https://i.imgur.com/wa38JIS.jpg'),
+        (231, '21 Jump Street', 'https://i.imgur.com/IcqG4Gw.jpg'),
+        (233, 'Pirates of the Caribbean: On Stranger Tides', 'https://i.imgur.com/l7asczo.jpg'),
+        (236, 'The Great Gatsby', 'https://i.imgur.com/1DvdDmR.jpg'),
+        (239, 'Rise of the Guardians', 'https://i.imgur.com/00WAZv3.jpg'),
+        (242, 'Maleficent', 'https://i.imgur.com/12R9qch.jpg'),
+        (254, 'The Hunger Games: Catching Fire', 'https://i.imgur.com/6T06CeF.jpg'),
+        (258, 'Guardians of the Galaxy', 'https://i.imgur.com/to2asYB.jpg'),
+        (268, 'Avengers: Age of Ultron', 'https://i.imgur.com/ApDTOOO.jpg'),
+        (269, 'The Heat', 'https://i.imgur.com/denaVNq.jpg'),
+        (272, 'Blackfish', 'https://i.imgur.com/rW65Ykd.jpg'),
+        (273, 'John Wick', 'https://i.imgur.com/8IBVewu.jpg');
+        ";
 
-	$sql = "INSERT INTO large_posters (movieID, title, image_url) VALUES 
-			(2, 'The Simpsons', 'https://i.imgur.com/4MNrTGL.jpg'),
-			(4, 'Doctor Who', 'https://i.imgur.com/ymwXysb.jpg'),
-			(5, 'The Walking Dead', 'https://i.imgur.com/yFHBlKc.jpg'),
-			(6, 'Friends', 'https://i.imgur.com/3TOZQpa.jpg'),
-			(8, 'The Office', 'https://i.imgur.com/4M5S9Z4.jpg'),
-			(9, 'Game of Thrones', 'https://i.imgur.com/u8VRoJp.jpg'),
-			(18, 'Parks and Recreation', 'https://i.imgur.com/4M5S9Z4.jpg'),
-			(26, 'House of Cards', 'https://i.imgur.com/cuThyef.jpg'),
-			(33, 'Peaky Blinders', 'https://i.imgur.com/4WCSym0.jpg'),
-			(34, 'Breaking Bad', 'https://i.imgur.com/37E5MGL.jpg'),
-			(39, 'Prison Break', 'https://i.imgur.com/8UNcfr4.jpg'),
-			(59, 'Stranger Things', 'https://i.imgur.com/gWYCqRc.jpg'),
-			(62, '13 Reasons Why', 'https://i.imgur.com/rpMaRQ4.jpg'),
-			(68, 'Narcos', 'https://i.imgur.com/9kct8Zq.jpg'),
-			(76, 'The Witcher', 'https://i.imgur.com/fO1BRIK.jpg'),
-			(92, 'Sense8', 'https://i.imgur.com/jDxZyhp.jpg'),
-			(163, 'The Lord of the Rings: The Two Towers', 'https://i.imgur.com/7gHpXqt.jpg'),
-			(164, 'Gladiator', 'https://i.imgur.com/WGeE2kR.jpg'),
-			(192, 'Pride & Prejudice', 'https://i.imgur.com/IklKu4L.jpg'),
-			(193, 'Harry Potter and the Half-Blood Prince', 'https://i.imgur.com/Im75Q6V.jpg'),
-			(202, 'The Dark Knight', 'https://i.imgur.com/wa38JIS.jpg'),
-			(231, '21 Jump Street', 'https://i.imgur.com/IcqG4Gw.jpg'),
-			(233, 'Pirates of the Caribbean: On Stranger Tides', 'https://i.imgur.com/l7asczo.jpg'),
-			(236, 'The Great Gatsby', 'https://i.imgur.com/1DvdDmR.jpg'),
-			(239, 'Rise of the Guardians', 'https://i.imgur.com/00WAZv3.jpg'),
-			(242, 'Maleficent', 'https://i.imgur.com/12R9qch.jpg'),
-			(254, 'The Hunger Games: Catching Fire', 'https://i.imgur.com/6T06CeF.jpg'),
-			(258, 'Guardians of the Galaxy', 'https://i.imgur.com/to2asYB.jpg'),
-			(268, 'Avengers: Age of Ultron', 'https://i.imgur.com/ApDTOOO.jpg'),
-			(269, 'The Heat', 'https://i.imgur.com/denaVNq.jpg'),
-			(272, 'Blackfish', 'https://i.imgur.com/rW65Ykd.jpg'),
-			(273, 'John Wick', 'https://i.imgur.com/8IBVewu.jpg');";
+    $sql .= "DELETE FROM followers;
+            INSERT INTO followers (user, followerID) VALUES (1, 2),
+            (1, 3),
+            (1, 5),
+            (1, 12),
+            (2, 3),
+            (2, 1),
+            (2, 5),
+            (2, 8),
+            (2, 9),
+            (3, 1),
+            (3, 5),
+            (3, 15),
+            (4, 14),
+            (7, 6),
+            (7, 8),
+            (7, 2),
+            (7, 9),
+            (8, 4),
+            (9, 11),
+            (9, 12),
+            (10, 15),
+            (11, 1),
+            (11, 15),
+            (12, 6),
+            (13, 6),
+            (13, 7),
+            (15, 13);
+            ";
 
-	$result = $conn->query($sql);
-	if ($result) {
-	  	echo "<br><p>large_posters table populated successfully</p>";
-	  	$result->free_result();
-	  	$conn->next_result();
-	} else {
-	  	echo "<br>Error populating large_posters table " . $conn->error;
-	}
+    $sql .= "DELETE FROM wishlist;
+            INSERT INTO wishlist (user,movie) VALUES (1, 2),
+            (1, 3),
+            (1, 5),
+            (1, 12),
+            (1, 67),
+            (1, 78),
+            (1, 82),
+            (1, 112),
+            (1, 117),
+            (1, 119),
+            (1, 227),
+            (2, 1),
+            (2, 3),
+            (2, 5),
+            (2, 8),
+            (2, 110),
+            (2, 145),
+            (2, 210),
+            (2, 226),
+            (2, 267),
+            (3, 34),
+            (3, 39),
+            (3, 57),
+            (3, 69),
+            (3, 89),
+            (3, 159),
+            (4, 35),
+            (4, 57),
+            (4, 83),
+            (4, 93),
+            (4, 118),
+            (5, 210),
+            (5, 235),
+            (5, 246),
+            (5, 256),
+            (5, 266),
+            (5, 268),
+            (5, 270),
+            (5, 271),
+            (5, 276),
+            (6, 56),
+            (6, 156),
+            (6, 178),
+            (6, 245),
+            (7, 67),
+            (7, 178),
+            (8, 46),
+            (8, 67),
+            (8, 93),
+            (8, 123),
+            (8, 128),
+            (9, 147),
+            (9, 189),
+            (9, 225),
+            (9, 245),
+            (10, 17),
+            (10, 27),
+            (11, 38),
+            (11, 42),
+            (11, 63),
+            (11, 113),
+            (11, 174),
+            (11, 196),
+            (11, 226),
+            (12, 167),
+            (12, 194),
+            (12, 219),
+            (12, 223),
+            (12, 274),
+            (12, 276),
+            (12, 277),
+            (13, 105),
+            (13, 106),
+            (14, 107),
+            (15, 123),
+            (15, 176),
+            (15, 198),
+            (15, 234),
+            (15, 267),
+            (15, 269);
+            ";
+
+    $sql .= "DELETE FROM watched_movies;
+            INSERT INTO watched_movies(user,movie, favourite) VALUES (1, 34, 1),
+            (1, 46, 1),
+            (1, 68, 0),
+            (1, 79, 0),
+            (1, 90, 0),
+            (1, 223, 0),
+            (1, 256, 1),
+            (1, 275, 1),
+            (2, 34, 1),
+            (2, 35, 1),
+            (2, 56, 1),
+            (2, 82, 1),
+            (3, 92, 1),
+            (3, 243, 1),
+            (3, 267, 1),
+            (3, 268, 0),
+            (4, 7, 0),
+            (5, 31, 0),
+            (5, 52, 1),
+            (5, 83, 1),
+            (5, 94, 1),
+            (5, 116, 1),
+            (5, 118, 0),
+            (6, 16, 0),
+            (6, 18, 1),
+            (6, 19, 1),
+            (6, 223, 1),
+            (7, 26, 0),
+            (7, 27, 0),
+            (7, 29, 0),
+            (8, 23, 1),
+            (8, 27, 1),
+            (8, 116, 1),
+            (9, 173, 1),
+            (9, 183, 0),
+            (9, 205, 1),
+            (9, 207, 1),
+            (9, 234, 1),
+            (9, 264, 1),
+            (10, 12, 1),
+            (10, 21, 1),
+            (11, 35, 1),
+            (12, 62, 1),
+            (12, 83, 1),
+            (12, 234, 0),
+            (12, 268, 0),
+            (13, 9, 1),
+            (13, 18, 1),
+            (14, 53, 1),
+            (14, 62, 1),
+            (14, 73, 0),
+            (14, 116, 0),
+            (14, 175, 1),
+            (14, 252, 1),
+            (14, 256, 1),
+            (15, 54, 1),
+            (15, 75, 1);
+            ";
+
+    $sql .= "DELETE FROM review;
+            ALTER TABLE review AUTO_INCREMENT = 1;
+            INSERT INTO review(user,movie,title,review_text,review_rating) VALUES (1,98,'Smart, intriguing, thats bing worthy','After reading some reviews I''ve come to the conclusion some reviewers should stick to game shows. I found this show to be smart, not once did I have a moment where I knew what was going to happen. The storyline, characters, and integration scenarios had my attention from the beginning to the end.','4.5'),
+            (1,223,'An immediate classic!','This is, without doubt, one of the funniest and most heartwarming films that I expect to see in my life. A true Family film, it should appeal to children of all ages as well as to adults who are still children at heart.
+            The cast is perfection, and the director has been truly inspired. The extra touches in both sight and sound that he brings to the film are brilliant - but I shan''t specify what they are, for fear of spoiling the surprises.','4'),
+            (1,34,'Dont watch this show','Dont you ever watch this show as it is so perfect u will never be able to watch another show','5'),
+            (1,256,'A true game-changer for movies aimed at teens.','I''ve never seen a more faithful adaption of a book in my life. All of the costumes, the sets, the locations, the cast (I''ll talk more about them in a while) and the pacing is as if they were exactly replicated from the book.','5'),
+            (3,267,'A worthy successor','After three years, the Rio franchise continues, with this wonderful sequel. Blu and Jewel, having fallen in love during the first movie, now have three adorably rambunctious children, Bia, Carla and Tiago. Each chick has their own unique personality traits, providing an amusing balance during their opening shenanigan.','5'),
+            (3,268,'Somewhat disappointed','I''m a big fan of Marvel and have seen the other Avengers titles, and so I went into this one with certain expectations. They weren''t met. As opposed to earlier installments, barely a few minutes seem to pass in AoU without one of the characters making what is supposed to be an amusing, throwaway remark/one-liner.','2.5'),
+            (4,7,'Slow Scream','I have watched all seasons.... unfortunately. Originally the drama was tense and fun. The bromance between Harvey and Mike was also really interesting. However, over time the sparkle disappeared and the magic of Mike''s amazing memory seems to have disappeared alongside it. Instead of being fun yet tense, the show has evolved into a continuous screaming match and people panicking about mundane nonsense. Made up drama that feels too forced to be entertaining.','2.5'),
+            (5,52,'Pleasant Surprise','I think we can all admit that it''s hard to create a show that stands out, As we are at a time where television is at it''s pinnacle point. So when I started this show I was expecting a mildly entertaining series.','4.5'),
+            (5,83,'Great show. Great story.','Quite a few twists and turns in the story. Look forward to watching Bad Blood. Some things seem unbelievable in real life but who knows what that works is really like.','5'),
+            (5,31,'It''s annoying.','I can see some minor appeal to this show and I won''t challenge the taste of anyone who likes it. My girlfriend watches it regularly, though she can''t articulate why. From my perspective it''s a pointless meta-tragedy where rich 30-somethings attempt to act like poor 20-somethings but wield only enough emotional depth to emulate spoiled teenagers.','1.5'),
+            (6,16,'Up to season 3 is good. Rest is redundant','Im on season 5 now, and ever since the end of S3 it''s been downhill. It was good, really good. But now everything now feels redundant and over the top. Core of it all are endless scandals and a garden variety of inequality that is highlighted against the 21st century, and the snowball keeps rolling and same thing happens over and over again.',2.5),
+            (6,18,'Forget the haters','Just watch it for yourself. I was drawn in by Amy Pohler, someone I didn''t really like before I saw this show, and i stayed because of the beautifully drawn characters. Because they''re deep characters, they''re not gonna slam you over the head with comedy. This ain''t My Name Is Earl, people. The show''s funny, but in a real, get to know everyone kind of way.','5'),
+            (7,26,'Worse and worse every season..','After a couple of great season, the show is too boring to watch. I hope the writers want to show how evil Underwoods (politics) are, but after watching the show, my feeling is Underwoods have to win.','2.8'),
+            (7,27,'Weak Pilot, But Stick Around','I want more. See, the pilot is incredibly mediocre and, as others have pointed out, leverages the joke format of other tried and true animated shows. But this is business as usual, really. Animated pilots are typically sub- par. I LOVE Bob''s Burgers, but man, that show''s pilot was a mess.','4'),
+            (8,23,'Amazing ... just amazing','i usually get quite bored of super hero TV shows but this is authentic and amazing. the first season is nail biting and the second season is just as good. the characters are good and the acting is excellent.','3.5'),
+            (9,173,'Must-see','beautiful mind The best kdrama i ever watched...','5'),
+            (10,21,'From an excellent TV show to an average one','The first 3 seasons are excellent. I used to recommend this series to all my friends. Few episodes, good story, unique characters. Then the fame came and brought greed. History Channel decided to double the earnings by doubling the number of episodes in season 4. Without enough content to fill the episodes','4.2'),
+            (11,35,'Fantastic','I don''t subscribe to HBO. A couple of weeks ago I heard an interview with a young actor from this series on NPR. It was described as a gritty crime drama with many Baltimore locals portraying variations on themselves. The interview made it sound interesting enough that I decided to check out the first season on DVD.','5'),
+            (14,62,'I love it','The first thing I want to say before I start, is that I do not binge watch TV series. It''s extremely rare for me, and I often don''t even finish the season. This TV series had me hooked from start to finish and I spent all day watching it.','4.8');";
+
+    if ($result = $conn->multi_query($sql)) 
+	  	echo "<p>Database created successfully</p>";
+	else 
+	  	echo "<br>Error creating database: " . $conn->error;
 
 	$conn->close();
 ?>

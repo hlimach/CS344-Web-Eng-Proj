@@ -6,7 +6,7 @@
 			$result = $conn->query("");
 		else
 	    //autoincrement review id set so remove the first val, and add session to get the second val of userid
-	    	$result = $conn->query("INSERT INTO review values ('7','2','".$movie_id."','".$_POST['review-title']."', '".$_POST['review-content']."', '".$_POST['rating']."')");
+	    	$result = $conn->query("INSERT INTO review values ('2','".$movie_id."','".$_POST['review-title']."', '".$_POST['review-content']."', '".$_POST['rating']."')");
 
 	    if ($result)
 	        echo "<script type='text/javascript'>alert('inserted!');</script>";
