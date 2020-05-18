@@ -1,11 +1,25 @@
 <?php 
+session_start();
+$_SESSION["userid"]=2;
+$username=$_GET['id'];
 
+include '../Pages/userpage_top.php'; 
+
+
+$sql='select userID from user where username="'.$username.'"';
+$result=mysqli_query($conn, $sql);
+if ($result->num_rows) {
+        while($row = $result->fetch_assoc()) {
+            $userID=$row["userID"];
+        
+        }
+    }
 //display user info
-include 'userpage_top.php'; 
 
-include 'dbconnect.php';
 
-$sql='select * from watched_movies where user=1 and favourite=false';
+
+
+$sql='select * from watched_movies where user='.$userID.' and favourite=false';
 $result=mysqli_query($conn, $sql);
 echo  "<h3>Watched Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
 
@@ -57,5 +71,7 @@ echo  "<h3>Watched Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
 else
 echo '<h6>NO MOVIES FOUND</h6>';
 $conn -> close();
-include 'userpage_bottom.php';
+include '../Pages/userpage_bottom.php';
+
+        
   ?>
