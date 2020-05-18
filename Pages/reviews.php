@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -58,7 +61,8 @@
                         <h3 class="col-12"style="text-decoration: underline;">Reviews</h3>
                          
                <?php
-                        $sql='select * from review where user=3;';
+			$id=$_SESSION["userid"];
+                        $sql='select * from review where user="$id";';
                         $result=mysqli_query($conn, $sql);
                         $num=0;
 

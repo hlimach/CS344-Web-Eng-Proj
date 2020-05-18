@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -58,7 +61,8 @@
                         <h3 class="col-12" style="text-decoration: underline;">Favorites</h3>
                          
                <?php
-                        $sql='select * from watched_movies where user=3 and favourite=true';
+                        $id=$_SESSION["userid"];
+                        $sql='select * from watched_movies where user="$id" and favourite=true';
                         $result=mysqli_query($conn, $sql);
                         $num=0;
                         if ($result->num_rows > 0) {

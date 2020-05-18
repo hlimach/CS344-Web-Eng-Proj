@@ -1,3 +1,6 @@
+<?php
+    session_start();
+    ?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -57,8 +60,8 @@
                          
                 <?php
                         $num=0;
-                       
-                         $query="select * from watched_movies where user='3'";
+                        $id=$_SESSION["userid"];
+                         $query="select * from watched_movies where user='$id'";
                          $result=mysqli_query($conn,$query);
                          while($row = mysqli_fetch_array($result))
                          {

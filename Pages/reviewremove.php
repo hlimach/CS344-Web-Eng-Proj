@@ -1,6 +1,5 @@
 <?php
-  
-  
+  session_start();
    $dbhost = 'localhost';
       $dbuser = 'root';
        $dbpass = '';
@@ -15,7 +14,8 @@
         while($row= mysqli_fetch_array($result2)){
           echo 'checking';
           $id=$row['reviewID'];
-           $sql = mysqli_query($conn,"Delete from review where reviewID='$id' and user='3';");
+           $id=$_SESSION["userid"];
+           $sql = mysqli_query($conn,"Delete from review where reviewID='$id' and user='$id';");
             $result = mysqli_query($conn, $sql);         
                 mysqli_close($conn);
             

@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -57,7 +60,8 @@
                         <h3 class="col-12"style="text-decoration: underline;">Wishlist</h3>
                          
                <?php
-                        $sql='select * from wishlist where user=3';
+                        $id=$_SESSION["userid"];
+                        $sql='select * from wishlist where user="$id"';
                         $result=mysqli_query($conn, $sql);
                         $num=0;
                         if ($result->num_rows > 0) {
@@ -90,7 +94,7 @@
                        } } } }  
 
                         else
-                            echo '<h4>NO FAVOURITE MOVIE FOUND</h4>';
+                            echo '<h4>NO SAVED MOVIE FOUND</h4>';
 
                         $conn -> close();
 ?>
