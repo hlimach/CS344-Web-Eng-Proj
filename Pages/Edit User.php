@@ -191,7 +191,7 @@
                                      
             $sql = mysqli_query($conn,"Update user Set
                 username='$username', f_name='$fname',pic_url='$image',
-                l_name='$lname',gender='$gender',age='$age',bio='$desc', email='$email' where userID='3'");
+                l_name='$lname',gender='$gender',age='$age',bio='$desc', email='$email' where userID='$id'");
             $result = mysqli_query($conn, $sql);  
             mysqli_close($conn);                 
         ?>
