@@ -79,15 +79,24 @@
             $sql = "SELECT username,email FROM user";
             $result_uname = $conn->query($sql);
             $current_name = null;
+            $current_email = null;
             $flagname = 0;
+            $email = 0;
             if ($result_uname->num_rows > 0) {
 
             // compare username of each row
                 while($row = $result_uname->fetch_assoc()){
-                    if(($name === $row["username"]) || ($name === $row["email"])){
+                    if($name === $row["username"]){
                         $flagname = 0;
                         $current_name = $row["username"];
                         echo '<script>console.log("user found");</script>';
+                        break;
+                    }
+                    else if($name === $row["email"]){
+                        $flagname = 0;
+                        $current_email = $row["email"];
+                        $email = 1;
+                        echo '<script>console.log("email found");</script>';
                         break;
                     }
                     else {
@@ -101,28 +110,53 @@
                 }
             }
 
-            // compare password of username
-            $sql = "SELECT password FROM user WHERE username= '$current_name'";
-            $result_pass = $conn->query($sql);
-            $row = $result_pass->fetch_assoc();
-            if($pass === $row["password"]){
-                echo '<script>console.log("password match");</script>';
+            // compare password of username and email
+            if($email == 0) {
+                $sql = "SELECT password FROM user WHERE username= '$current_name'";
+                $result_pass = $conn->query($sql);
+                $row = $result_pass->fetch_assoc();
+                if($pass === $row["password"]){
+                    echo '<script>console.log("password match");</script>';
+                }
+                else {
+                    echo '<script>console.log("password not match");</script>';
+                    echo '<script>$("#wrongpass").removeAttr("hidden");</script>';
+                    $flagname = 1;
+	            }
             }
-            else {
-                echo '<script>console.log("password not match");</script>';
-                echo '<script>$("#wrongpass").removeAttr("hidden");</script>';
-                $flagname = 1;
-	        }
+            else if($email == 1){
+                $sql = "SELECT password FROM user WHERE email= '$current_email'";
+                $result_pass = $conn->query($sql);
+                $row = $result_pass->fetch_assoc();
+                if($pass === $row["password"]){
+                    echo '<script>console.log("password match");</script>';
+                }
+                else {
+                    echo '<script>console.log("password not match");</script>';
+                    echo '<script>$("#wrongpass").removeAttr("hidden");</script>';
+                    $flagname = 1;
+	            }
+            }
 
             if($flagname == 0) {
-            // get userID
-            $sql = "SELECT userID FROM user WHERE username= '$current_name'";
-            $result_pass = $conn->query($sql);
-            $userid= $result_pass->fetch_assoc();
+
+            ///get userID with username or email
+            if($email == 0){
+                // get userID
+                $sql = "SELECT userID,username FROM user WHERE username= '$current_name'";
+                $result_pass = $conn->query($sql);
+                $userid= $result_pass->fetch_assoc();
+            }
+            else if($email == 1){
+                // get userID
+                $sql = "SELECT userID,username FROM user WHERE email= '$current_email'";
+                $result_pass = $conn->query($sql);
+                $userid= $result_pass->fetch_assoc();
+            }
 
             //logging in
             $_SESSION["userid"] = $userid["userID"];
-            $_SESSION["username"] = $_POST['username'];            
+            $_SESSION["username"] = $userid["username"];            
 
             header("Location:Userhome.php");
             }
