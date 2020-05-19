@@ -119,9 +119,9 @@
 							echo "</div>";
 					?>
 					<div id='film-actions'>
-						<a href='#'><i class='fa fa-bookmark-o'></i>Bookmark</a>
-						<a href='#'><i class='fa fa-plus-square-o'></i>Watched</a>
-						<a href='#'><i class='fa fa-heart-o'></i>Favorite</a>
+						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=bkmrk"?>"><i class='fa fa-bookmark-o'></i>Bookmark</a>
+						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=save"?>"><i class='fa fa-plus-square-o'></i>Watched</a>
+						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=fav"?>"><i class='fa fa-heart-o'></i>Favorite</a>
 					</div>
 					<div id='film-rating'><?php echo $movie['rating']."/10 IMDb"?></div>
 					<div id='film-stats'>
