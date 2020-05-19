@@ -1,6 +1,3 @@
-<?php
-    session_start();
-    ?>
 <DOCTYPE HTML>
 <html>
 <head>
@@ -11,7 +8,7 @@
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body >
-    <?php include 'header.html' ?>
+    <?php include 'header.php' ?>
    
     <div class='col-12 col-t-12 login_container flexwrap' style="padding-top: 40px;padding-bottom: 40px">
     <div class='col-8 col-t-12 flexwrap desktopborder'>
