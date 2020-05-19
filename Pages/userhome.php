@@ -50,7 +50,7 @@ echo  "<h3>Watched Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
                     }
 
                 echo "<li>
-                    <a id='list-link' href='search-result.php?id=$movieID'>
+                    <a id='list-link' href='FilmPage.php?id=$movieID'>
                     <div id=\"user-movie-info\">
                     <img id=\"list-movie-poster\" src=\"".$poster."\">
                     <h3>$title $seasons</h3>
