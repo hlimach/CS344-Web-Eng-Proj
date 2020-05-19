@@ -62,6 +62,11 @@ $(document).ready(function(){
 	
 	
 	//functions for userpage
+		$('#user-links-nav a').each(function() {
+		if (this.href === window.location.href) {
+			$(this).addClass('active');
+		}
+	});
 
 	follow_unfollow();
 	$('.follow-btn').click(function(){
