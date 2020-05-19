@@ -52,7 +52,7 @@
                 ?>
                 </div>
                 <div class="col-9 col-t-9 col-m-12 flexwrap  tabborder sideline" style="float: left;">  
-                    <div>
+                    <div class="col-12">
                         <h3 class="col-12" style="text-decoration: underline;">History</h3>
                          
                 <?php
