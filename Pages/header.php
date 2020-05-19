@@ -32,6 +32,7 @@
 		</div>
 
 		<div id='popular-menu'><a href='#' class='redir' id='dt=2&g=ma'>Popular</a></div>
+		<div id='about-us-menu'><a href='aboutus.php'>About Us</a></div>
         <div id='admin-menu' hidden><a href='admin.php' >Admin Panel</a></div>
 	</div>
 

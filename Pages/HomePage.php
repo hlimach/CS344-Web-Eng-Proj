@@ -39,6 +39,8 @@
 		</div>
 
 		<div id='popular-menu'><a href='#' class='redir' id='dt=2&g=ma'>Popular</a></div>
+		<div id='about-us-menu'><a href='aboutus.php'>About Us</a></div>
+        <div id='admin-menu' hidden><a href='admin.php' >Admin Panel</a></div>
 	</div>
 
 
@@ -160,4 +162,11 @@
 	<script src="../Functionality/jquery-3.2.1.js"></script>
 	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
 
+	<?php
+        //admin panel functionality
+        if ($_SESSION['username'] == "admin"){
+            echo '<script>$("#admin-menu").removeAttr("hidden");</script>';
+        }
+    ?>
+    
 </body>
