@@ -1,6 +1,7 @@
 <?php
 	require 'config.php';
 	require "Search.php";
+	
 	session_start();
 	
 	$movie_id = $_GET['id'];
@@ -26,11 +27,11 @@
 			<div id='logo-large' class='col-3'>
 				<a href='#'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
-			<!-- check for logged in/ out user -->
+			
 			<div class='user-icon col-1'>
-				<a href='#' class='fa fa-user-circle  w3-large'></a>
+				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
 			</div>
-			<!-- add functionality to search bar -->
+			
 			<div id='fixed-search-bar' class="col-4">
 		        <form id='search-form' action="Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
@@ -43,14 +44,14 @@
 			<div id='logo-small' class='col-t-1 col-m-1'>
 				<a href='#'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
 			</div>
-			<!-- check for logged in/ out user -->
+			
 			<div class='user-icon col-t-1 col-m-1'>			
-				<a href='#' class='fa fa-user-circle w3-large'></a>
+				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
 				<a href='#' class='fa fa-search  w3-large'></a>
 			</div>
-			<!-- add functionality to search bar -->
+			
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
 		        <form id='search-form' action="Search.php" method="post">
 		            <input id='search-bar-s' type='text' name='query' placeholder='Search...'/>

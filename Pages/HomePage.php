@@ -1,6 +1,6 @@
 <?php
 	require "config.php";
-	require "Search.php";
+	require 'Search.php';
 	
 	session_start();
 ?>
@@ -67,10 +67,10 @@
 			</div>
 			<!-- check for logged in/ out user -->
 			<div class='user-icon col-t-1 col-m-1'>			
-				<a href='#' class='fa fa-user-circle w3-large'></a>
+				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-search  w3-large'></a>
+				<a href='#' class='fa fa-search  w3-large'></a>
 			</div>
 			<!-- add functionality to search bar -->
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">

@@ -12,8 +12,7 @@
 	}
 
 	// Create database
-    $sql = "drop database if exists movieswebsite;";
-    $sql .=	"create database movieswebsite;";
+    $sql =	"create database if not exists movieswebsite;";
     $sql .= "use movieswebsite;";
 
     $sql .= "drop table if exists user;
