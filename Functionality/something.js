@@ -18,16 +18,16 @@ function follow_unfollow(){
 			var userid=$('.follow-btn').attr("data");
 			
 			var followstate=($('.follow-btn').text());
-			$.get('../Functionality/follow.php', {state:followstate, user:userid },function (data) { 
+			$.get('../Pages/follow.php', {state:followstate, user:userid },function (data) { 
 				data = $.trim(data);
-				console.log(data==='Unfollow');
+				
 				if (data==='Unfollow') {
 					$('.follow-btn').css("background-color","red");
 					$('.follow-btn').css("color","white");
 					$('.follow-btn').text("Unfollow");
 				}
 				else{
-					console.log(data);
+					
 					$('.follow-btn').css("background-color","#23ac45");
 					$('.follow-btn').text("Follow");
 				}
