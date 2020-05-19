@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    //check for admin
+    if($_SESSION['username'] != "admin"){
+        header('location:error.php');
+        
+    }
+?>
 <DOCTYPE HTML>
 <html>
 <head>
