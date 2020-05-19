@@ -80,7 +80,7 @@
                             $title=$row["title"];
                             $poster=$row["image_url"];
 
-                        echo "<a href='FilmPage.php?id=$movieID'><div class='col-11 col-t-11 col-m-12 user-movie-info' id='".++$num."'>
+                        echo "<a href='FilmPage.php?id=$movieID' style='text-decoration:none'><div class='col-11 col-t-11 col-m-12 user-movie-info' id='".++$num."'>
                                          <button class='remove-movie'> Remove </button>
                                          <img class='col-3 col-t-3 col-m-3' style='float:left;height:100%' src=\"".$poster."\">
                                          <h4>".$title."</h4>
