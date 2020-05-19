@@ -17,7 +17,7 @@
 </head>
 <body class="adminfix">
 	<div class="col-12">
-	    <?php include 'header.html' ?>
+	    <?php include 'header.php' ?>
     </div>
     <div class="col-12 col-t-12 col-m-12" style="display: inline-block;">
 	    <div><h2 id="h2" style="float: left;clear: left">Users</h2></div>
