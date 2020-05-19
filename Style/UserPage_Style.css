@@ -84,18 +84,15 @@
 	text-align: center;
 }
 
- #user-picture {
-	display: block;
-	overflow: hidden;
 
- }
- #profilepicture{
-	border-radius: 50%;
-	 width: 100%;
-	 object-fit:cover;
-	 border: 1px solid white;
-	 box-shadow: 4px 0px 9px 0px rgba(255,255,255,0.64);
- }
+	#profilepicture{
+		width: 200px; /* width of container */
+		height: 200px; /* height of container */
+		clip-path: circle();
+		object-fit: cover;
+		
+	
+}
 
  #user-name{
 	font-size: x-large;
@@ -209,11 +206,11 @@ margin: auto;
 
 #user-movie-info{
 background-color: rgb(20, 20, 20);
+box-shadow: 5px -2px 8px 0px rgb(114, 114, 114);
 margin-top: 5%;
 width: 90%;
 min-height: 15%;
 overflow: hidden;
-box-shadow: 5px -2px 8px 0px rgb(114, 114, 114);
 transition: transform 0.5s;
 
 }
@@ -222,7 +219,7 @@ transition: transform 0.5s;
 font-size: large;
 }
 
-#user-movie-info:hover, #user-follow-list:hover{
+#user-movie-info:hover{
 transform: scale(1.03);
 cursor: pointer;
 }
@@ -278,16 +275,18 @@ margin-right: 3.5%;
 
 #user-follow-list{
 	margin-top: 5%;
-	width: 90%;
+	width: 70%;
 	height: 8vh;
 	overflow: hidden;
-	transition: transform 0.5s;
+	
+
 }
 
 .follower-pic{
-	clip-path: circle();
-	border-radius:50% ;
-	height: 100%;
+	object-fit: cover;
+	width:80px;
+	height: 100px;
+	
 
 }
 #search-results{
