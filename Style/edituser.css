@@ -369,7 +369,6 @@ height: 27vh;
             cursor:pointer;
         }
 [class*="col-"] {
-    float: left;
     padding: 5px;
 }
 
