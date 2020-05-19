@@ -199,7 +199,7 @@
 	<script src="../Functionality/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="../Functionality/check1.js"></script>
     <div style=" background-color:yellow">
-        <?php include 'footer.php' ?>
+        <?php include 'footer.html' ?>
     </div>
 
 
