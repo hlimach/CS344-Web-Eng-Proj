@@ -30,7 +30,7 @@
     </script>
 </head>
 <body>
-    <?php include 'header.html' ?>
+    <?php include 'header.php' ?>
     <div class='col-12 col-m-12 login_container flexwrap' style="padding-top: 40px;padding-bottom: 40px">
     <div class='col-8 col-m-12 flexwrap desktopborder'>
                     <div class="col-3 col-t-3 remove-m sidebox" style="float: left">
