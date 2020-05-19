@@ -10,7 +10,7 @@
 	<title>Track.tv</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/HomePage_Style.css" type="text/css">
+	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
 </head>
 
 <body>
@@ -26,13 +26,13 @@
 				<h1>All your cinematic record. All in one place.</h1>
 				<p>Save all movies and tv shows that you've watched, loved, or want to watch.</p>
 			</div>
-			<div id='st1-img' class='section-img col-5 col-t-12 col-m-12'><img src='../Style/Images/monitor.png'></div>
+			<div id='st1-img' class='section-img col-5 col-t-12 col-m-12'><img src='Images/monitor.png'></div>
 		</div>
 	</div>
 
 	<div id='b2'>
 		<div class='sections'>
-			<div id='st2-img' class='section-img col-5 col-t-12 col-m-12'><img src='../Style/Images/popular.png'></div>
+			<div id='st2-img' class='section-img col-5 col-t-12 col-m-12'><img src='Images/popular.png'></div>
 			<div id='st2' class='section-text col-7 col-t-12 col-m-12 t-text m-text'>
 				<h1>Find out whats popular.</h1>
 				<p>Discover movies and TV shows trending among other users.</p>
@@ -80,7 +80,7 @@
 		</div>
 	</div>
 
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/Haleema.js" type="text/javascript"></script>
 
 </body>

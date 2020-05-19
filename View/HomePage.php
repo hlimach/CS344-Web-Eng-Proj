@@ -1,9 +1,9 @@
 <?php
 	session_start();
 
-	require "config.php";
-	require 'Search.php';
-	include 'CheckLogin.php';
+	require '../Controller/config.php';
+	require '../Controller/Search.php';
+	include '../Controller/CheckLogin.php';
 ?>
 
 <!doctype html>
@@ -14,7 +14,7 @@
 	<title>Home Page</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/HomePage_Style.css" type="text/css">
+	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
 </head>
 
 <body>
@@ -40,7 +40,7 @@
 		</div>
 
 		<div id='popular-menu'><a href='#' class='redir' id='dt=2&g=ma'>Popular</a></div>
-		<div id='about-us-menu'><a href='aboutus.php'>About Us</a></div>
+		<div id='about-us-menu'><a href='AboutUs.php'>About Us</a></div>
 	</div>
 
 
@@ -48,14 +48,14 @@
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div class='slider-menu col-1 fa fa-bars w3-large'></div>
 			<div id='logo-large' class='col-3'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			
-			<div class='user-icon col-1'><a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
+			<div class='user-icon col-1'><a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
 			
 			<div id='fixed-search-bar' class="col-4">
 				
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn' name='submit' type='submit' class='fa fa-search'/>
 		        </form>
@@ -65,18 +65,18 @@
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
 				<a href='#' class='fa fa-search  w3-large'></a>
 			</div>
 
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar-s' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn-s' name='submit' type='submit' class='fa fa-arrow-right'/>
 		        </form>
@@ -88,7 +88,7 @@
 	<div id='page-content'>
 		<div id='main-image'>
 			<div class='fully-faded'>
-				<img src='../Style/Images/main-img.jpg'>
+				<img src='Images/main-img.jpg'>
 				<div id='main-img-text'>
 					<h1>Discover currently trending</h1>
 					<button class='main-btn redir' id='dt=2&g=ma'>Explore All</button>
@@ -159,7 +159,7 @@
 	</div>
 	<!--footer final, dont touch above!! -->
 
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/Haleema.js" type="text/javascript"></script>
     
 </body>

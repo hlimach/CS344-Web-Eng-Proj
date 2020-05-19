@@ -1,19 +1,25 @@
 <?php
 	session_start();
-	require 'config.php';
-	require 'Search.php';
-	include 'CheckLogin.php';
+
+	require '../Controller/config.php';
+	require '../Controller/Search.php';
+	//include '../Controller/CheckLogin.php';
+	
+	$word = $_GET['w'];
 ?>
+
+<script type="text/javascript">
+    var word = '<?php echo $word; ?>';
+</script>
 
 <!doctype html>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width">
-	<title>Browse Page</title>
+	<title>Search Results</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/HomePage_Style.css" type="text/css">
-
+	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
 </head>
 
 <body>
@@ -23,11 +29,11 @@
 			<div id='logo-large' class='col-3'>
 				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
-			<!-- check for logged in/ out user -->
+			
 			<div class='user-icon col-1'>
 				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
 			</div>
-			<!-- add functionality to search bar -->
+			
 			<div id='fixed-search-bar' class="col-4">
 		        <form id='search-form' action="Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
@@ -40,23 +46,23 @@
 			<div id='logo-small' class='col-t-1 col-m-1'>
 				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
 			</div>
-			<!-- check for logged in/ out user -->
+			
 			<div class='user-icon col-t-1 col-m-1'>			
 				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
 				<a href='#' class='fa fa-search  w3-large'></a>
 			</div>
-			<!-- add functionality to search bar -->
+			
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar-s' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn-s' name='submit' type='submit' class='fa fa-arrow-right'/>
 		        </form>
 		    </div>
 		</div>
 
-		<?php include 'Search.php'; ?>
+		<?php include '../Controller/Search.php'; ?>
 	</div>
 
 	<div id='page-content'>
@@ -102,14 +108,13 @@
 
 		<div id='poster-section' class='col-10 col-t-12 col-m-12'>
 			<div class='top-info'>
-				<div class='main-text'>Browse</div>
+				<div class='main-text'>Search Results</div>
 				<div class='main-tabs bold-tiny'>
-					<a id='all-tab' href='#'>ALL</a>
-					<a id='movies-tab' href='#'>MOVIES</a>
-					<a id='tv-shows-tab' href='#'>TV SHOWS</a>
+					<a id='film-tab' class='active-tab' href='#'>MOVIES & TV SHOWS</a>
+					<a id='user-tab' href='#'>USERS</a>
 				</div>
 			</div>
-			<div id='poster-listings'></div>
+			<div id='res-listings'></div>
 		</div>
 	</div>
 
@@ -118,10 +123,10 @@
 	<div id='footer-box'>
 		<div class='footer'>
 			<div class='footer-heading'>Questions?</div>
-			<div class='footer-content'><a href='./services.php'>Services</a></div>
-			<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
-			<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
-			<div class='footer-content'><a href='./developers.php'>Developers</a></div>
+			<div class='footer-content'><a href='#'>Services</a></div>
+			<div class='footer-content'><a href='#'>FAQs</a></div>
+			<div class='footer-content'><a href='#'>Contact Us</a></div>
+			<div class='footer-content'><a href='#'>Developers</a></div>
 		
 			<div class='footer-heading'>Find Us</div>
 			<div class='footer-heading' id='find-us-icons'>
@@ -135,6 +140,6 @@
 		</div>
 	</div>
 	
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/Haleema.js" type="text/javascript"></script>
 </body>

@@ -1,8 +1,9 @@
 <?php
 	session_start();
-	require 'config.php';
-	require "Search.php";
-	include 'CheckLogin.php';
+	
+	require '../Controller/config.php';
+	require '../Controller/Search.php';
+	//include '../Controller/CheckLogin.php';
 	
 	$movie_id = $_GET['id'];
 	$movie = $conn->query("SELECT * FROM movie WHERE movieID =".$movie_id)->fetch_assoc();
@@ -17,7 +18,7 @@
 	<title><?php echo $movie['title'] ?></title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/HomePage_Style.css" type="text/css">
+	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
 
 </head>
 
@@ -25,7 +26,7 @@
 	<div id='header'>
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div id='logo-large' class='col-3'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			
 			<div class='user-icon col-1'>
@@ -42,7 +43,7 @@
 
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			
@@ -60,7 +61,7 @@
 		    </div>
 		</div>
 
-		<?php include 'Search.php'; ?>
+		<?php include '../Controller/Search.php'; ?>
 	</div>
 
 	<div id='page-content'>
@@ -141,7 +142,7 @@
 
 			<div id='film-reviews'>
 				<div id='leave-review'>
-					<?php require 'LeaveReview.php' ?>
+					<?php require '../Controller/LeaveReview.php' ?>
 				</div>
 				
 				<div id='reviews-list'>
@@ -189,6 +190,6 @@
 		<div id='footer-end' class='footer-heading'> CS-344 Web Engineering, Spring 2020: Semester Project.</div>
 	</div>
 
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/Haleema.js" type="text/javascript"></script>
 </body>
