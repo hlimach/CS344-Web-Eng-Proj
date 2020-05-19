@@ -64,7 +64,8 @@
                 $age=$row["age"];
 
                     echo
-                '<div id="user-picture" class="col-12 col-t-5"><img id="profilepicture" src="'.$picture.'" alt="No profile picture"></div>
+                '<div id="user-picture" class="col-12 col-t-5" ><img id="profilepicture" src="'.$picture.'" alt="No profile picture"></div>
+                
                     <div id="user-name"  >'.$fname." ".$lname.", ".$age.'</div>
                     <div id="user-handle"  >'.'@'.$handle.'</div>
                     <div id="user-follow-div" class="col-12 col-t-7">
@@ -86,8 +87,12 @@
                         
                     if ($userID==$_SESSION["userid"]) {
                        echo ' <div id="user-edit">
-                            <a href="Edit User.php"><button id="user-edit-btn">Edit Profile</button></a>
+                            <button id="user-edit-btn">Edit Profile</button>
+                        </div>
+                        <div> <a href="HomePage.php">LOGOUT</a>
                         </div>';
+                       
+                        
                     }
                     
                 }
