@@ -1,5 +1,6 @@
 <?php 
 session_start();
+include '../Pages/CheckLogin.php';
 //display user info and header
 include '../Pages/userpage_top.php';
 
