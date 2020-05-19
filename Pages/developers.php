@@ -17,7 +17,7 @@
 
         <div class="c-aboutdesk-d wrap_aboutus">
             <div style="background-color:black">
-                <?php include 'header.html' ?>
+                <?php include 'header.php' ?>
 	        </div>
 
             <div id="body">
