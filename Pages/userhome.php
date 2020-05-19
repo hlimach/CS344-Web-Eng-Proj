@@ -1,6 +1,6 @@
 <?php 
 session_start();
-
+include '../Pages/CheckLogin.php';
 $username=$_GET['id'];
 
 include '../Pages/userpage_top.php'; 
