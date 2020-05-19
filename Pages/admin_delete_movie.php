@@ -1,3 +1,12 @@
+<?php
+    session_start();
+    //check for admin
+    if($_SESSION['username'] != "admin"){
+        header('location:error.php');
+        
+    }
+?>
+
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
@@ -39,6 +48,22 @@
                 $set = 1;
             }
         }       
+    }
+    if (isset($_POST['delete'])){
+        include 'dbconnect.php';
+
+        if($_POST["searchid"] == null){
+        }   
+        else {
+            $sql = "DELETE FROM movie WHERE movieID = '$_POST[id]'";
+            if ($conn->query($sql) == TRUE) {
+                echo '<script>alert("Movie deleted successfully");</script>';
+                $_POST = array();
+            } else {
+                echo '<script>alert("Error")</script>';
+            }
+        
+        }             
     }
     ?>    
     
@@ -135,21 +160,6 @@
         echo '<script>$("#noexistid").removeAttr("hidden");</script>';
     }
     
-    if (isset($_POST['delete'])){
-        include 'dbconnect.php';
-
-        if($_POST["searchid"] == null){
-        }   
-        else {
-            $sql = "DELETE FROM movie WHERE movieID = '$_POST[id]'";
-            if ($conn->query($sql) == TRUE) {
-                echo '<script>alert("Movie deleted successfully");</script>';
-            } else {
-                echo '<script>alert("Error")</script>';
-            }
-        $_POST = array();
-        }             
-    }
     ?>
 </body>
 </html>

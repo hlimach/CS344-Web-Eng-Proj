@@ -1,3 +1,11 @@
+<?php
+    session_start();
+    //check for admin
+    if($_SESSION['username'] != "admin"){
+        header('location:error.php');
+        
+    }
+?>
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>

@@ -1,3 +1,12 @@
+<?php  
+    session_start();
+
+    //check for logged in
+    if(isset($_SESSION['userid'])) {
+        header("Location:HomePage.php");
+    }
+?>
+
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
@@ -7,6 +16,134 @@
     </head>
 
     <body>
+                
+
+        <!--login php script-->
+        <?php             
+            if (isset($_POST['submit'])){
+
+                include 'dbconnect.php'; 
+
+                $check = true;   
+                $fcheck = true;
+                $bcheck = true; 
+                $piccheck = true; 
+                $lcheck = true;   
+                $acheck = true;
+                $p1check = true;
+                $p2check = true;
+                $unamecheck = true;
+                $uname2check = true;
+                $echeck = true;
+                $e2check = true;
+
+                //creating check on first Name
+                if($_POST["fname"] === null || (!ctype_alpha($_POST["fname"]))){
+                    $check = false; 
+                    $fcheck = false;
+                    echo '<script>console.log("invalid first name");</script>';
+                }        
+        
+                //creating check on Bio
+                if($_POST["bio"] == null){
+                    $check = false; 
+                    $bcheck = false;
+                    echo '<script>console.log("invalid bio");</script>';
+                }   
+
+                //creating check on profile picture Url
+                    if($_POST["pic"] == null){
+                    $check = false; 
+                    $piccheck = false;
+                    echo '<script>console.log("invalid url");</script>';
+                }  
+
+                //creating check on last Name
+                if($_POST["lname"] === null || (!ctype_alpha($_POST["lname"]))){
+                    $check = false; 
+                    $lcheck = false;
+                    echo '<script>console.log("invalid last name");</script>';
+                } 
+
+                //creating check on Age
+                if($_POST["age"] === null || (!is_numeric($_POST["age"]))){
+                    $check = false; 
+                    $acheck = false;
+                    echo '<script>console.log("invalid age");</script>';
+                } 
+
+                //creating check on password
+                if($_POST["pass1"] == null){
+                    $check = false; 
+                    $p1check = false;
+                    echo '<script>console.log("invalid password");</script>';
+                } 
+            
+                //creating check on password confirm
+                if($_POST["pass2"] != $_POST["pass1"]){
+                    $check = false; 
+                    $p2check = false;
+                    echo '<script>console.log(possword dont match");</script>';
+                } 
+            
+                //creating check on username
+                if($_POST["username"] == null){
+                    $check = false; 
+                    $unamecheck = false;
+                    echo '<script>console.log("invalid username");</script>';
+                }
+                else{
+                    $sql = "SELECT username FROM user";
+                    $result_uname = $conn->query($sql);
+
+                    if ($result_uname->num_rows > 0) {
+                        while($row = $result_uname->fetch_assoc()){
+                            if($_POST["username"] === $row["username"]){
+                                $check = false; 
+                                $uname2check = false;
+                                echo '<script>console.log("user already exists");</script>';
+                                break;
+                            }
+                        }
+                    }
+                }
+            
+                //creating check on email
+                if($_POST["email"] == null){
+                    $check = false; 
+                    $echeck = false;
+                    echo '<script>console.log("invalid email");</script>';
+                }
+                else{
+                    $sql = "SELECT email FROM user";
+                    $result_email = $conn->query($sql);
+
+                    if ($result_email->num_rows > 0) {
+                        while($row = $result_email->fetch_assoc()){
+                            if($_POST["email"] === $row["email"]){
+                                $check = false; 
+                                $e2check = false;
+                                echo '<script>console.log("account already exists");</script>';
+                                break;
+                            }
+                        }
+                    }
+                }
+
+
+                //entering data into mysql
+                if($check == true){
+                    $sql = "INSERT INTO user (username, password, f_name, l_name, age, bio, gender, email, pic_url) VALUES ('$_POST[username]', '$_POST[pass1]', '$_POST[fname]', '$_POST[lname]', '$_POST[age]', '$_POST[bio]', '$_POST[gender]', '$_POST[email]', '$_POST[pic]')";
+
+                    if ($conn->query($sql) == TRUE) {
+                        echo '<script>alert("signup successful");</script>';
+                        echo "<script type='text/javascript'>window.location.href = 'login.php';</script>";
+                    } else {
+                        echo '<script>alert("Error")</script>';
+                    }
+                }         
+            }
+        ?>
         <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" id="myform" ?>
             <div class="c-12 login_container flexwrap" style="background-image:url(https://allegromediamusic.files.wordpress.com/2018/03/8281fadb7336e7ced706e1043e023e1c.jpg)">
                 <div class="c-6 c-t-6 wraplogin " style="margin:2%; padding-bottom:1%" >
@@ -164,120 +301,43 @@
                 </div>   
             </div>
         </form>
-        <!--login php script-->
-        <?php if (isset($_POST['submit'])){
-
-            include 'dbconnect.php'; 
-
-            $check = true;        
-
-            //creating check on first Name
-            if($_POST["fname"] === null || (!ctype_alpha($_POST["fname"]))){
-                $check = false; 
-                echo '<script>console.log("invalid first name");</script>;';
-                echo '<script>$("#wrongfname").removeAttr("hidden");</script>';
-            }        
-        
-            //creating check on Bio
-            if($_POST["bio"] == null){
-                $check = false; 
-                echo '<script>console.log("invalid bio");</script>;';
-                echo '<script>$("#wrongbio").removeAttr("hidden");</script>';
-            }   
-
-            //creating check on profile picture Url
-                if($_POST["pic"] == null){
-                $check = false; 
-                echo '<script>console.log("invalid url");</script>;';
-                echo '<script>$("#wrongurl").removeAttr("hidden");</script>';
-            }  
-
-            //creating check on last Name
-            if($_POST["lname"] === null || (!ctype_alpha($_POST["lname"]))){
-                $check = false; 
-                echo '<script>console.log("invalid last name");</script>;';
-                echo '<script>$("#wronglname").removeAttr("hidden");</script>';
-            } 
-
-            //creating check on Age
-            if($_POST["age"] === null || (!is_numeric($_POST["age"]))){
-                $check = false; 
-                echo '<script>console.log("invalid age");</script>;';
-                echo '<script>$("#wrongage").removeAttr("hidden");</script>';
-            } 
-
-            //creating check on password
-            if($_POST["pass1"] == null){
-                $check = false; 
-                echo '<script>console.log("invalid password");</script>;';
-                echo '<script>$("#wrongpass").removeAttr("hidden");</script>';
-            } 
-            
-            //creating check on password confirm
-            if($_POST["pass2"] != $_POST["pass1"]){
-                $check = false; 
-                echo '<script>console.log(possword dont match");</script>;';
-                echo '<script>$("#wrongpass2").removeAttr("hidden");</script>';
-            } 
-            
-            //creating check on username
-            if($_POST["username"] == null){
-                $check = false; 
-                echo '<script>console.log("invalid username");</script>;';
-                echo '<script>$("#wrongusername").removeAttr("hidden");</script>';
-            }
-            else{
-                $sql = "SELECT username FROM user";
-                $result_uname = $conn->query($sql);
-
-                if ($result_uname->num_rows > 0) {
-                    while($row = $result_uname->fetch_assoc()){
-                        if($_POST["username"] === $row["username"]){
-                            $check = false; 
-                            echo '<script>console.log("user already exists");</script>';
-                            echo '<script>$("#takenusername").removeAttr("hidden");</script>';
-                            break;
-                        }
-                    }
+        <?php  
+            if (isset($_POST['submit'])){
+                if($fcheck == false){
+                    echo '<script>$("#wrongfname").removeAttr("hidden");</script>';
+                }
+                if($bcheck == false){
+                    echo '<script>$("#wrongbio").removeAttr("hidden");</script>';                
+                }
+                if($piccheck == false){
+                    echo '<script>$("#wrongurl").removeAttr("hidden");</script>';                
+                }
+                if($lcheck == false){
+                     echo '<script>$("#wronglname").removeAttr("hidden");</script>';               
+                }
+                if($acheck == false){
+                    echo '<script>$("#wrongage").removeAttr("hidden");</script>';                
+                }
+                if($p1check == false){
+                    echo '<script>$("#wrongpass").removeAttr("hidden");</script>';                
+                }
+                if($p2check == false){
+                    echo '<script>$("#wrongpass2").removeAttr("hidden");</script>';                
+                }
+                if($unamecheck == false){
+                     echo '<script>$("#wrongusername").removeAttr("hidden");</script>';               
+                }
+                if($uname2check == false){
+                    echo '<script>$("#takenusername").removeAttr("hidden");</script>';                
+                }
+                if($echeck == false){
+                    echo '<script>$("#wrongemail").removeAttr("hidden");</script>';
+                }
+                if($e2check == false){
+                    echo '<script>$("#takenemail").removeAttr("hidden");</script>';
                 }
             }
-            
-            //creating check on email
-            if($_POST["email"] == null){
-                $check = false; 
-                echo '<script>console.log("invalid email");</script>;';
-                echo '<script>$("#wrongemail").removeAttr("hidden");</script>';
-            }
-            else{
-                $sql = "SELECT email FROM user";
-                $result_email = $conn->query($sql);
-
-                if ($result_email->num_rows > 0) {
-                    while($row = $result_email->fetch_assoc()){
-                        if($_POST["email"] === $row["email"]){
-                            $check = false; 
-                            echo '<script>console.log("account already exists");</script>';
-                            echo '<script>$("#takenemail").removeAttr("hidden");</script>';
-                            break;
-                        }
-                    }
-                }
-            }
-
-
-        //entering data into mysql
-        if($check == true){
-            $sql = "INSERT INTO user (username, password, f_name, l_name, age, bio, gender, email, pic_url) VALUES ('$_POST[username]', '$_POST[pass1]', '$_POST[fname]', '$_POST[lname]', '$_POST[age]', '$_POST[bio]', '$_POST[gender]', '$_POST[email]', '$_POST[pic]')";
-
-            if ($conn->query($sql) == TRUE) {
-                echo '<script>alert("signup successful");</script>';
-            } else {
-                echo '<script>alert("Error")</script>';
-            }
-            
-        }
-
-        }?>
+        ?>
     </body>
 
 </html>

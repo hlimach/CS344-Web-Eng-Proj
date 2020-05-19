@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+    include 'CheckLogin.php';
+?>
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>

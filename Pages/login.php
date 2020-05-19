@@ -1,6 +1,11 @@
 ﻿<?php
         // Start the session
         session_start();
+        
+        //check for logged in
+        if(isset($_SESSION['userid'])) {
+            header("Location:HomePage.php");
+        }
 ?>
 <html>
     <head>
