@@ -42,7 +42,7 @@
     ?>    
     
     <div  style="background-color:black">
-        <?php include 'header.html' ?>
+        <?php include 'header.php' ?>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" id="myform" ?>
         <div class="admincontainer-t">
