@@ -89,7 +89,7 @@
                        echo ' <div id="user-edit">
                             <button id="user-edit-btn">Edit Profile</button>
                         </div>
-                        <div> <a href="HomePage.php">LOGOUT</a>
+                        <div> <a href="../Functionality/logout.php">LOGOUT</a>
                         </div>';
                        
                         
