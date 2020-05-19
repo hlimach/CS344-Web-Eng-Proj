@@ -87,7 +87,7 @@
                         
                     if ($userID==$_SESSION["userid"]) {
                        echo ' <div id="user-edit">
-                              <a href="../Pages/Edit Profile">  <button id="user-edit-btn">Edit Profile</button> </a>
+                              <a href="../Pages/Edit Profile.php">  <button id="user-edit-btn">Edit Profile</button> </a>
                         </div>
                         <div> <a href="../Pages/logout.php">LOGOUT</a>
                         </div>';
