@@ -368,6 +368,11 @@ height: 27vh;
             font-size:20px;
             cursor:pointer;
         }
+[class*="col-"] {
+    float: left;
+    padding: 5px;
+}
+
 
 
 
