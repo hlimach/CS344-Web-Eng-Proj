@@ -5,13 +5,22 @@
 
     <title>User Homepage</title>
     <link rel="stylesheet" href="../Style/UserPage_Style.css" type="text/css">
+       <script src="../Functionality/jquery-3.2.1.js"></script>
+    <script src="../Functionality/Header_Footer.js" type="text/javascript"></script>
 
 
 </head>
 
 <body id='user-homepage'>
 
-<?php include "../Pages/header.php" ?>
+<?php 
+    include "../Pages/header.php";
+    
+        //admin panel functionality
+    if ($_SESSION['username'] == "admin")
+        header('Location: admin.php');        
+    
+?>
 
 <div class='col-12 col-t-12 col-m-12'>
 </div>
@@ -87,7 +96,7 @@
                         
                     if ($userID==$_SESSION["userid"]) {
                        echo ' <div id="user-edit">
-                              <a href="../Pages/Edit Profile.php">  <button id="user-edit-btn">Edit Profile</button> </a>
+                              <a href="../Pages/Edit User.php">  <button id="user-edit-btn">Edit Profile</button> </a>
                         </div>
                         <div> <a href="../Pages/logout.php">LOGOUT</a>
                         </div>';

@@ -1,9 +1,11 @@
 <?php
+	session_start();
+
 	require 'config.php';
 	require "Search.php";
+	include 'CheckLogin.php';
+	
 	$word = $_GET['w'];
-
-	session_start();
 ?>
 
 <script type="text/javascript">
@@ -25,7 +27,7 @@
 	<div id='header'>
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div id='logo-large' class='col-3'>
-				<a href='#'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			
 			<div class='user-icon col-1'>
@@ -42,7 +44,7 @@
 
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='#'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			

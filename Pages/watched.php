@@ -1,3 +1,8 @@
+<?php 
+    session_start();
+    include 'CheckLogin.php';
+?>
+
 <DOCTYPE HTML>
 <html>
 <head>

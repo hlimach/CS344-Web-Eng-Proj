@@ -126,7 +126,6 @@
 			('Short', 21);";
 
     $sql .= "INSERT INTO user (username,password,f_name,l_name,age, bio,gender,email,pic_url) VALUES 
-            ('admin', 'admin', 'admin', 'admin' ,0 ,'na', 'na','admin@track.tv','https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg'),
             ('matariq', 'maira123', 'maira', 'tariq', 20, 'Life was meant for good friends and great adventures.', 'female', 'matariq@gmail.com', 'https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg'),
             ('uhani', 'uhani123', 'ume', 'hani', 18,'Life was meant for good friends and great adventures.', 'female', 'uhani@gmail.com', 'https://i.pinimg.com/originals/3d/37/36/3d37369dd8c864e4c21f803c28cf3170.jpg'),
             ('mrana', 'mrana111', 'maha', 'rana', 18, 'A day spent with a friend is always a day well spent.', 'female', 'mrana@gmail.com', 'https://i.pinimg.com/originals/7d/a7/f8/7da7f84652f8d5ef017a0903fd9fe3b0.jpg'),
@@ -141,7 +140,8 @@
             ('sharique', 'sharique', 'sharique', 'pervaiz', 23, 'On Mercury, a day lasts 1408 hours. Just like Monday does on Earth.', 'male', 'spervaiz@gmail.com', 'https://i.pinimg.com/originals/fb/55/24/fb55244036ea68a2e511dd86917582f5.jpg'),
             ('blink', 'hamiz101', 'hamiz', 'ali', 20, 'Life is not a fairy tale. If you lose your shoe at midnight, you?re probably drunk.', 'male', 'hali@gmail.com', 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRJyac8d8-Sx9VAjQBSy9JRabxPGdWBo6td87K6MiN-wyM07XsU&usqp=CAU'),
             ('fatimah', 'f111', 'fatimah', 'zulfiqar', 19, 'I made a huge list for today. I just can?t figure out who?s going to do it.', 'female', 'fzulfiqar@gmail.com', 'https://i.pinimg.com/236x/df/98/5f/df985f50600c837200d5b73201bc32be--cute-stuff-eiffel.jpg'),
-            ('smunir','s123', 'sadia', 'munir', 22, 'Life doesn?t have any hands but it can sure give you a slap sometimes.', 'female', 'smunir@hotmail.com', 'https://i.pinimg.com/originals/91/85/e3/9185e39fd47fa1c4cd5a9732009f5fb6.jpg');";
+            ('smunir','s123', 'sadia', 'munir', 22, 'Life doesn?t have any hands but it can sure give you a slap sometimes.', 'female', 'smunir@hotmail.com', 'https://i.pinimg.com/originals/91/85/e3/9185e39fd47fa1c4cd5a9732009f5fb6.jpg'),
+            ('admin', 'admin', 'admin', 'admin' ,0 ,'na', 'na','admin@track.tv','https://i.pinimg.com/564x/20/62/69/20626905851e066e66764c3385fa4352.jpg');";
 
 	$sql .= "INSERT INTO movie VALUES 
 			(1, 'Mr. Robot', 8.5, 4, 'https://m.media-amazon.com/images/M/MV5BMzgxMmQxZjQtNDdmMC00MjRlLTk1MDEtZDcwNTdmOTg0YzA2XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SX300.jpg'),

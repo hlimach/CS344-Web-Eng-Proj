@@ -50,6 +50,13 @@
 }
 
 body {
+	font-family: Helvetica, Arial, sans-serif;
+	background-color:black;
+	margin: 0;
+	color:white;
+}
+
+.header_footer {
 	font-family: Optima, Helvetica, sans-serif;
 	font-weight: 500;
 	font-variant: small-caps;

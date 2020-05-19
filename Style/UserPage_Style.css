@@ -85,17 +85,20 @@
 }
 
 
-	#profilepicture{
-		width: 200px; /* width of container */
-		height: 200px; /* height of container */
-		clip-path: circle();
-		object-fit: cover;
-		
-	
+#profilepicture{
+	width: 200px; /* width of container */
+	height: 200px; /* height of container */
+	clip-path: circle();
+	object-fit: cover;
 }
 
  #user-name{
 	font-size: x-large;
+ }
+
+ #f-box {
+ 	display:inline-block;
+ 	width:100%;
  }
 
 

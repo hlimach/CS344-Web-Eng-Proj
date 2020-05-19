@@ -5,12 +5,11 @@
     </div>
 </div>
 
-
-<?php
-include '../Pages/footer.html';
-?>
-
-
+<div id='f-box'>
+	<?php
+	include '../Pages/footer.html';
+	?>
+</div>
 
 </body>
 </html>

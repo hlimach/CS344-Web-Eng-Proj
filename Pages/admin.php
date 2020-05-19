@@ -12,7 +12,8 @@
 <head>
 	<title>Admin Homepage</title>
 	<link rel="stylesheet" type="text/css" href="../Style/edituser.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="../Functionality/jquery-3.2.1.js"></script>
+    <script src="../Functionality/Header_Footer.js" type="text/javascript"></script>
    
 </head>
 <body class="adminfix">

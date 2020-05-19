@@ -3,6 +3,7 @@
 
 	require "config.php";
 	require 'Search.php';
+	include 'CheckLogin.php';
 ?>
 
 <!doctype html>
@@ -40,7 +41,6 @@
 
 		<div id='popular-menu'><a href='#' class='redir' id='dt=2&g=ma'>Popular</a></div>
 		<div id='about-us-menu'><a href='aboutus.php'>About Us</a></div>
-        <div id='admin-menu' hidden><a href='admin.php' >Admin Panel</a></div>
 	</div>
 
 
@@ -48,7 +48,7 @@
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div class='slider-menu col-1 fa fa-bars w3-large'></div>
 			<div id='logo-large' class='col-3'>
-				<a href='#'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			
 			<div class='user-icon col-1'><a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
@@ -65,7 +65,7 @@
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='#'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			
@@ -161,12 +161,5 @@
 
 	<script src="../Functionality/jquery-3.2.1.js"></script>
 	<script src="../Functionality/HomePage_F.js" type="text/javascript"></script>
-
-	<?php
-        //admin panel functionality
-        if ($_SESSION['username'] == "admin"){
-            echo '<script>$("#admin-menu").removeAttr("hidden");</script>';
-        }
-    ?>
     
 </body>
