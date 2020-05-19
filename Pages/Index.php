@@ -1,6 +1,6 @@
 <!doctype html>
 <?php
-	require 'DatabaseSetup.php';
+	require '../Model/DatabaseSetup.php';
 ?>
 
 <html>
