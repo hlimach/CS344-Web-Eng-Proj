@@ -14,7 +14,7 @@
 </head>
 
 <body>
-	<?php include 'header.html' ?>
+	<?php include 'header.php' ?>
 	<div class="mobilesizefix-d">
     	<div class="col-12 col-t-12 col-m-12 login_container flexwrap" style="padding-top: 40px;padding-bottom: 40px">
     		<div class="col-8 col-t-12 col-m-12 flexwrap desktopborder">
@@ -199,7 +199,7 @@
 	<script src="../Functionality/jquery-3.2.1.js"></script>
 	<script type="text/javascript" src="../Functionality/check1.js"></script>
     <div style=" background-color:yellow">
-        <?php include 'footer.html' ?>
+        <?php include 'footer.php' ?>
     </div>
 
 
