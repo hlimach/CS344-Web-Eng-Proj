@@ -11,7 +11,7 @@
 
 <body id='user-homepage'>
 
-<?php include "../Pages/header.html" ?>
+<?php include "../Pages/header.php" ?>
 
 <div class='col-12 col-t-12 col-m-12'>
 </div>
