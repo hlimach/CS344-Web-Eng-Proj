@@ -303,71 +303,55 @@ width:92%;
 height: 27vh;
 
 }
- .scrolladd{
-            float: left;
-            height: 50%;
-            width: 100%;
-            overflow-y: hidden;
-            overflow-x: scroll;
-            white-space: nowrap;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-            }
+  .scrolladd{
+        float: left;
+        height: 50%;
+        width: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        position: relative;
+-webkit-overflow-scrolling: touch;
+    }
+    .scrolladd::-webkit-scrollbar {
+    display: none;
+}
 
-            .scrolladd::-webkit-scrollbar {
-            display: none;
-        }
-        #h2{
-            color: #FFC30B;
-            padding-left: 20px;
-            text-decoration: underline;
-            text-decoration-color: #FFC30B;
-            float: left;
-        }
-         .user-movie-info-admin{
-                transition: width 0.5s, height 0.5s;
-                position: relative;
+#h2{
+    color: #FFC30B;
+    padding-left: 20px;
+    text-decoration: underline;
+    text-decoration-color: #FFC30B;
+    float: left;
+}
 
-        }
-        .user-movie-info-admin .sp{
-                display: none;
+#inputtext{
+    background-color: black;
+    color: white;
+    float: right;
+    cursor: pointer;
+    padding-right: 10px;
+    border-color: #FFC30B;
 
-        }
-        .user-movie-info-admin:hover{
-        box-shadow: 5px -2px 8px 0px rgb(114, 114, 114);
-        height: 60vh;
-        width: 35vh;
+}
+#inputtext:hover{
+    background-color: #FFC30B;
+}
+#logout{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding-right: 10px;
+    border-color: #FFC30B;
 
-        }   
-        .user-movie-info-admin:hover .ch1{
-            opacity: 0.3;
-        }
-        .user-movie-info-admin:hover div.sp{
-            display: inline-block;
-            position: absolute;
-             left: 90px;
-             top:49%;
-             opacity: 1;
-             width: auto;
-        }
-         #inputtext-admin{
-            background-color: black;
-            color: white;
-            float: right;
-            cursor: pointer;
-            padding-right: 10px;
-            border-color: #FFC30B;
-
-        }
-        #inputtext-admin:hover{
-            background-color: #FFC30B;
-        }
-        #removebutton{
-            background-color:inherit;
-            border:none;color:white;
-            font-size:20px;
-            cursor:pointer;
-        }
+}
+#logout:hover{
+    background-color: #FFC30B;
+}
+   
+        [class*="col-"] {
+    float: left;
+    padding: 5px;
+}
 [class*="col-"] {
     padding: 5px;
 }
