@@ -19,12 +19,12 @@ The website requires a local server to run. WAMPP or XAMPP can be used.
 
 Download XAMPP :
 ```bash
-(https://www.apachefriends.org/download.html)
+[a link](https://www.apachefriends.org/download.html)
 ```
 
 Download WAMPP :
 ```bash
-https://sourceforge.net/projects/wampserver/
+[a link](https://sourceforge.net/projects/wampserver/)
 ```
 
 ## Structure:
