@@ -59,7 +59,7 @@
                         <h3 class="col-12"style="text-decoration: underline;">Wishlist</h3>                        
                         <?php
                             $id=$_SESSION["userid"];
-                            $sql='select * from wishlist where user="$id"';
+                            $sql="select * from wishlist where user=".$id;
                             $result=mysqli_query($conn, $sql);
                             $num=0;
                             if ($result->num_rows > 0) {

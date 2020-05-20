@@ -64,7 +64,7 @@
                          
                <?php
                         $id=$_SESSION["userid"];
-                        $sql='select * from watched_movies where user="$id" and favourite=true';
+                        $sql="select * from watched_movies where user=".$id." and favourite=true";
                         $result=mysqli_query($conn, $sql);
                         $num=0;
                         if ($result->num_rows > 0) {

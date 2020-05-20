@@ -69,7 +69,7 @@
                          
                <?php
 			$id=$_SESSION["userid"];
-                        $sql='select * from review where user="$id";';
+                        $sql="select * from review where user=".$id;
                         $result=mysqli_query($conn, $sql);
                         $num=0;
 
