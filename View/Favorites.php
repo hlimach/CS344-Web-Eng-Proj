@@ -9,6 +9,7 @@
     <title>Favourites/edit page</title>
     <link rel="stylesheet" href="HeaderFooter.css" type="text/css">
     <link rel="stylesheet" href="EditUser.css">
+    <link rel="stylesheet" href="UserPageStyle.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script>
      $(document).ready(function() {
@@ -63,7 +64,7 @@
                          
                <?php
                         $id=$_SESSION["userid"];
-                        $sql="select * from watched_movies where user='$id' and favourite=true";
+                        $sql='select * from watched_movies where user="$id" and favourite=true';
                         $result=mysqli_query($conn, $sql);
                         $num=0;
                         if ($result->num_rows > 0) {
@@ -114,7 +115,7 @@
     </div>
      <script src="../Controller/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="../Controller/Check1.js"></script> 
-                    
+    <script src="../Controller/HeaderFooter.js" type="text/javascript"></script>                    
 
 </body>
 </html>

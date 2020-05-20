@@ -7,9 +7,13 @@
 <html>
 <head>
 	<title>Reviews/edit page</title>
-	 <link rel="stylesheet" href="HeaderFooter.css" type="text/css">
+
     <link rel="stylesheet" href="EditUser.css">
+    <link rel="stylesheet" href="UserPageStyle.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	 <link rel="stylesheet" href="HeaderFooter.css" type="text/css">
 	<script>
      
     $(document).ready(function() {
@@ -36,7 +40,9 @@
     </script>
 </head>
 <body>
+    <div>
    <?php include 'Header.php' ?>
+    </div>
     <div class='col-12 col-t-12 login_container flexwrap' style="padding-top: 40px;padding-bottom: 40px">
     <div class='col-8 col-t-12 flexwrap desktopborder'>
                     <div class="col-3 col-t-3 remove-m sidebox" style="float: left">
@@ -62,10 +68,11 @@
                         <h3 class="col-12"style="text-decoration: underline;">Reviews</h3>
                          
                <?php
-                        $num=0;
-			             $id=$_SESSION["userid"];
-                        $sql="select * from review where user='$id'";
+			$id=$_SESSION["userid"];
+                        $sql='select * from review where user="$id";';
                         $result=mysqli_query($conn, $sql);
+                        $num=0;
+
                         if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             
@@ -113,7 +120,7 @@
         <?php include 'Footer.html' ?>
     </div>
      <script src="../Controller/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../Controller/Check1.js"></script>  
-
+    <script type="text/javascript" src="../Controller/Check1.js"></script>   
+    <script src="../Controller/HeaderFooter.js" type="text/javascript"></script>
 </body>
 </html>
