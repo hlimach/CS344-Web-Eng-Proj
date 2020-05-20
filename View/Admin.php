@@ -3,7 +3,7 @@
 
     //check for admin
     if($_SESSION['username'] != "admin"){
-        header('location:error.php');
+        header('location:Error.php');
         
     }
 ?>
@@ -11,18 +11,18 @@
 <html>
 <head>
 	<title>Admin Homepage</title>
-	<link rel="stylesheet" type="text/css" href="../Style/edituser.css">
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-    <script src="../Functionality/Header_Footer.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="EditUser.css">
+	<script src="../Controller/jquery-3.2.1.js"></script>
+    <script src="../Controller/HeaderFooter.js" type="text/javascript"></script>
    
 </head>
 <body class="adminfix">
 	<div class="col-12">
-	    <?php include 'header.php' ?>
+	    <?php include 'Header.php' ?>
     </div>
    <div class="col-12 col-t-12 col-m-12" style="display: inline-block;">
             <div><h2 id="h2" style="float: left;clear: left">Users</h2></div>
-            <div style="clear: right"><h6 id="h3"><input id="inputtext" type="button" name="edit" value="Delete User by id"></h6></div>
+            <div style="clear: right"><h6 id="h3"><input id="inputtext" type="button" name="edit" value="Delete User by ID"></h6></div>
         </div>
     <div class="col-12 col-t-12 col-m-12 scrolladd">
         <div class="col-12 col-t-12 col-m-12" style="text-align: center;">
@@ -103,12 +103,12 @@
 
         ?>
         </div>
-        <div class="col-12" style="text-align: center;color: white;margin-top: 30px"><button id="logout"><a href="logout.php" style="text-decoration: none: ">LOG OUT</a></button></div>
+        <div class="col-12" style="text-align: center;color: white;margin-top: 30px"><button id="logout"><a href="../Controller/Logout.php" style="text-decoration: none: ">LOG OUT</a></button></div>
 
     <div style="display:inline-block;width:100%">
-        <?php include 'footer.html'; ?>
+        <?php include 'Footer.html'; ?>
     </div>
-	 <script src="../Functionality/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../Functionality/admin.js"></script>   
+	 <script src="../Controller/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../Controller/Admin.js"></script>   
 </body>
 </html>

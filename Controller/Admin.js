@@ -1,4 +1,4 @@
- $(document).ready(function() {
+$(document).ready(function() {
     $(".removebutton2").click(function(){
         $(this).closest(".user-movie-info-admin").hide();
         var val= $(this).closest(".user-movie-info-admin").find(".ch").text();
