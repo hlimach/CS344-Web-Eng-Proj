@@ -5,47 +5,43 @@ The website is a multi purpose platform for TV lovers to share their love for en
 
 The main page for the website is Index.php.
 
-```python
-./View/Index.php
-```
+[./View/Index.php](./View/Index.php)
+
 Directly access it through selecting the view folder in URL:
 
-```python
-./View/
-```
+[./View/](./View/)
+
 
 ## Requirements
 The website requires a local server to run. WAMPP or XAMPP can be used.
 
 Download XAMPP :
-```bash
-[a link](https://www.apachefriends.org/download.html)
-```
+
+[https://www.apachefriends.org/download.html](https://www.apachefriends.org/download.html)
 
 Download WAMPP :
-```bash
-[a link](https://sourceforge.net/projects/wampserver/)
-```
+
+[https://sourceforge.net/projects/wampserver/](https://sourceforge.net/projects/wampserver/)
+
 
 ## Structure:
 
 MVC structure has been followed. 
 
 The sql file is located in the Model folder.
-```python
-./Model/MoviesWebsiteStructure.sql
-```
+
+[./Model/MoviesWebsiteStructure.sql](./Model/MoviesWebsiteStructure.sql)
+
 All visual files including html and php files are located in the View folder.
 
-```python
-./View/
-```
+
+[./View/](./View/)
+
 
 All logic files that control the working of the site are located in the Controller folder.
 
-```python
-./Controller/
-```
+[./Controller/](./Controller/)
+
 
 ## Contributers:
 The contributers to this project are:
