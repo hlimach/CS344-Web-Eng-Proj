@@ -3,7 +3,7 @@ session_start();
 
 $state=$_GET["state"];
 $userID=$_GET["user"];
-include '../Pages/dbconnect.php';
+include 'config.php';
 
 switch ($state) {
     case 'Follow':

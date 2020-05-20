@@ -1,6 +1,6 @@
 <?php
 //to get user's info from database and display in left section of the page
-include 'dbconnect.php';
+include 'config.php';
          
                 //get number of followers and following
                 $sql='select * from followers where user=1';
@@ -31,8 +31,8 @@ include 'dbconnect.php';
                     <div id="user-name"  >'.$fname." ".$lname.", ".$age.'</div>
                     <div id="user-handle"  >'.'@'.$handle.'</div>
                     <div id="user-follow-div" class="col-12 col-t-7">
-                        <div id="user-following"><a href="user-followers.php">'.$followers.' Followers</a></div>
-                        <div id="user-following"><a href="user-following.php">'.$following.' Following </a></div>
+                        <div id="user-following"><a href="UserFollowers.php">'.$followers.' Followers</a></div>
+                        <div id="user-following"><a href="UserFollowing.php">'.$following.' Following </a></div>
                     </div>
                     <div id="user-follow"><button class="follow-btn">Follow </button></div>
                     <div id="user-bio" class="col-12 col-t-12">
