@@ -1,14 +1,14 @@
 TRACK TV
 
-The website is a multi purpose platform for TV lovers to share their love for entertainment. For more information, go to (../report/)
+The website is a multi purpose platform for TV lovers to share their love for entertainment. For more information, check (./Report/WebProjReport.pdf)
 
 Setup:
 
 The main page for the website is Index.php
-./View/Index.php
+./HTML/View/Index.php
 
 Directly access it through selecting the view folder in URL:
-./View/
+./HTML/View/
 
 Login:
 
@@ -38,13 +38,13 @@ Structure:
 MVC structure has been followed. 
 
 The sql file is located in the Model folder 
-./Model/MoviesWebsiteStructure.sql
+./HTML/Model/MoviesWebsiteStructure.sql
 
 All visual files including html and php files are located in the View folder.
-./View/
+./HTML/View/
 
 All logic files that control the working of the site are located in the Controller folder.
-./Controller/
+./HTML/Controller/
 
 Contributers:
 
