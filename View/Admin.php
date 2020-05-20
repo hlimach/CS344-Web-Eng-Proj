@@ -11,6 +11,7 @@
 <html>
 <head>
 	<title>Admin Homepage</title>
+    <meta name="viewport" content="width=device-width">
 	<link rel="stylesheet" type="text/css" href="EditUser.css">
 	<script src="../Controller/jquery-3.2.1.js"></script>
     <script src="../Controller/HeaderFooter.js" type="text/javascript"></script>

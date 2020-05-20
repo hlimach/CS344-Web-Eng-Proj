@@ -7,6 +7,7 @@
 <html>
 <head>
     <title>Saved/edit page</title>
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="HeaderFooter.css" type="text/css">
     <link rel="stylesheet" href="EditUser.css">
     <link rel="stylesheet" href="UserPageStyle.css">

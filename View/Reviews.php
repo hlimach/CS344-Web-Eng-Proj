@@ -7,7 +7,7 @@
 <html>
 <head>
 	<title>Reviews/edit page</title>
-
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="EditUser.css">
     <link rel="stylesheet" href="UserPageStyle.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">

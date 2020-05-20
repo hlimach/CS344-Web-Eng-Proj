@@ -1454,7 +1454,7 @@
             (14,62,'I love it','The first thing I want to say before I start, is that I do not binge watch TV series. It''s extremely rare for me, and I often don''t even finish the season. This TV series had me hooked from start to finish and I spent all day watching it.','4.8');";
 
     if ($result = $conn->multi_query($sql)) 
-	  	echo "<script type='text/javascript'>alert('Database loaded successfully');</script>";
+	  	echo "<script type='text/javascript'>alert('Welcome!');</script>";
 	else 
 	  	echo "<script type='text/javascript'>alert('Error creating database: '.$conn->error);</script>";
 

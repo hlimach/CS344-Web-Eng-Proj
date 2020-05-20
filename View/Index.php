@@ -46,13 +46,13 @@
 				<h1>Bookmark for future.</h1>
 				<p>Build your own movies and TV shows bucketlist.</p>
 			</div>
-			<div id='st3-img' class='section-img col-5 col-t-12 col-m-12'></div>
+			<div id='st3-img' class='section-img col-5 col-t-12 col-m-12'><img src='Images/laptop.png'></div>
 		</div>
 	</div>
 
 	<div id='b4'>
 		<div class='sections'>
-			<div id='st4-img' class='section-img col-5 col-t-12 col-m-12'></div>
+			<div id='st4-img' class='section-img col-5 col-t-12 col-m-12'><img src='Images/mobile.png'></div>
 			<div id='st4' class='section-text col-7 col-t-12 col-m-12 t-text m-text'>
 				<h1>Discover other users.</h1>
 				<p>Follow people who share similar interests for more recommendations.</p>
