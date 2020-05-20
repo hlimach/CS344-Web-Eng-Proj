@@ -47,7 +47,7 @@
 			<!-- add functionality to search bar -->
 			<div id='fixed-search-bar' class="col-4">
 				<!--changes inside of this-->
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn' name='submit' type='submit' class='fa fa-search'/>
 		        </form>
@@ -68,7 +68,7 @@
 			</div>
 			<!-- add functionality to search bar -->
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar-s' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn-s' name='submit' type='submit' class='fa fa-arrow-right'/>
 		        </form>
