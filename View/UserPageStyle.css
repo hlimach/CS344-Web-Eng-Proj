@@ -103,6 +103,7 @@
 
 
  #user-handle{
+	 text-transform: capitalize;
 	margin-bottom: 2%;
 }
 
