@@ -40,7 +40,7 @@
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div class='slider-menu col-1 fa fa-bars w3-large'></div>
 			<div id='logo-large' class='col-3'>
-				<a href='HomePage.php'><img src='/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='./Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			<!-- check for logged in/ out user -->
 			<div class='user-icon col-1'><a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
@@ -57,7 +57,7 @@
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='HomePage.php'><img src='/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='./Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			<!-- check for logged in/ out user -->
 			<div class='user-icon col-t-1 col-m-1'>			
