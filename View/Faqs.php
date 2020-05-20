@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    include '../Controller/CheckLogin.php';
+    
 ?>
 <html>
     <head>
