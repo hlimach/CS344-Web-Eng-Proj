@@ -1,5 +1,6 @@
 # TRACK TV
-The website is a multi purpose platform for TV lovers to share their love for entertainment. For more information, go to report/.
+The website is a multi purpose platform for TV lovers to share their love for entertainment. For more information, go to 
+[../report/](../report/)
 
 ## Setup
 
