@@ -3,7 +3,7 @@
 	
 	require '../Controller/config.php';
 	require '../Controller/Search.php';
-	//include '../Controller/CheckLogin.php';
+	include '../Controller/CheckLogin.php';
 	
 	$movie_id = $_GET['id'];
 	$movie = $conn->query("SELECT * FROM movie WHERE movieID =".$movie_id)->fetch_assoc();
@@ -18,7 +18,7 @@
 	<title><?php echo $movie['title'] ?></title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
+	<link rel="stylesheet" href="Haleema.css" type="text/css">
 
 </head>
 
@@ -30,11 +30,11 @@
 			</div>
 			
 			<div class='user-icon col-1'>
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
 			</div>
 			
 			<div id='fixed-search-bar' class="col-4">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn' name='submit' type='submit' class='fa fa-search'/>
 		        </form>
@@ -47,14 +47,14 @@
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
 				<a href='#' class='fa fa-search  w3-large'></a>
 			</div>
 			
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar-s' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn-s' name='submit' type='submit' class='fa fa-arrow-right'/>
 		        </form>
@@ -120,9 +120,9 @@
 							echo "</div>";
 					?>
 					<div id='film-actions'>
-						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=bkmrk"?>"><i class='fa fa-bookmark-o'></i>Bookmark</a>
-						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=save"?>"><i class='fa fa-plus-square-o'></i>Watched</a>
-						<a href="<?php echo "SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=fav"?>"><i class='fa fa-heart-o'></i>Favorite</a>
+						<a href="<?php echo "../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=bkmrk"?>"><i class='fa fa-bookmark-o'></i>Bookmark</a>
+						<a href="<?php echo "../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=save"?>"><i class='fa fa-plus-square-o'></i>Watched</a>
+						<a href="<?php echo "../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$movie_id."&l=fav"?>"><i class='fa fa-heart-o'></i>Favorite</a>
 					</div>
 					<div id='film-rating'><?php echo $movie['rating']."/10 IMDb"?></div>
 					<div id='film-stats'>
@@ -156,7 +156,7 @@
 								<div class='rev-img'><img src='".$user['pic_url']."'></div>
 								<div class='rev'>
 									<div class='rev-title'>".$rev['title']."</div>
-									<div class='rev-user'>Review by <a href='userhome.php?id=".$user['username']."'><b>".$user['username']." </b></a>";
+									<div class='rev-user'>Review by <a href='UserHome.php?id=".$user['username']."'><b>".$user['username']." </b></a>";
 										for($x = 0; $x < $rev['review_rating']; $x++)
 											echo "<i class='fa fa-star fa-xs'></i>";
 							echo	"</div>
@@ -171,13 +171,12 @@
 		</div>
 	</div>
 
-	<!--footer final-->
 	<div class='footer'>
 		<div class='footer-heading'>Questions?</div>
-		<div class='footer-content'><a href='./services.php'>Services</a></div>
-		<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
-		<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
-		<div class='footer-content'><a href='./developers.php'>Developers</a></div>
+		<div class='footer-content'><a href='Services.php'>Services</a></div>
+		<div class='footer-content'><a href='Faqs.php'>FAQs</a></div>
+		<div class='footer-content'><a href='ContactUs.php'>Contact Us</a></div>
+		<div class='footer-content'><a href='Developers.php'>Developers</a></div>
 	
 		<div class='footer-heading'>Find Us</div>
 		<div class='footer-heading' id='find-us-icons'>

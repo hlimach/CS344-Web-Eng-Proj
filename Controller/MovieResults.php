@@ -6,7 +6,7 @@
 	if($searchm->num_rows > 0) {
 		while($sres = $searchm->fetch_assoc()) {
 			echo "<div class='result'>
-					<a href='FilmPage.php?id=".$sres['movieID']."'>
+					<a href='../View/FilmPage.php?id=".$sres['movieID']."'>
 						<div class='res-img'><img src='".$sres['image_url']."'></div>
 						<div class='res'>".$sres['title']."</div>
 					</a>

@@ -14,7 +14,7 @@
 	<title>Home Page</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
+	<link rel="stylesheet" href="Haleema.css" type="text/css">
 </head>
 
 <body>
@@ -105,6 +105,8 @@
 				$sectnames = array('sect1','sect2','sect3','sect4');
 				$imgid = 1;
 				$sliderid = 1;
+
+				//makes 4 sections with 8 posters in each
 				for($sect = 0; $sect < 4; $sect++) {
 					$pos = $conn->query("SELECT image_url FROM movie WHERE movieID in (SELECT movieID from large_posters) LIMIT 8 OFFSET ".$sect*8);
 					$largeimg = $conn->query("SELECT * from large_posters LIMIT 8 OFFSET ".$sect*8);
@@ -122,9 +124,9 @@
 								echo 
 								"<div class='lpos-i' id='lpos-i".$sliderid."'>"
 									.$largeposters['title'].
-									"<p class='tiny'><a href='SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=bkmrk'><i id='watchlist-btn' class='fa fa-bookmark-o w3-large'></i></a>Add to Watchlist</p>
-									<p class='tiny'><a href='SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=save'><i id='watched-btn' class='fa fa-plus-square-o w3-large'></i></a> Add to Watched</p>
-									<p class='tiny'><a href='SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=fav'><i id='fav-btn' class='fa fa-heart-o w3-large'></i></a>Add to Favorites</p>
+									"<p class='tiny'><a href='../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=bkmrk'><i id='watchlist-btn' class='fa fa-bookmark-o w3-large'></i></a>Add to Watchlist</p>
+									<p class='tiny'><a href='../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=save'><i id='watched-btn' class='fa fa-plus-square-o w3-large'></i></a> Add to Watched</p>
+									<p class='tiny'><a href='../Controller/SaveMovie.php?u=".$_SESSION['userid']."&id=".$largeposters['movieID']."&l=fav'><i id='fav-btn' class='fa fa-heart-o w3-large'></i></a>Add to Favorites</p>
 								</div>
 								<div class='faded' id='lpos-c".$sliderid."'><div class='fa fa-times w3-large l-pos-exit'></div><img src='".$largeposters['image_url']."'></div>";
 								$sliderid++;
@@ -137,14 +139,14 @@
 
 	</div>
 
-	<!--footer final, dont touch below!! -->
+
 	<div id='footer-box'>
 		<div class='footer'>
 			<div class='footer-heading'>Questions?</div>
-			<div class='footer-content'><a href='./services.php'>Services</a></div>
-			<div class='footer-content'><a href='./faqs.php'>FAQs</a></div>
-			<div class='footer-content'><a href='./contactus.php'>Contact Us</a></div>
-			<div class='footer-content'><a href='./developers.php'>Developers</a></div>
+			<div class='footer-content'><a href='Services.php'>Services</a></div>
+			<div class='footer-content'><a href='Faqs.php'>FAQs</a></div>
+			<div class='footer-content'><a href='ContactUs.php'>Contact Us</a></div>
+			<div class='footer-content'><a href='Developers.php'>Developers</a></div>
 		
 			<div class='footer-heading'>Find Us</div>
 			<div class='footer-heading' id='find-us-icons'>
@@ -157,7 +159,7 @@
 			<div id='footer-end' class='footer-heading'>CS-344 Web Engineering, Spring 2020: Semester Project.</div>	
 		</div>
 	</div>
-	<!--footer final, dont touch above!! -->
+
 
 	<script src="../Controller/jquery-3.2.1.js"></script>
 	<script src="../Controller/Haleema.js" type="text/javascript"></script>

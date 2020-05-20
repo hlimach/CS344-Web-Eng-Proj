@@ -3,7 +3,7 @@
 
 	require '../Controller/config.php';
 	require '../Controller/Search.php';
-	//include '../Controller/CheckLogin.php';
+	include '../Controller/CheckLogin.php';
 	
 	$word = $_GET['w'];
 ?>
@@ -19,7 +19,7 @@
 	<title>Search Results</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../View/Haleema.css" type="text/css">
+	<link rel="stylesheet" href="Haleema.css" type="text/css">
 </head>
 
 <body>
@@ -27,15 +27,15 @@
 	<div id='header'>
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div id='logo-large' class='col-3'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			
 			<div class='user-icon col-1'>
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a>
 			</div>
 			
 			<div id='fixed-search-bar' class="col-4">
-		        <form id='search-form' action="Search.php" method="post">
+		        <form id='search-form' action="../Controller/Search.php" method="post">
 		            <input id='search-bar' type='text' name='query' placeholder='Search...'/>
 					<button id='search-btn' name='submit' type='submit' class='fa fa-search'/>
 		        </form>
@@ -44,11 +44,11 @@
 
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			
 			<div class='user-icon col-t-1 col-m-1'>			
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
 				<a href='#' class='fa fa-search  w3-large'></a>
@@ -118,15 +118,13 @@
 		</div>
 	</div>
 
-
-	<!--footer final-->
 	<div id='footer-box'>
 		<div class='footer'>
 			<div class='footer-heading'>Questions?</div>
-			<div class='footer-content'><a href='#'>Services</a></div>
-			<div class='footer-content'><a href='#'>FAQs</a></div>
-			<div class='footer-content'><a href='#'>Contact Us</a></div>
-			<div class='footer-content'><a href='#'>Developers</a></div>
+			<div class='footer-content'><a href='Services.php'>Services</a></div>
+			<div class='footer-content'><a href='Faqs.php'>FAQs</a></div>
+			<div class='footer-content'><a href='ContactUs.php'>Contact Us</a></div>
+			<div class='footer-content'><a href='Developers.php'>Developers</a></div>
 		
 			<div class='footer-heading'>Find Us</div>
 			<div class='footer-heading' id='find-us-icons'>

@@ -10,7 +10,7 @@
 				continue;
 			
 			echo "<div class='user-list'>
-					<a href='Userhome.php?id=".$ures['username']."'>
+					<a href='../View/UserHome.php?id=".$ures['username']."'>
 						<div class='ures-img'><img src='".$ures['pic_url']."'></div>
 						<div class='ures'>
 							<div class='handle'>".$ures['username']."</div>

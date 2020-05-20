@@ -2,17 +2,17 @@ $(document).ready(function(){
 
 	if ((window.location.hash).includes('#dt')) {
 		var updatedString = window.location.hash.replace("#", "");
-		$load_page = "BrowsePageListing.php?" + updatedString;
+		$load_page = "../Controller/BrowsePageListing.php?" + updatedString;
 		$('#poster-listings').load($load_page);
 	}
 
 	$('.redir').click(function(event){
 		$redir_query = event.target.id;
-		window.location.href = 'BrowsePage.php#' + event.target.id;
+		window.location.href = '../View/BrowsePage.php#' + event.target.id;
 	});
 
 	if((window.location.href).includes('Results.php?w=')) {
-		$('#res-listings').load('MovieResults.php?w='+word);
+		$('#res-listings').load('../Controller/MovieResults.php?w='+word);
 	}
 
 	$(window).scroll(function() {
@@ -57,13 +57,13 @@ $(document).ready(function(){
 	$('#film-tab').click(function(){
 		$('#user-tab').removeClass('active-tab');
 		$('#film-tab').addClass('active-tab');
-		$('#res-listings').load('MovieResults.php?w='+word);
+		$('#res-listings').load('../Controller/MovieResults.php?w='+word);
 	});
 
 	$('#user-tab').click(function(){
 		$('#film-tab').removeClass('active-tab');
 		$('#user-tab').addClass('active-tab');
-		$('#res-listings').load('UserResults.php?w='+word);
+		$('#res-listings').load('../Controller/UserResults.php?w='+word);
 	});
 
 	//HOMEPAGE FUNCTIONALITY 
@@ -92,19 +92,19 @@ $(document).ready(function(){
 	$('#all-tab').click(function(){
 		$('#tv-shows-tab, #movies-tab').removeClass('active-tab');
 		$('#all-tab').addClass('active-tab');
-		$('#poster-listings').load('BrowsePageListing.php?dt=2&g=null');
+		$('#poster-listings').load('../Controller/BrowsePageListing.php?dt=2&g=null');
 	});
 
 	$('#movies-tab').click(function(){
 		$('#all-tab, #tv-shows-tab').removeClass('active-tab');
 		$('#movies-tab').addClass('active-tab');
-		$('#poster-listings').load('BrowsePageListing.php?dt=0&g=null');
+		$('#poster-listings').load('../Controller/BrowsePageListing.php?dt=0&g=null');
 	});
 
 	$('#tv-shows-tab').click(function(){
 		$('#all-tab, #movies-tab').removeClass('active-tab');
 		$('#tv-shows-tab').addClass('active-tab');
-		$('#poster-listings').load('BrowsePageListing.php?dt=1&g=null');
+		$('#poster-listings').load('../Controller/BrowsePageListing.php?dt=1&g=null');
 	});
 	
 	//click events for home page posters (open when clicked)
@@ -127,10 +127,10 @@ $(document).ready(function(){
 
 		var params = "dt=" + dt + "&g=" + g;
 
-		var load_page = "BrowsePageListing.php?" + params;
+		var load_page = "../Controller/BrowsePageListing.php?" + params;
 
 		if(!((window.location.href).includes('BrowsePage.php'))){
-			window.location.href = 'BrowsePage.php#' + params;
+			window.location.href = '../View/BrowsePage.php#' + params;
 		}
 		else {
 			$('#poster-listings').load(load_page);
