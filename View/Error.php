@@ -7,14 +7,14 @@
 	<title>Header & Footer</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
+	<link rel="stylesheet" href="HeaderFooter.css" type="text/css">
 
 </head>
 
 <body>
 	
 	<div>
-        <?php include 'header.php'?>
+        <?php include 'Header.php'?>
 	</div>
 
 	<div id='page-content'>
@@ -22,10 +22,9 @@
 	</div>
 
     <div>  
-        <?php include 'footer.html' ?>
+        <?php include 'Footer.html' ?>
     </div>
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/Header_Footer.js" type="text/javascript">
-		//took it from here
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/HeaderFooter.js" type="text/javascript">
 	</script>
 </body>
