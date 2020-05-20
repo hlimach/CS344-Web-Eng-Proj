@@ -9,7 +9,6 @@
 	<title>Reviews/edit page</title>
 	 <link rel="stylesheet" href="HeaderFooter.css" type="text/css">
     <link rel="stylesheet" href="EditUser.css">
-    <link rel="stylesheet" href="UserPageStyle.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script>
      
@@ -63,11 +62,10 @@
                         <h3 class="col-12"style="text-decoration: underline;">Reviews</h3>
                          
                <?php
-			$id=$_SESSION["userid"];
-                        $sql='select * from review where user="$id";';
-                        $result=mysqli_query($conn, $sql);
                         $num=0;
-
+			             $id=$_SESSION["userid"];
+                        $sql="select * from review where user='$id'";
+                        $result=mysqli_query($conn, $sql);
                         if ($result->num_rows > 0) {
                         while($row = $result->fetch_assoc()) {
                             
@@ -115,7 +113,7 @@
         <?php include 'Footer.html' ?>
     </div>
      <script src="../Controller/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../Controller/Check1.js"></script>   
+    <script type="text/javascript" src="../Controller/Check1.js"></script>  
 
 </body>
 </html>
