@@ -17,10 +17,6 @@ $(document).ready(function(){
 		});
 	});
 
-	$('#search-btn-s, #search-btn').click(function(){
-			alert('next page lmao');
-	});
-
 	//sliding menu functionality
 	$('.slider-menu').click(function(){
 		$('#sliding-menu').animate({"left":"0px"}, "slow").addClass('visible');
@@ -121,7 +117,7 @@ $(document).ready(function(){
     });   
       $(document).ready(function() {
             $("#mbutton6").click(function(){
-             document.location.href = '../View/saved.php';
+             document.location.href = '../View/Saved.php';
             });
 
  

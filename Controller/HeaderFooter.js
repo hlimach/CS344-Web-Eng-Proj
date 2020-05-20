@@ -2,17 +2,17 @@ $(document).ready(function(){
 	
 	if ((window.location.hash).includes('#dt')) {
 		var updatedString = window.location.hash.replace("#", "");
-		$load_page = "BrowsePageListing.php?" + updatedString;
+		$load_page = "../Controller/BrowsePageListing.php?" + updatedString;
 		$('#poster-listings').load($load_page);
 	}
 
 	$('.redir').click(function(event){
 		$redir_query = event.target.id;
-		window.location.href = 'BrowsePage.php#' + event.target.id;
+		window.location.href = '../View/BrowsePage.php#' + event.target.id;
 	});
 
 	if((window.location.href).includes('Results.php?w=')) {
-		$('#res-listings').load('MovieResults.php?w='+word);
+		$('#res-listings').load('../Controller/MovieResults.php?w='+word);
 	}
 
 	$(window).scroll(function() {
@@ -86,7 +86,7 @@ $(document).ready(function(){
 			var userid=$('.follow-btn').attr("data");
 			
 			var followstate=($('.follow-btn').text());
-			$.get('../Pages/follow.php', {state:followstate, user:userid },function (data) { 
+			$.get('../Controller/Follow.php', {state:followstate, user:userid },function (data) { 
 				data = $.trim(data);
 				
 				if (data==='Unfollow') {

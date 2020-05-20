@@ -16,7 +16,7 @@
 	    echo "error:" .$conn->error;
 	else {
 		echo "<script type='text/javascript'>alert('added successfully')</script>";
-		header("Location: userhome.php?id=$userid");
+		header("Location: ../View/UserHome.php?id=$userid");
 	}
 
 
