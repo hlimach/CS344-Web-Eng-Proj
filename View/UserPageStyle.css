@@ -94,7 +94,9 @@
 
  #user-name{
 	font-size: x-large;
+	 text-transform: capitalize;
  }
+
 
  #f-box {
  	display:inline-block;
