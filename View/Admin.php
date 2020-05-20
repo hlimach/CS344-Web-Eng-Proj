@@ -22,7 +22,8 @@
     </div>
    <div class="col-12 col-t-12 col-m-12" style="display: inline-block;">
             <div><h2 id="h2" style="float: left;clear: left">Users</h2></div>
-            <div style="clear: right"><h6 id="h3"><input id="inputtext" type="button" name="edit" value="Delete User by ID"></h6></div>
+            <div style="clear: right"><h6 id="h3">
+            <a href="AdminDeleteUser.php"><input id="inputtext" type="button" name="edit" value="Delete User by ID"></h6></a></div>
         </div>
     <div class="col-12 col-t-12 col-m-12 scrolladd">
         <div class="col-12 col-t-12 col-m-12" style="text-align: center;">
@@ -71,9 +72,11 @@
 <div class="col-12 col-t-12 col-m-12" style="display: inline-block;padding-top: 50px">
     <div class="remove-m"><h2 id="h2" style="float: left;clear: left">Movies/Tv Shows</h2></div>
     <div class="remove-t remove"><h4 id="h2" style="float: left;clear: left">Movies/Tv Shows</h4></div>
-    <div style="clear: right;"><h6 id="h3"><input id="inputtext" type="button" name="edit" value="Delete by id">
-    <input id="inputtext" type="button" name="Delete" value="Add Movie">
-    <input id="inputtext" type="button" name="Delete" value="Edit Movie"></h6></div>
+    <div style="clear: right;"><h6 id="h3">
+    <a href="AdminDeleteMovie.php"><input id="inputtext" type="button" name="edit" value="Delete by id"></a>
+    <a href="AdminNewMovie.php"><input id="inputtext" type="button" name="Delete" value="Add Movie"></a>
+    <a href="AdminEditMovie.php"><input id="inputtext" type="button" name="Delete" value="Edit Movie"></h6></a>
+    </div>
 </div>
     <div class="col-12 col-t-12 col-m-12 scrolladd" id="moviediv">
         <div class="col-12" style="text-align: center;">
@@ -109,6 +112,6 @@
         <?php include 'Footer.html'; ?>
     </div>
 	 <script src="../Controller/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../Controller/Admin.js"></script>   
+    <script type="text/javascript" src="../Controller/HeaderFooter.js"></script>   
 </body>
 </html>
