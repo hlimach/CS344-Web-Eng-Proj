@@ -23,7 +23,7 @@ The login details for a general user are :
 Username: matariq
 Password: maira123
 
-## Requirements
+Requirements:
 
 The website requires a local server to run. WAMPP or XAMPP can be used.
 
