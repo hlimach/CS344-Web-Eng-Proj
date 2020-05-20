@@ -31,7 +31,7 @@ Download XAMPP :
 https://www.apachefriends.org/download.html
 
 Download WAMPP :
-https://sourceforge.net/projects/wampserver/)
+https://sourceforge.net/projects/wampserver/
 
 Structure:
 
