@@ -5,75 +5,74 @@ include '../Controller/CheckLogin.php';
 include 'UserPageTop.php';
 
 
-$username=$_GET["id"];
-
+$username=$_GET['id'];
 $sql='select userID from user where username="'.$username.'"';
 $result=mysqli_query($conn, $sql);
-    if ($result->num_rows) {
+if ($result->num_rows) {
         while($row = $result->fetch_assoc()) {
-           $userID=$row["userID"];
-
+            $userID=$row["userID"];
+        
         }
-     }
+    }
 
-//get list of favorite movies from database
-$sql='select * from watched_movies where user='.$userID.' and favourite=true';
+
+$sql='select * from review where user='.$userID;
 $result=mysqli_query($conn, $sql);
-echo  "<h3>Favorite Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
+
+echo  "<h3>Reviews (".mysqli_num_rows($result).")</h3>";
 
     if ($result->num_rows > 0) {
         echo "<ul id='user-list'>";
         
     
-    while($row = $result->fetch_assoc()) {
-    
-    $movieID=$row["movie"];
-    
-
-    $sql2='select * from movie where movieid='.$movieID;
-    $result2=mysqli_query($conn,$sql2);
-    if ($result2->num_rows > 0)
-        {
-            while($row=$result2->fetch_assoc())
+        while($row = $result->fetch_assoc()) {
             
-            {
-            $title=$row["title"];
-            $rating=$row["rating"];
-            $poster=$row["image_url"];
-            $seasons=$row["seasons"];
+            $movieID=$row["movie"];
+            $review_title=$row["title"];
+            $reviewtext=$row["review_text"];
+            $reviewtext= substr($reviewtext,0,120);
+            $reviewrate=$row["review_rating"];
 
-            //show number of seasons for tv shows, show nothing for movies
-                if ($seasons>0) {
-                $seasons="(".$seasons." Seasons)";
-                }
-                else {
-                    $seasons="";
-                }
+            $sql2='select * from movie where movieid='.$movieID;
+            $result2=mysqli_query($conn,$sql2);
 
-        echo 
-            "<li>
-            <a id='list-link' href='FilmPage.php?id=$movieID'>
-            <div id=\"user-movie-info\">
-            <img id=\"list-movie-poster\" src=\"".$poster."\">
-            <h3>$title $seasons</h3>
-            <p>Rating: ".$rating."/10</p>
-            </div>
-            </a>
-            </li>";
+                if ($result2->num_rows > 0)
+                {
+                    while($row=$result2->fetch_assoc())
+                    
+                        {
+                        $id=$row["movieID"];
+                        $title=$row["title"];
+                        $poster=$row["image_url"];
+
+                    echo 
+                        "<li>
+                        <a id='list-link' href='search-result.php?$id'>
+                        <div id=\"user-movie-info\">
+                        <img id=\"list-movie-poster\" src=\"$poster\">
+                        <h3>$title</h3>
+                        <h6>\"$review_title\" (Rating:  $reviewrate/5)</h6>
+                        <div id='list-movie-desc'>
+                        <p>\"$reviewtext...\"</p>
+                        </div>
+                        </div>
+                        </a>
+                        </li>";
+                        
+                    }
+
+                }
             
-            }//end of inner while
+        }
 
-        }//end of inner if
-        
-    }//end of outer while
+    echo "</ul>";
 
-        echo "</ul>";
-        
-    }//end of outer if
+    }
+
 else
-echo '<h6>NO MOVIES FOUND</h6>';
+    echo '<h6>NO REVIEWS FOUND</h6>';
 
-//close database connection
+    //close database connection
 $conn -> close();
 
 
