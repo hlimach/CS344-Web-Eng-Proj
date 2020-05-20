@@ -89,7 +89,7 @@
             </div>
         </div>
 	    <script src="../Controller/jquery-3.2.1.js"></script>
-	    <script src="../Controller/Header_Footer.js" type="text/javascript">
+	    <script src="../Controller/HeaderFooter.js" type="text/javascript">
 		    //took it from here
 	    </script>
     </body>
