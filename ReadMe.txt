@@ -37,6 +37,8 @@ Structure:
 
 MVC structure has been followed. 
 
+Database has been loaded dynamically. Successful database creation will alert 'Welcome!' at Index page, or else error will be listed. In case of error, run sql file in phpMyAdmin.
+
 The sql file is located in the Model folder 
 ./HTML/Model/MoviesWebsiteStructure.sql
 
@@ -46,9 +48,9 @@ All visual files including html and php files are located in the View folder.
 All logic files that control the working of the site are located in the Controller folder.
 ./HTML/Controller/
 
-Contributers:
+Contributors:
 
-The contributers to this project are:
+The contributors to this project are:
 
 Maira Tariq 263021
 Haleema Ramzan 271712
