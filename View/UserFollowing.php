@@ -1,8 +1,8 @@
 <?php 
 session_start();
-include '../Pages/CheckLogin.php';
+include '../Controller/CheckLogin.php';
 //display user info and header
-include '../Pages/userpage_top.php';
+include '../Controller/UserPageTop.php';
 
 
 $username=$_GET["id"];
@@ -42,7 +42,7 @@ echo  "<h3>Following (".mysqli_num_rows($result).")</h3>";
                 $pic=$row["pic_url"];
 
             echo "<li>
-            <a id='list-link' href='userhome.php?id=$handle'>
+            <a id='list-link' href='UserHome.php?id=$handle'>
                 <div id=\"user-follow-list\">
                 <img id=\"list-movie-poster\" class='follower-pic' src=\"".$pic."\">
                 <h3>".$fname.' '.$lname."</h3>
@@ -67,6 +67,6 @@ echo  "<h3>Following (".mysqli_num_rows($result).")</h3>";
 $conn -> close();
 
 //display footer
-include '../Pages/userpage_bottom.php';
+include 'UserPageBottom.php';
 
 ?>

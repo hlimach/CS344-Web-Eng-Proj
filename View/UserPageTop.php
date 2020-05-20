@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 
     <title>User Homepage</title>
-    <link rel="stylesheet" href="../Style/UserPage_Style.css" type="text/css">
-       <script src="../Functionality/jquery-3.2.1.js"></script>
-    <script src="../Functionality/Header_Footer.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="UserPageStyle.css" type="text/css">
+       <script src="../Controller/jquery-3.2.1.js"></script>
+    <script src="../Controller/HeaderFooter.js" type="text/javascript"></script>
 
 
 </head>
@@ -14,11 +14,11 @@
 <body id='user-homepage'>
 
 <?php 
-    include "../Pages/header.php";
+    include "Header.php";
     
         //admin panel functionality
     if ($_SESSION['username'] == "admin")
-        header('Location: admin.php');        
+        header('Location: Admin.php');        
     
 ?>
 
@@ -36,7 +36,7 @@
 
       $username=$_GET["id"];
     
-        include '../Pages/dbconnect.php';
+        include '../Controller/dbconnect.php';
         $sql='select userID from user where username="'.$username.'"';
         $result=mysqli_query($conn, $sql);
             if ($result->num_rows) {
@@ -96,9 +96,9 @@
                         
                     if ($userID==$_SESSION["userid"]) {
                        echo ' <div id="user-edit">
-                              <a href="../Pages/Edit User.php">  <button id="user-edit-btn">Edit Profile</button> </a>
+                              <a href="EditUser.php">  <button id="user-edit-btn">Edit Profile</button> </a>
                         </div>
-                        <div> <a href="../Pages/logout.php">LOGOUT</a>
+                        <div> <a href="../Controller/Logout.php">LOGOUT</a>
                         </div>';
                        
                         

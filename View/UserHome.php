@@ -1,9 +1,9 @@
 <?php 
 session_start();
-include '../Pages/CheckLogin.php';
+include '../Controller/CheckLogin.php';
 $username=$_GET['id'];
 
-include '../Pages/userpage_top.php'; 
+include 'UserPageTop.php'; 
 
 
 $sql='select userID from user where username="'.$username.'"';
@@ -71,7 +71,7 @@ echo  "<h3>Watched Movies and TV Shows (".mysqli_num_rows($result).")</h3>";
 else
 echo '<h6>NO MOVIES FOUND</h6>';
 $conn -> close();
-include '../Pages/userpage_bottom.php';
+include 'UserPageBottom.php';
 
         
   ?>

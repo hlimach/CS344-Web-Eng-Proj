@@ -1,19 +1,19 @@
 <?php 
     session_start();
-    include 'CheckLogin.php';
+    include '../Controller/CheckLogin.php';
 ?>
 
 <DOCTYPE HTML>
 <html>
 <head>
 	<title>Change password/edit page</title>
-	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
-    <link rel="stylesheet" href="../Style/edituser.css">
-    <link rel="stylesheet" href="../Style/maira.css">
+	<link rel="stylesheet" href="HeaderFooter.css" type="text/css">
+    <link rel="stylesheet" href="EditUser.css">
+    <link rel="stylesheet" href="UserPageStyle.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 </head>
 <body >
-    <?php include 'header.php' ?>
+    <?php include 'Header.php' ?>
    
     <div class='col-12 col-t-12 login_container flexwrap' style="padding-top: 40px;padding-bottom: 40px">
     <div class='col-8 col-t-12 flexwrap desktopborder'>
@@ -136,10 +136,10 @@
                     <button class=" textstyle button col-m-2 mobileend" id="mbutton6"><p>Saved movies</p></button>
     			</div>
                 <div class="col-12">
-        <?php include 'footer.html' ?>
+        <?php include 'Footer.html' ?>
     </div>
-    <script src="../Functionality/jquery-3.2.1.js"></script>
-    <script type="text/javascript" src="../Functionality/check1.js"></script>        
+    <script src="../Controller/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../Controller/Check1.js"></script>        
 
 </body>
 </html>

@@ -1,8 +1,8 @@
 <?php 
 session_start();
-include '../Pages/CheckLogin.php';
+include '../Controller/CheckLogin.php';
 //display user info and header
-include '../Pages/userpage_top.php';
+include 'UserPageTop.php';
 
 
 $username=$_GET["id"];
@@ -78,5 +78,5 @@ $conn -> close();
 
 
 //display footer
- include '../Pages/userpage_bottom.php';
+ include 'UserPageBottom.php';
  ?>

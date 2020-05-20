@@ -1,6 +1,6 @@
 <?php 
     session_start();
-    include 'CheckLogin.php';
+    include '../Controller/CheckLogin.php';
 ?>
 <!doctype html>
 <html>
@@ -8,14 +8,14 @@
 	<title>Edit User</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
-    <link rel="stylesheet" href="../Style/edituser.css">
+	<link rel="stylesheet" href="HeaderFooter.css" type="text/css">
+    <link rel="stylesheet" href="EditUser.css">
 	
 
 </head>
 
 <body>
-	<?php include 'header.php' ?>
+	<?php include 'Header.php' ?>
 	<div class="mobilesizefix-d">
     	<div class="col-12 col-t-12 col-m-12 login_container flexwrap" style="padding-top: 40px;padding-bottom: 40px">
     		<div class="col-8 col-t-12 col-m-12 flexwrap desktopborder">
@@ -197,10 +197,10 @@
             mysqli_close($conn);                 
         ?>
 
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script type="text/javascript" src="../Functionality/check1.js"></script>
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script type="text/javascript" src="../Controller/Check1.js"></script>
     <div style=" background-color:yellow">
-        <?php include 'footer.html' ?>
+        <?php include 'Footer.html' ?>
     </div>
 
 

@@ -7,7 +7,7 @@
 
 <div id='f-box'>
 	<?php
-	include '../Pages/footer.html';
+	include 'Footer.html';
 	?>
 </div>
 
