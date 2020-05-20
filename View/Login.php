@@ -10,7 +10,7 @@
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
-        <link rel="stylesheet" type="text/css" href="../Style/css file.css">
+        <link rel="stylesheet" type="text/css" href="UmeHani.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
         <title>Login</title>
@@ -61,7 +61,7 @@
                             <tr>
                                 <td>
                                     <span class="form-title" style="font-size:15px">
-                                        <a href="./signup.php"><b>New here? Create your account now!</b></a>
+                                        <a href="./SignUp.php"><b>New here? Create your account now!</b></a>
                                     </span>
                                 </td>
                             </tr>
@@ -74,11 +74,11 @@
         <!--login php script-->
         <?php if (isset($_POST['login'])){
 
-            include 'dbconnect.php';
+            include '../Controller/Config.php';
         
             //get results
             $dom = new DOMDocument();
-            $dom->loadHTML("./login.php");
+            $dom->loadHTML("./Login.php");
             $name = $_POST['username'];
             $pass = $_POST['pass'];
             $sql = "SELECT username,email FROM user";

@@ -10,7 +10,7 @@
 <html>
     <head>
         <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
-        <link rel="stylesheet" type="text/css" href="../Style/css file.css">
+        <link rel="stylesheet" type="text/css" href="UmeHani.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <title>Sign Up</title>
     </head>
@@ -22,7 +22,7 @@
         <?php             
             if (isset($_POST['submit'])){
 
-                include 'dbconnect.php'; 
+                include '../Controller/Config.php'; 
 
                 $check = true;   
                 $fcheck = true;
@@ -289,7 +289,7 @@
 					            <tr>
                                     <td>
                                         <div class="button-container">
-                                            <a href="./login.php">
+                                            <a href="./Login.php">
                                                 Already have account? Go to login page
                                             </a>
                                         </div>

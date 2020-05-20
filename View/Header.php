@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 <head>
-	<title>Header & Footer</title>
+	<title>Header</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
+	<link rel="stylesheet" href="HeaderFooter.css" type="text/css">
 
 </head>
 
@@ -32,7 +32,7 @@
 		</div>
 
 		<div id='popular-menu'><a href='#' class='redir' id='dt=2&g=ma'>Popular</a></div>
-		<div id='about-us-menu'><a href='aboutus.php'>About Us</a></div>
+		<div id='about-us-menu'><a href='AboutUs.php'>About Us</a></div>
 	</div>
 
 
@@ -40,10 +40,10 @@
 		<div id='large-header' class='col-12 remove-t remove-m'>
 			<div class='slider-menu col-1 fa fa-bars w3-large'></div>
 			<div id='logo-large' class='col-3'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Large_Final.png' height='80'></a>
+				<a href='HomePage.php'><img src='/Images/Logo_Large_Final.png' height='80'></a>
 			</div>
 			<!-- check for logged in/ out user -->
-			<div class='user-icon col-1'><a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
+			<div class='user-icon col-1'><a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-user-circle  w3-large'></a></div>
 			<!-- add functionality to search bar -->
 			<div id='fixed-search-bar' class="col-4">
 				<!--changes inside of this-->
@@ -57,14 +57,14 @@
 		<div id='small-header' class='remove col-t-12 col-m-12'>
 			<div class='slider-menu col-t-1 col-m-1 fa fa-bars w3-large'></div>
 			<div id='logo-small' class='col-t-1 col-m-1'>
-				<a href='HomePage.php'><img src='../Style/Images/Logo_Small_Final.png' height='60'></a>
+				<a href='HomePage.php'><img src='/Images/Logo_Small_Final.png' height='60'></a>
 			</div>
 			<!-- check for logged in/ out user -->
 			<div class='user-icon col-t-1 col-m-1'>			
 				<a href='#' class='fa fa-user-circle w3-large'></a>
 			</div>
 			<div id='open-search-bar' class="col-t-1 col-m-1">
-				<a href='userhome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-search  w3-large'></a>
+				<a href='UserHome.php?id=<?php echo $_SESSION["username"]?>' class='fa fa-search  w3-large'></a>
 			</div>
 			<!-- add functionality to search bar -->
 		    <div id='hidden-search-bar' class="col-t-12 col-m-12">

@@ -2,25 +2,25 @@
     session_start();
     //check for admin
     if($_SESSION['username'] != "admin"){
-        header('location:error.php');
+        header('location:Error.php');
         
     }
 ?>
 <html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Buenard' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="../Style/css file.css">
+    <link rel="stylesheet" type="text/css" href="UmeHani.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="../Style/Header_Footer_Style.css" type="text/css">
+	<link rel="stylesheet" href="HeaderFooter.css" type="text/css">
     <title>Admin Add Movie Page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 </head>
 
 <body>
     <div  style="background-color:black">
-        <?php include 'header.php' ?>
+        <?php include 'Header.php' ?>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="POST" id="myform" ?>
         <div class="admincontainer-t">
@@ -43,21 +43,21 @@
                         <p id="iderr" class="colred" style="margin:0%" hidden>invalid id</p>
                         <p id="takenid" class="colred" style="margin:0%" hidden>id already exists</p>
                 </div>
-                <?php include 'admin_new.php' ?>
+                <?php include '../Controller/AdminNew.php' ?>
         </div>
     </form>
     <div>
-        <?php include 'footer.html' ?>
+        <?php include 'Footer.html' ?>
     </div>
 
-	<script src="../Functionality/jquery-3.2.1.js"></script>
-	<script src="../Functionality/Header_Footer.js" type="text/javascript">
+	<script src="../Controller/jquery-3.2.1.js"></script>
+	<script src="../Controller/HeaderFooter.js" type="text/javascript">
 		//took it from here
 	</script>
 
 
     <?php if (isset($_POST['submit'])){
-        include 'dbconnect.php';
+        include '../Controller/config.php';
 
         $check = true;        
 
@@ -84,7 +84,7 @@
             }
 
         //checks
-        include 'admin_new_check.php';
+        include '../Controller/AdminNewCheck.php';
 
         //creating check on season and entering data
         if($check == true){
