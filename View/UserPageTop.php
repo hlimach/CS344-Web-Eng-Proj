@@ -78,8 +78,8 @@
                     <div id="user-name"  >'.$fname." ".$lname.", ".$age.'</div>
                     <div id="user-handle"  >'.'@'.$handle.'</div>
                     <div id="user-follow-div" class="col-12 col-t-7">
-                        <div id="user-following"><a href=\'user-followers.php?id='.$handle.'\'>'.$followers.' Followers</a></div>
-                        <div id="user-following"><a href=\'user-following.php?id='.$handle.'\'>'.$following.' Following </a></div>
+                        <div id="user-following"><a href=\'UserFollowers.php?id='.$handle.'\'>'.$followers.' Followers</a></div>
+                        <div id="user-following"><a href=\'UserFollowing.php?id='.$handle.'\'>'.$following.' Following </a></div>
                     </div>';
 
                     if ($userID!=$_SESSION["userid"]) {
@@ -114,10 +114,10 @@
                             
                             <div id='user-links' class='col-8 col-t-12 col-m-12'>
                             <div id='user-links-nav' class='nav'>
-                                <div><a id='watched' href=\"userhome.php?id=".$handle."\"> Watched Movies </a></div>
-                                <div><a id='fav' href=\"user-favs.php?id=".$handle."\"> Favorites </a></div>
-                                <div><a id='later' href=\"user-later.php?id=".$handle."\">Watch Later </a></div>
-                                <div><a id='reviews' href=\"user-reviews.php?id=".$handle."\">Reviews </a></div>
+                                <div><a id='watched' href=\"UserHome.php?id=".$handle."\"> Watched Movies </a></div>
+                                <div><a id='fav' href=\"UserFavs.php?id=".$handle."\"> Favorites </a></div>
+                                <div><a id='later' href=\"UserLater.php?id=".$handle."\">Watch Later </a></div>
+                                <div><a id='reviews' href=\"UserReviews.php?id=".$handle."\">Reviews </a></div>
                             </div>
                             
                             <div id='user-movie-content'>";

@@ -2,7 +2,7 @@
 session_start();
 include '../Controller/CheckLogin.php';
 //display user info and header
-include '../Controller/UserPageTop.php';
+include 'UserPageTop.php';
 
 
 $username=$_GET["id"];
