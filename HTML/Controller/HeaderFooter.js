@@ -46,7 +46,7 @@ $(document).ready(function(){
 
 		$('#slider-menu-exit').click(function(){
 			$('#sliding-menu').animate({"left":"-1000px"}, "slow").removeClass('visible');
-			$('#header, #page-content, #footer').css('overflow','scroll');
+			$('#header, #page-content, #footer').css('overflow','hidden');
 		});
 
 	});
