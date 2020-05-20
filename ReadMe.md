@@ -19,7 +19,7 @@ The website requires a local server to run. WAMPP or XAMPP can be used.
 
 Download XAMPP :
 ```bash
-https://www.apachefriends.org/download.html
+(https://www.apachefriends.org/download.html)
 ```
 
 Download WAMPP :
